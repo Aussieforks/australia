@@ -258,6 +258,8 @@ minetest.register_node("australia:submarine", {
 --
 
 aus.treelist = {
+    -- @@@ Josselin2
+--	--treename, treedesc, treetrunk_dia, treespaling, treefruit, treefruit_desc, treefruit_scale, treefruit_health
 	--treename, treedesc, treetrunk_dia, treesapling, treefruit, treefruit_desc, treefruit_scale, treefruit_health
 	{"black_box", "Eucalyptus largiflorens: Black Box", 1.0, "eucalyptus", nil, nil, nil, nil },
 	{"black_wattle", "Acacia melanoxylon: Black Wattle", 0.75, "acacia", nil, nil, nil, nil },
@@ -313,6 +315,8 @@ for i in ipairs(aus.treelist) do
 	local treename			= aus.treelist[i][1]
 	local treedesc			= aus.treelist[i][2]
 	local treetrunk_dia		= aus.treelist[i][3]
+    -- @@@ Josselin2
+--	local treespaling		= aus.treelist[i][4]
 	local treesapling		= aus.treelist[i][4]
 	local treefruit			= aus.treelist[i][5]
 	local treefruit_desc	= aus.treelist[i][6]
@@ -379,6 +383,12 @@ for i in ipairs(aus.treelist) do
 		description = treedesc.." Sapling",
 		drawtype = "plantlike",
 		visual_scale = 1.0,
+        -- @@@ Josselin2
+        --[[
+		tiles = {"aus_"..treespaling.."_sapling.png"},
+		inventory_image = "aus_"..treespaling.."_sapling.png",
+		wield_image = "aus_"..treespaling.."_sapling.png",
+        ]]--
 		tiles = {"aus_"..treesapling.."_sapling.png"},
 		inventory_image = "aus_"..treesapling.."_sapling.png",
 		wield_image = "aus_"..treesapling.."_sapling.png",
@@ -1028,6 +1038,8 @@ minetest.register_node("australia:kelp_brown", {
 	paramtype = "light",
 	sunlight_propagates = true,
 	walkable = false,
+    -- @@@ Josselin2
+--	climable = true,
 	climbable = true,
 	drowning = 1,
 	is_ground_content = true,
@@ -1130,6 +1142,8 @@ minetest.register_node("australia:cauliflower_coral_brown", {
 	wield_image = "aus_cauliflower_coral_brown.png",
 	paramtype = "light",
 	walkable = false,
+    -- @@@ Josselin2
+--	climable = true,
 	climbable = true,
 	drowning = 1,
 	is_ground_content = true,
@@ -1154,6 +1168,8 @@ minetest.register_node("australia:cauliflower_coral_green", {
 	wield_image = "aus_cauliflower_coral_green.png",
 	paramtype = "light",
 	walkable = false,
+    -- @@@ Josselin2
+--	climable = true,
 	climbable = true,
 	drowning = 1,
 	is_ground_content = true,
@@ -1178,6 +1194,8 @@ minetest.register_node("australia:cauliflower_coral_pink", {
 	wield_image = "aus_cauliflower_coral_pink.png",
 	paramtype = "light",
 	walkable = false,
+    -- @@@ Josselin2
+--	climable = true,
 	climbable = true,
 	drowning = 1,
 	is_ground_content = true,
@@ -1198,6 +1216,8 @@ minetest.register_node("australia:cluster_coral_green", {
 	wield_image = "aus_cluster_coral_green.png",
 	paramtype = "light",
 	walkable = false,
+    -- @@@ Josselin2
+--	climable = true,
 	climbable = true,
 	drowning = 1,
 	is_ground_content = true,
@@ -1218,6 +1238,8 @@ minetest.register_node("australia:cluster_coral_orange", {
 	wield_image = "aus_cluster_coral_orange.png",
 	paramtype = "light",
 	walkable = false,
+    -- @@@ Josselin2
+--	climable = true,
 	climbable = true,
 	drowning = 1,
 	is_ground_content = true,
@@ -1238,6 +1260,8 @@ minetest.register_node("australia:cluster_coral_purple", {
 	wield_image = "aus_cluster_coral_purple.png",
 	paramtype = "light",
 	walkable = false,
+    -- @@@ Josselin2
+--	climable = true,
 	climbable = true,
 	drowning = 1,
 	is_ground_content = true,
@@ -1258,6 +1282,8 @@ minetest.register_node("australia:staghorn_coral_blue", {
 	wield_image = "aus_staghorn_coral_blue.png",
 	paramtype = "light",
 	walkable = false,
+    -- @@@ Josselin2
+--	climable = true,
 	climbable = true,
 	drowning = 1,
 	is_ground_content = true,
@@ -1281,6 +1307,8 @@ minetest.register_node("australia:staghorn_coral_pink", {
 	paramtype = "light",
 	sunlight_propagates = true,
 	walkable = false,
+    -- @@@ Josselin2
+--	climable = true,
 	climbable = true,
 	buildable_to = false,
 	drowning = 1,
@@ -1305,6 +1333,8 @@ minetest.register_node("australia:staghorn_coral_purple", {
 	paramtype = "light",
 	sunlight_propagates = true,
 	walkable = false,
+    -- @@@ Josselin2
+--	climable = true,
 	climbable = true,
 	buildable_to = false,
 	drowning = 1,
@@ -1329,6 +1359,8 @@ minetest.register_node("australia:staghorn_coral_yellow", {
 	paramtype = "light",
 	sunlight_propagates = true,
 	walkable = false,
+    -- @@@ Josselin2
+--	climable = true,
 	climbable = true,
 	buildable_to = false,
 	drowning = 1,
@@ -1353,6 +1385,8 @@ minetest.register_node("australia:seafan_coral", {
 	paramtype = "light",
 	sunlight_propagates = true,
 	walkable = false,
+    -- @@@ Josselin2
+--	climable = true,
 	climbable = true,
 	buildable_to = false,
 	drowning = 1,
@@ -1377,6 +1411,8 @@ minetest.register_node("australia:hammer_coral", {
 	paramtype = "light",
 	sunlight_propagates = true,
 	walkable = false,
+    -- @@@ Josselin2
+--	climable = true,
 	climbable = true,
 	buildable_to = false,
 	drowning = 1,
@@ -1401,6 +1437,8 @@ minetest.register_node("australia:tube_sponge", {
 	paramtype = "light",
 	sunlight_propagates = true,
 	walkable = false,
+    -- @@@ Josselin2
+--	climable = true,
 	climbable = true,
 	buildable_to = false,
 	drowning = 1,
@@ -1425,6 +1463,8 @@ minetest.register_node("australia:sea_grass", {
 	paramtype = "light",
 	sunlight_propagates = true,
 	walkable = false,
+    -- @@@ Josselin2
+--	climable = true,
 	climbable = true,
 	buildable_to = false,
 	drowning = 1,

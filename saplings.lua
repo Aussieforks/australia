@@ -68,6 +68,9 @@ aus.saplings = {
 	 schematics=aus.schematics.quandong_tree},
 	{sapling="australia:red_bottlebrush_sapling",
 	 schematics=aus.schematics.red_bottlebrush_tree},
+    -- @@@ Josselin2
+--	{sapling="australia:river_oak_sapling",
+--	 schematics=aus.schematics.river_oak_tree},
 	{sapling="australia:river_oak_sapling",
 	 schematics=aus.schematics.river_oak_big_tree},
 	{sapling="australia:river_red_gum_sapling",
