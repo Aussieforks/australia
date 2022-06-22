@@ -33,7 +33,7 @@ Added 'use_texture_alpha = "clip"' to a number of nodes
 *saplings.lua*
 
 Fixed non-existent schematic list, "aus.schematics.river_oak_tree" (should be
-"schematics=aus.schematics.river_oak_big_tree", matching "aus.schematics.coast_banksia_big_tree")
+"aus.schematics.river_oak_big_tree", matching "aus.schematics.coast_banksia_big_tree")
 
 *README.md*
 
