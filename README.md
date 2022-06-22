@@ -24,10 +24,16 @@ Replaced 'water.alpha = 0' with 'water.use_texture_alpha = "opaque"'
 *nodes.lua*
 
 Fixed invalid fields for .inventory_image and .wield_image in several nodes
+Fixed typos, climable > climbable, treespaling > treesapling
 
 Replaced 'alpha = 224' with 'use_texture_alpha = "blend"'
 
 Added 'use_texture_alpha = "clip"' to a number of nodes
+
+*saplings.lua*
+
+Fixed non-existent schematic list, "aus.schematics.river_oak_tree" (should be
+"schematics=aus.schematics.river_oak_big_tree", matching "aus.schematics.coast_banksia_big_tree")
 
 *README.md*
 
