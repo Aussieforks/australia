@@ -816,7 +816,9 @@ minetest.register_node("australia:mangrove_lily", {
 
 	-- Nypa fruticans: Mangrove Palm
 minetest.register_node("australia:mangrove_palm_trunk", {
-	description = "Nypa fruticans: Mangrove Fern",
+    -- @@@ Josselin2
+--	description = "Nypa fruticans: Mangrove Fern",
+	description = "Nypa fruticans: Mangrove Palm",
 	tiles = {"aus_mangrove_palm_trunk.png", "aus_mangrove_mud.png",
 		"aus_mangrove_palm_trunk.png"},
 	inventory_image = "aus_mangrove_palm_trunk.png",
@@ -838,7 +840,7 @@ minetest.register_node("australia:mangrove_palm_trunk", {
 })
 
 minetest.register_node("australia:mangrove_palm_leaf_bot", {
-	description = "Nypa fruticans: Mangrove Fern",
+	description = "Nypa fruticans: Mangrove Palm",
 	tiles = {"aus_mangrove_palm_leaf_bot.png", "aus_mangrove_palm_leaf_bot.png",
 		"aus_mangrove_palm_leaf_bot.png"},
 	inventory_image = "aus_mangrove_palm_leaf_bot.png",
@@ -861,7 +863,9 @@ minetest.register_node("australia:mangrove_palm_leaf_bot", {
 })
 
 minetest.register_node("australia:mangrove_palm_leaf_top", {
-	description = "Nypa fruticans: Mangrove Fern",
+    -- @@@ Josselin2
+--	description = "Nypa fruticans: Mangrove Fern",
+	description = "Nypa fruticans: Mangrove Palm",
 	tiles = {"aus_mangrove_palm_leaf_top.png", "aus_mangrove_palm_leaf_top.png",
 		"aus_mangrove_palm_leaf_top.png"},
 	inventory_image = "aus_mangrove_palm_leaf_top.png",
@@ -1651,7 +1655,9 @@ meta:from_table({
 })
 
 minetest.register_node("australia:submarinechest", {
-	description = "U-boot chest",
+    -- @@@ Josselin2
+--	description = "U-boot chest",
+	description = "U-boat chest",
 	tiles = {"default_chest_top.png", "default_chest_top.png", "default_chest_side.png",
 		"default_chest_side.png", "default_chest_side.png", "default_chest_front.png"},
 	paramtype2 = "facedir",
@@ -1666,7 +1672,9 @@ minetest.register_node("australia:submarinechest", {
 			"size[8,9]"..
 			"list[current_name;main;0,0;8,4;]"..
 			"list[current_player;main;0,5;8,4;]")
-		meta:set_string("infotext", "U-boot chest")
+    -- @@@ Josselin2
+--		meta:set_string("infotext", "U-boot chest")
+		meta:set_string("infotext", "U-boat chest")
 		local inv = meta:get_inventory()
 		inv:set_size("main", 8*4)
 	local contents = {}

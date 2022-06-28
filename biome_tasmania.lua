@@ -234,7 +234,9 @@ minetest.register_decoration({
 	biomes = {"tasmania"},
 	y_min = 7,
 	y_max = 31000,
-	decoration = "flowers:Mushroom_brown",
+    -- @@@ Josselin2
+--	decoration = "flowers:Mushroom_brown",
+	decoration = "flowers:mushroom_brown",
 })
 
 	-- Red Mushroom

@@ -363,7 +363,9 @@ minetest.register_decoration({
 	biomes = {"victorian_forests"},
 	y_min = 36,
 	y_max = 180,
-	decoration = "flowers:Mushroom_brown",
+    -- @@@ Josselin2
+--	decoration = "flowers:Mushroom_brown",
+	decoration = "flowers:mushroom_brown",
 })
 
 	-- Red Mushroom

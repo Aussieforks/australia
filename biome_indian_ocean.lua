@@ -125,6 +125,8 @@ minetest.register_decoration({
 -- ABM'S
 --
 
+-- @@@ Josselin2 - duplicate of ABM found in biome_great_australia_bight.lua
+--[[
 minetest.register_abm({
 nodenames = {"australia:stone_kelp_brown"},
 interval = 15,
@@ -139,6 +141,7 @@ action = function(pos, node, active_object_count, active_object_count_wider)
 	end
 end
 })
+]]--
 
 minetest.register_abm({
 nodenames = {"australia:woodship"},

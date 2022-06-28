@@ -30,7 +30,9 @@ minetest.register_biome({
 	-- Iron
 minetest.register_ore({
 	ore_type        = "blob",
-	ore             = "air",
+    -- @@@ Josselin2
+--	ore             = "air",
+	ore             = "default:stone_with_iron",
 	wherein         = {"default:stone"},
 	clust_scarcity  = 24 * 24 * 24,
 	clust_size      = 8,

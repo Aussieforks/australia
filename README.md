@@ -5,7 +5,7 @@ Original mod created by vlapsley, updated for Minetest v5.5.1 by Josselin2.
 
 [Discussion on Minetest Forums](https://forum.minetest.net/viewtopic.php?f=9&t=14412)
 
-As of 20 June 2022, the original version of this mod produces a number of annoying errors/warnings on Minetest v5.5.1. I have updated the code to fix them. 
+As of 28 June 2022, the original version of this mod produces a number of annoying errors/warnings on Minetest v5.5.1. I have updated the code to fix them. 
 
 All changes are preceded by '@@@ Josselin2':
 
@@ -13,9 +13,37 @@ All changes are preceded by '@@@ Josselin2':
 
 Merged in *depends.txt*, and then deleted *depends.txt*
 
-*biomeeasterncoasts.lua*
+*biome_indian_ocean.lua*
+
+Removed the duplicate brown kelp ABM (biome_great_australian_bight.lua already provides it)
+
+*biome_eastern_coasts.lua*
 
 The Warratah schematic generates an "incorrect number of nodes provided in raw schematic data" error. Fixed it
+
+*biome_flinders_lofty.lua*
+
+The cherry tree was placed in a different biome. This is surely a mistake, so modified it to be placed in the Flinders Lofty biome
+
+*biome_goldfields_esperence.lua*
+
+For backwards compatibility, did *not* fix the typo (it should be Esperance)
+
+*biome_pilbara.lua*
+
+In the iron ore definition, changed the ore to iron (instead of "air", which is surely a mistake)
+
+*biome_tasman_sea.lua*
+
+Removed the duplicate brown kelp ABM (biome_great_australian_bight.lua already provides it)
+
+*biome_tasmania.lua*
+
+Fixed typo in the brown mushroom decoration
+
+*biome_victorian_forests.lua*
+
+Fixed typo in the brown mushroom decoration
 
 *noairblocks.lua*
 
@@ -24,11 +52,16 @@ Replaced 'water.alpha = 0' with 'water.use_texture_alpha = "opaque"'
 *nodes.lua*
 
 Fixed invalid fields for .inventory_image and .wield_image in several nodes
+
 Fixed typos, climable > climbable, treespaling > treesapling
 
 Replaced 'alpha = 224' with 'use_texture_alpha = "blend"'
 
 Added 'use_texture_alpha = "clip"' to a number of nodes
+
+The mangrove palm had the .description "Mangrove Fern", but there is a separate mangrove fern item. Changed the descriptions
+
+Changed the .description of the submarine chest to "U-Boat" (from U-boot) because most Australians don't speak German as their native language
 
 *saplings.lua*
 

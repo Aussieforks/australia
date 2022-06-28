@@ -191,7 +191,9 @@ for r = 2,max_r do
 		y_min = 36,
 		y_max = 120,
 		fill_ratio = (max_r-r+1)/15000,
-		biomes = {"great_dividing_range"},
+        -- @@@ Josselin2
+--		biomes = {"great_dividing_range"},
+		biomes = {"flinders_lofty"},
 		schematic = schem,
 		flags = "place_center_x, place_center_z",
 		rotation = "random",
