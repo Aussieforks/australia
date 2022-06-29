@@ -113,7 +113,9 @@ register_dry_grass_decoration(0.09, -0.03, 1)
 	-- River Red Gum Log
 minetest.register_decoration({
 	deco_type = "schematic",
-	place_on = {"dirt_with_dry_grass"},
+    -- @@@ Josselin2
+--	place_on = {"dirt_with_dry_grass"},
+	place_on = {"default:dirt_with_dry_grass"},
 	sidelen = 16,
 	noise_params = {
 		offset = 0.0018,

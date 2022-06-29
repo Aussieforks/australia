@@ -25,9 +25,15 @@ The Warratah schematic generates an "incorrect number of nodes provided in raw s
 
 The cherry tree was placed in a different biome. This is surely a mistake, so modified it to be placed in the Flinders Lofty biome
 
+Fixed river red gum tree log decoration, which was placed on a non-existent node
+
 *biome_goldfields_esperence.lua*
 
 For backwards compatibility, did *not* fix the typo (it should be Esperance)
+
+*biome_murray_darling_basin.lua*
+
+Fixed river red gum tree log decoration, which was placed on a non-existent node
 
 *biome_pilbara.lua*
 
@@ -62,6 +68,8 @@ Added 'use_texture_alpha = "clip"' to a number of nodes
 The mangrove palm had the .description "Mangrove Fern", but there is a separate mangrove fern item. Changed the descriptions
 
 Changed the .description of the submarine chest to "U-Boat" (from U-boot) because most Australians don't speak German as their native language
+
+Removed "australia:fern" and "australia:small_fern" from the not_in_creative_inventory group; it looks like a copy and paste error
 
 *saplings.lua*
 
