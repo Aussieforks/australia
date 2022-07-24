@@ -1611,31 +1611,35 @@ minetest.register_node("australia:woodshipchest", {
 		meta:set_string("infotext", "Woodship chest")
 		local inv = meta:get_inventory()
 		inv:set_size("main", 8*4)
-	local contents = {}
-	if math.random(1,100) <= 25 then
-		contents = {main = {[1] = "default:coal_lump 36"}}
-	elseif math.random(1,100) >= 26 or math.random(1,100) <= 40 then
-		contents = {main = {[1] = "default:iron_lump 24"}}
-	elseif math.random(1,100) >= 41 or math.random(1,100) <= 45 then
-		contents = {main = {[1] = "default:gold_lump 24"}}
-	elseif math.random(1,100) >= 46 or math.random(1,100) <= 50 then
-		contents = {main = {[1] = "default:diamond 24"}}
-	elseif math.random(1,100) >= 51 or math.random(1,100) <= 60 then
-		contents = {main = {[1] = "australia:huon_pine_tree 18"}}
-	elseif math.random(1,100) >= 61 or math.random(1,100) <= 70 then
-		contents = {main = {[1] = "australia:jarrah_tree 18"}}
-	elseif math.random(1,100) >= 71 or math.random(1,100) <= 80 then
-		contents = {main = {[1] = "australia:marri_tree 18"}}
-	elseif math.random(1,100) >= 81 or math.random(1,100) <= 90 then
-		contents = {main = {[1] = "australia:merbau_tree 18"}}
-	else
-		contents = {main = {[1] = "australia:river_red_gum_tree 18"}}
+		
+	local loot = {}
+	-- add default loot
+	for _,item in pairs({
+		"default:coal_lump 5",
+		"default:iron_lump 10",
+		"default:gold_lump 7",
+		"default:gold_lump 4",
+		"default:diamond 3",
+	}) do
+		loot[#loot+1] = item
 	end
-meta:from_table({
-	inventory = contents,
-	fields = {
-	formspec = "size[8,9;]list[context;main;0,0;8,4;]list[current_player;main;0,5;8,4;]",
-	infotext = "Normal chest"
+	
+	-- add group:seed loot
+	for name,def in pairs(minetest.registered_items) do
+		if def.groups.seed then
+			loot[#loot+1] = name
+		end
+	end
+	
+	local contents = {['main'] = {}}
+	for i=1,math.random(1,5) do
+		table.insert(contents.main,loot[math.random(1,#loot)])
+	end
+	meta:from_table({
+		inventory = contents,
+		fields = {
+		formspec = "size[8,9;]list[context;main;0,0;8,4;]list[current_player;main;0,5;8,4;]",
+		infotext = "Normal chest"
 	}
 })
 	end,
