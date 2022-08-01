@@ -131,6 +131,7 @@ minetest.register_abm({
 				local adj = {x = pos.x - math.floor(schem.size.x / 2),
 										 y = pos.y - 1,
 										 z = pos.z - math.floor(schem.size.z / 2)}
+
 				minetest.place_schematic(adj, schem, 'random', nil, true)
 				break
 			end
