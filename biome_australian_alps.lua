@@ -12,7 +12,7 @@ minetest.register_biome({
 	--depth_water_top = ,
 	--node_water = "",
 	--node_river_water = "",
-	y_min = 150,
+	y_min = 120,
 	y_max = 31000,
 	heat_point = 10,
 	humidity_point = 50,
@@ -68,7 +68,7 @@ minetest.register_decoration({
 		persist = 0.66
 	},
 	biomes = {"australian_alps"},
-	y_min = 150,
+	y_min = 110,
 	y_max = 170,
 	schematic = {
 		size = {x = 3, y = 3, z = 1},
