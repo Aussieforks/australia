@@ -13,7 +13,7 @@ minetest.register_biome({
 	--node_water = "",
 	node_river_water = "australia:muddy_river_water_source",
 	y_min = 36,
-	y_max = 31000,
+	y_max = 120,
 	heat_point = 75,
 	humidity_point = 45,
 })
