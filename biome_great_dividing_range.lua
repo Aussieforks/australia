@@ -350,7 +350,7 @@ local fruit = "australia:cherry"
 local tree = "australia:cherry_tree"
 local leaves = "australia:cherry_leaves"
 for r = 2,max_r do
-	local schem = aus.generate_conifer_schematic(3, 2, tree, leaves, fruit)
+	local schem = aus.generate_conifer_schematic(3, r, tree, leaves, fruit)
 	push(aus.schematics.cherry_tree, schem)
 	minetest.register_decoration({
 		deco_type = "schematic",
@@ -473,7 +473,7 @@ local fruit = nil
 local tree = "australia:southern_sassafras_tree"
 local leaves = "australia:southern_sassafras_leaves"
 for r = 4,max_r do
-	local schem = aus.generate_conifer_schematic(6, 4, tree, leaves, fruit)
+	local schem = aus.generate_conifer_schematic(6, r, tree, leaves, fruit)
 	push(aus.schematics.southern_sassafras_tree, schem)
 	minetest.register_decoration({
 		deco_type = "schematic",

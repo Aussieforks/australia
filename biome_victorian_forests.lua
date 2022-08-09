@@ -575,7 +575,7 @@ local fruit = nil
 local tree = "australia:southern_sassafras_tree"
 local leaves = "australia:southern_sassafras_leaves"
 for r = 4,max_r do
-	local schem = aus.generate_conifer_schematic(6, 4, tree, leaves, fruit)
+	local schem = aus.generate_conifer_schematic(6, r, tree, leaves, fruit)
 	push(aus.schematics.southern_sassafras_tree, schem)
 	minetest.register_decoration({
 		deco_type = "schematic",

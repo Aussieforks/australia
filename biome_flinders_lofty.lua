@@ -184,7 +184,7 @@ local fruit = "australia:cherry"
 local tree = "australia:cherry_tree"
 local leaves = "australia:cherry_leaves"
 for r = 2,max_r do
-	local schem = aus.generate_conifer_schematic(3, 2, tree, leaves, fruit)
+	local schem = aus.generate_conifer_schematic(3, r, tree, leaves, fruit)
 	push(aus.schematics.cherry_tree, schem)
 	minetest.register_decoration({
 		deco_type = "schematic",
@@ -193,8 +193,6 @@ for r = 2,max_r do
 		y_min = 36,
 		y_max = 120,
 		fill_ratio = (max_r-r+1)/15000,
-        -- @@@ Josselin2
---		biomes = {"great_dividing_range"},
 		biomes = {"flinders_lofty"},
 		schematic = schem,
 		flags = "place_center_x, place_center_z",

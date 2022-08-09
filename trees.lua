@@ -1,5 +1,17 @@
 -- mods/australia/trees.lua
 
+local function str2seed(s)
+	local nleaf = #s
+	assert(nleaf > 0)
+	local i = 1
+	local chr = 0
+	repeat
+		chr = chr + s:byte(i,i) % 256
+		i = i + 1
+	until i > #s
+	return chr
+end
+
 	-- Rainforest tree
 function aus.generate_rainforest_tree_schematic(trunk_height, r, trunk, leaf)
 	local height = trunk_height * 2 + 1
@@ -7,6 +19,7 @@ function aus.generate_rainforest_tree_schematic(trunk_height, r, trunk, leaf)
 	local width = 2 * radius + 1
 	local trunk_top = height - 4
 	local s = aus.schematic_array(width, height, width)
+	local rand = PcgRandom((str2seed(trunk) + str2seed(leaf) + trunk_height + r) % 256)
 
 -- roots, trunk, and extra leaves
 	for z = -1,1 do
@@ -31,11 +44,11 @@ function aus.generate_rainforest_tree_schematic(trunk_height, r, trunk, leaf)
 
 -- canopy
 	for y = 1,trunk_top+3 do
-		if y > trunk_height and (y == trunk_top or math.random(1,height - y) == 1) then
+		if y > trunk_height and (y == trunk_top or rand:next(1,height - y) == 1) then
 			local x, z = 0, 0
 			while x == 0 and z == 0 do
-				x = math.random(-1,1) * 2
-				z = math.random(-1,1) * 2
+				x = rand:next(-1,1) * 2
+				z = rand:next(-1,1) * 2
 			end
 			for j = -2,2,2 do
 				aus.generate_canopy(s, leaf, {x=j*x, y=y, z=j*z})
@@ -52,6 +65,7 @@ function aus.generate_fanpalm_tree_schematic(trunk_height, r, trunk, leaf)
 	local width = 2 * radius + 1
 	local trunk_top = height - 3
 	local s = aus.schematic_array(width, height, width)
+	local rand = PcgRandom((str2seed(trunk) + str2seed(leaf) + trunk_height + r) % 256)
 
 -- trunk
 	for z = -radius,radius do
@@ -69,11 +83,11 @@ function aus.generate_fanpalm_tree_schematic(trunk_height, r, trunk, leaf)
 
 -- canopy
 	for y = 1,trunk_top+1 do
-		if y > trunk_height and (y == trunk_top or math.random(1,height - y) == 1) then
+		if y > trunk_height and (y == trunk_top or rand:next(1,height - y) == 1) then
 			local x, z = 0, 0
 			while x == 0 and z == 0 do
-				x = math.random(-1,1) * 2
-				z = math.random(-1,1) * 2
+				x = rand:next(-1,1) * 2
+				z = rand:next(-1,1) * 2
 			end
 			for j = -1,1,2 do
 				aus.generate_canopy(s, leaf, {x=j*x, y=y, z=j*z})
@@ -82,6 +96,7 @@ function aus.generate_fanpalm_tree_schematic(trunk_height, r, trunk, leaf)
 	end
 	return s
 end
+
 	-- Mangrove tree
 function aus.generate_mangrove_tree_schematic(trunk_height, trunk, leaf)
 	local height = trunk_height * 2 + 1
@@ -89,6 +104,7 @@ function aus.generate_mangrove_tree_schematic(trunk_height, trunk, leaf)
 	local width = 2 * radius + 1
 	local trunk_top = height - 3
 	local s = aus.schematic_array(width, height, width)
+	local rand = PcgRandom((str2seed(trunk) + str2seed(leaf) + trunk_height) % 256)
 
 -- roots, trunk, and extra leaves
 	for z = -1,1 do
@@ -113,11 +129,11 @@ function aus.generate_mangrove_tree_schematic(trunk_height, trunk, leaf)
 
 -- canopy
 	for y = 1,trunk_top+2 do
-		if y > trunk_height and (y == trunk_top or math.random(1,height - y) == 1) then
+		if y > trunk_height and (y == trunk_top or rand:next(1,height - y) == 1) then
 			local x, z = 0, 0
 			while x == 0 and z == 0 do
-				x = math.random(-1,1) * 2
-				z = math.random(-1,1) * 2
+				x = rand:next(-1,1) * 2
+				z = rand:next(-1,1) * 2
 			end
 			for j = -1,1,2 do
 				aus.generate_canopy(s, leaf, {x=j*x, y=y, z=j*z})
@@ -160,7 +176,7 @@ end
 
 
 	-- Create a spheroid of leaves.
-function aus.generate_leaves(s, leaf, pos, radius, fruit, adjust)
+function aus.generate_leaves(s, leaf, pos, radius, fruit, adjust, rand)
 	local height = s.size.y
 	local width = s.size.x
 	local rx = math.floor(s.size.x / 2)
@@ -178,7 +194,7 @@ function aus.generate_leaves(s, leaf, pos, radius, fruit, adjust)
 					if dist1 <= r1 then
 						local newprob = probs[math.max(1, math.ceil(dist1))]
 						if s.data[i].name == "air" then
-							if fruit and (rx < 3 or dist2 / rx > 0.5) and math.random(1,10) == 1 then
+							if fruit and (rx < 3 or dist2 / rx > 0.5) and rand:next(1,10) == 1 then
 								s.data[i].name = fruit
 								s.data[i].param1 = 127
 							else
@@ -203,6 +219,7 @@ function aus.generate_tree_schematic(trunk_height, radii, trunk, leaf, fruit, li
 	local width = 2 * radii.z + 1
 	local trunk_top = height-radii.y-1
 	local s = aus.schematic_array(width, height, width)
+	local rand = PcgRandom((str2seed(trunk) + str2seed(leaf) + trunk_height + radii.y + radii.x + radii.z) % 256)
 
 	-- the main trunk
 	for y = 1,trunk_top do
@@ -213,7 +230,7 @@ function aus.generate_tree_schematic(trunk_height, radii, trunk, leaf, fruit, li
 	end
 
 	-- some leaves for free
-	aus.generate_leaves(s, leaf, {x=0, y=trunk_top, z=0}, radii.x, fruit)
+	aus.generate_leaves(s, leaf, {x=0, y=trunk_top, z=0}, radii.x, fruit, nil, rand)
 
 	-- Specify a table of limb positions...
 	if radii.x > 3 and limbs then
@@ -222,7 +239,7 @@ function aus.generate_tree_schematic(trunk_height, radii, trunk, leaf, fruit, li
 			s.data[i].name = trunk
 			s.data[i].param1 = 255
 			s.data[i].force_place = true
-			aus.generate_leaves(s, leaf, p, radii.x, fruit, true)
+			aus.generate_leaves(s, leaf, p, radii.x, fruit, true, rand)
 		end
 		-- or just do it randomly.
 	elseif radii.x > 3 then
@@ -231,12 +248,12 @@ function aus.generate_tree_schematic(trunk_height, radii, trunk, leaf, fruit, li
 				for x = -radii.x,radii.x do
 					-- a smaller spheroid inside the radii
 					if x^2/(radii.x-3)^2 + y^2/(radii.y-3)^2 + z^2/(radii.z-3)^2 <= 1 then
-						if math.random(1,6) == 1 then
+						if rand:next(1,6) == 1 then
 							local i = (z+radii.z)*width*height + (y+trunk_top)*width + (x+radii.x) + 1
 							s.data[i].name = trunk
 							s.data[i].param1 = 255
 							s.data[i].force_place = true
-							aus.generate_leaves(s, leaf, {x=x, y=trunk_top+y, z=z}, radii.x, fruit, true)
+							aus.generate_leaves(s, leaf, {x=x, y=trunk_top+y, z=z}, radii.x, fruit, true, rand)
 						end
 					end
 				end
@@ -253,6 +270,7 @@ function aus.generate_big_tree_schematic(trunk_height, radii, trunk, leaf, fruit
 	local width = 2 * radii.z + 1
 	local trunk_top = height-radii.y-1
 	local s = aus.schematic_array(width, height, width)
+	local rand = PcgRandom((str2seed(trunk) + str2seed(leaf) + trunk_height + radii.x + radii.y + radii.z) % 256)
 
 	-- the main trunk
 	for y = 0,trunk_top do
@@ -281,7 +299,7 @@ function aus.generate_big_tree_schematic(trunk_height, radii, trunk, leaf, fruit
 	end
 
 	-- some leaves for free
-	aus.generate_leaves(s, leaf, {x=0, y=trunk_top, z=0}, radii.x, fruit)
+	aus.generate_leaves(s, leaf, {x=0, y=trunk_top, z=0}, radii.x, fruit, nil, rand)
 
 	-- Specify a table of limb positions...
 	if radii.x > 3 and limbs then
@@ -290,7 +308,7 @@ function aus.generate_big_tree_schematic(trunk_height, radii, trunk, leaf, fruit
 			s.data[i].name = trunk
 			s.data[i].param1 = 255
 			s.data[i].force_place = true
-			aus.generate_leaves(s, leaf, p, radii.x, fruit, true)
+			aus.generate_leaves(s, leaf, p, radii.x, fruit, true, rand)
 		end
 		-- or just do it randomly.
 	elseif radii.x > 3 then
@@ -299,12 +317,12 @@ function aus.generate_big_tree_schematic(trunk_height, radii, trunk, leaf, fruit
 				for x = -radii.x,radii.x do
 					-- a smaller spheroid inside the radii
 					if x^2/(radii.x-3)^2 + y^2/(radii.y-3)^2 + z^2/(radii.z-3)^2 <= 1 then
-						if math.random(1,6) == 1 then
+						if rand:next(1,6) == 1 then
 							local i = (z+radii.z)*width*height + (y+trunk_top)*width + (x+radii.x) + 1
 							s.data[i].name = trunk
 							s.data[i].param1 = 255
 							s.data[i].force_place = true
-							aus.generate_leaves(s, leaf, {x=x, y=trunk_top+y, z=z}, radii.x, fruit, true)
+							aus.generate_leaves(s, leaf, {x=x, y=trunk_top+y, z=z}, radii.x, fruit, true, rand)
 						end
 					end
 				end
@@ -321,6 +339,7 @@ function aus.generate_giant_tree_schematic(trunk_height, radii, trunk, leaf, fru
 	local width = 2 * radii.z + 1
 	local trunk_top = height-radii.y-1
 	local s = aus.schematic_array(width, height, width)
+	local rand = PcgRandom((str2seed(trunk) + str2seed(leaf) + trunk_height + radii.x + radii.y + radii.z) % 256)
 
 	-- the main trunk
 	for y = 0,trunk_top do
@@ -349,7 +368,7 @@ function aus.generate_giant_tree_schematic(trunk_height, radii, trunk, leaf, fru
 	end
 
 	-- some leaves for free
-	aus.generate_leaves(s, leaf, {x=0, y=trunk_top, z=0}, radii.x, fruit)
+	aus.generate_leaves(s, leaf, {x=0, y=trunk_top, z=0}, radii.x, fruit, nil, rand)
 
 	-- Specify a table of limb positions...
 	if radii.x > 3 and limbs then
@@ -358,7 +377,7 @@ function aus.generate_giant_tree_schematic(trunk_height, radii, trunk, leaf, fru
 			s.data[i].name = trunk
 			s.data[i].param1 = 255
 			s.data[i].force_place = true
-			aus.generate_leaves(s, leaf, p, radii.x, fruit, true)
+			aus.generate_leaves(s, leaf, p, radii.x, fruit, true, rand)
 		end
 		-- or just do it randomly.
 	elseif radii.x > 3 then
@@ -367,12 +386,12 @@ function aus.generate_giant_tree_schematic(trunk_height, radii, trunk, leaf, fru
 				for x = -radii.x,radii.x do
 					-- a smaller spheroid inside the radii
 					if x^2/(radii.x-3)^2 + y^2/(radii.y-3)^2 + z^2/(radii.z-3)^2 <= 1 then
-						if math.random(1,6) == 1 then
+						if rand:next(1,6) == 1 then
 							local i = (z+radii.z)*width*height + (y+trunk_top)*width + (x+radii.x) + 1
 							s.data[i].name = trunk
 							s.data[i].param1 = 255
 							s.data[i].force_place = true
-							aus.generate_leaves(s, leaf, {x=x, y=trunk_top+y, z=z}, radii.x, fruit, true)
+							aus.generate_leaves(s, leaf, {x=x, y=trunk_top+y, z=z}, radii.x, fruit, true, rand)
 						end
 					end
 				end
@@ -388,6 +407,7 @@ function aus.generate_conifer_schematic(trunk_height, radius, trunk, leaf, fruit
 	local width = 2 * radius + 1
 	local trunk_top = height - radius - 1
 	local s = aus.schematic_array(width, height, width)
+	local rand = PcgRandom((str2seed(trunk) + str2seed(leaf) + trunk_height + radius) % 256)
 
 	-- the main trunk
 	local probs = {200,150,100,75,50,25}
@@ -421,7 +441,7 @@ function aus.generate_conifer_schematic(trunk_height, radius, trunk, leaf, fruit
 			for x = -1,1 do
 				local i = (z+radius)*width*height + y*width + (x+radius) + 1
 				if (x == 0 and z == 0) or y < height - 1 then
-					if fruit and math.random(1,10) == 1 then
+					if fruit and rand:next(1,10) == 1 then
 						s.data[i].name = fruit
 						s.data[i].param1 = 127
 					else

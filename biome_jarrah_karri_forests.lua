@@ -253,7 +253,7 @@ local fruit = nil
 local tree = "australia:rottnest_island_pine_tree"
 local leaves = "australia:rottnest_island_pine_leaves"
 for r = 2,max_r do
-	local schem = aus.generate_conifer_schematic(3, 2, tree, leaves, fruit)
+	local schem = aus.generate_conifer_schematic(3, r, tree, leaves, fruit)
 	push(aus.schematics.rottnest_island_pine_tree, schem)
 	minetest.register_decoration({
 		deco_type = "schematic",

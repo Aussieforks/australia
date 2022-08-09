@@ -330,7 +330,7 @@ local r = 3
 local tree = "australia:fan_palm_tree"
 local leaves = "australia:fan_palm_leaves"
 for h = 9,max_ht do
-	local schem = aus.generate_fanpalm_tree_schematic(max_ht, r, tree, leaves)
+	local schem = aus.generate_fanpalm_tree_schematic(h, r, tree, leaves)
 	push(aus.schematics.fan_palm_tree, schem)
 	minetest.register_decoration({
 		deco_type = "schematic",
@@ -403,7 +403,7 @@ local r = 8
 local tree = "australia:merbau_tree"
 local leaves = "australia:merbau_leaves"
 for h = 8,max_ht do
-	local schem = aus.generate_rainforest_tree_schematic(max_ht, r, tree, leaves)
+	local schem = aus.generate_rainforest_tree_schematic(h, r, tree, leaves)
 	push(aus.schematics.merbau_tree, schem)
 	minetest.register_decoration({
 		deco_type = "schematic",
