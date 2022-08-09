@@ -1591,6 +1591,34 @@ minetest.register_node("australia:muddy_river_water_flowing", {
 --
 -- Tools / "Advanced" crafting / Non-"natural"
 --
+local loot_noise = PerlinNoise({
+	offset = 0,
+	scale = 65536,
+	spread = vector.new(1,1,1),
+	seed = tonumber(minetest.get_mapgen_setting("seed")) * 1361 - 114,
+	octaves = 1,
+	persist = 1
+})
+
+local loot = {}
+-- add default loot
+for _,item in pairs({
+	"default:coal_lump 5",
+	"default:iron_lump 10",
+	"default:gold_lump 7",
+	"default:gold_lump 4",
+	"default:diamond 3",
+}) do
+	loot[#loot+1] = item
+end
+
+-- add group:seed loot
+for name,def in pairs(minetest.registered_items) do
+	if def.groups.seed then
+		loot[#loot+1] = name
+	end
+end
+local nloot = #loot
 
 minetest.register_node("australia:woodshipchest", {
 	description = "Wooden ship chest",
@@ -1599,122 +1627,70 @@ minetest.register_node("australia:woodshipchest", {
 	paramtype2 = "facedir",
 	groups = {choppy=2,oddly_breakable_by_hand=2, not_in_creative_inventory=1},
 	drop = 'default:chest',
-	legacy_facedir_simple = true,
 	is_ground_content = false,
 	sounds = default.node_sound_wood_defaults(),
+
 	on_construct = function(pos)
-		local meta = minetest.get_meta(pos)
-		meta:set_string("formspec",
-			"size[8,9]"..
-			"list[current_name;main;0,0;8,4;]"..
-			"list[current_player;main;0,5;8,4;]")
-		meta:set_string("infotext", "Woodship chest")
-		local inv = meta:get_inventory()
-		inv:set_size("main", 8*4)
-		
-	local loot = {}
-	-- add default loot
-	for _,item in pairs({
-		"default:coal_lump 5",
-		"default:iron_lump 10",
-		"default:gold_lump 7",
-		"default:gold_lump 4",
-		"default:diamond 3",
-	}) do
-		loot[#loot+1] = item
-	end
-	
-	-- add group:seed loot
-	for name,def in pairs(minetest.registered_items) do
-		if def.groups.seed then
-			loot[#loot+1] = name
+		local r = PcgRandom(loot_noise:get_3d(pos))
+
+		local contents = {}
+		for i=1,r:next(1,5) do
+			table.insert(contents, loot[r:next(1,nloot)])
 		end
-	end
-	
-	local contents = {['main'] = {}}
-	for i=1,math.random(1,5) do
-		table.insert(contents.main,loot[math.random(1,#loot)])
-	end
-	meta:from_table({
-		inventory = contents,
-		fields = {
-		formspec = "size[8,9;]list[context;main;0,0;8,4;]list[current_player;main;0,5;8,4;]",
-		infotext = "Normal chest"
-	}
-})
-	end,
-	can_dig = function(pos,player)
-		local meta = minetest.get_meta(pos);
+
+		local node = minetest.get_node(pos)
+		minetest.set_node(pos, {name="default:chest", param1=node.param1, param2=node.param2})
+
+		local meta = minetest.get_meta(pos)
 		local inv = meta:get_inventory()
-		return inv:is_empty("main")
+		local inv_size = inv:get_size("main")
+		for idx, item in pairs(contents) do
+			local slot = r:next(1, inv_size)
+			if inv:get_stack("main", slot):is_empty() then
+				inv:set_stack("main", slot, ItemStack(item))
+			else
+				inv:add_item("main", ItemStack(item))
+			end
+		end
 	end,
-	on_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
-		minetest.log("action", player:get_player_name()..
-				" moves stuff in chest at "..minetest.pos_to_string(pos))
-	end,
-	on_metadata_inventory_put = function(pos, listname, index, stack, player)
-		minetest.log("action", player:get_player_name()..
-				" moves stuff to chest at "..minetest.pos_to_string(pos))
-	end,
-	on_metadata_inventory_take = function(pos, listname, index, stack, player)
-		minetest.log("action", player:get_player_name()..
-				" takes stuff from chest at "..minetest.pos_to_string(pos))
-	end,
+
 })
 
+local have_technic_worldgen = minetest.get_modpath('technic_worldgen')
+
 minetest.register_node("australia:submarinechest", {
-    -- @@@ Josselin2
---	description = "U-boot chest",
 	description = "U-boat chest",
 	tiles = {"default_chest_top.png", "default_chest_top.png", "default_chest_side.png",
 		"default_chest_side.png", "default_chest_side.png", "default_chest_front.png"},
-	paramtype2 = "facedir",
 	groups = {choppy=2,oddly_breakable_by_hand=2, not_in_creative_inventory=1},
+	paramtype2 = "facedir",
 	drop = 'default:chest',
-	legacy_facedir_simple = true,
 	is_ground_content = false,
-	sounds = default.node_sound_wood_defaults(),
 	on_construct = function(pos)
+		local r = PcgRandom(loot_noise:get_3d(pos))
+
+		local contents = {}
+		table.insert(contents, "default:sword_steel 2")
+		if have_technic_worldgen and r:next(1,2) == 1 then
+			table.insert(contents, "technic:mineral_uranium 18")
+		else
+			table.insert(contents, "tnt:tnt 3")
+		end
+
+		local node = minetest.get_node(pos)
+		minetest.set_node(pos, {name="default:chest", param1=node.param1, param2=node.param2})
+
 		local meta = minetest.get_meta(pos)
-		meta:set_string("formspec",
-			"size[8,9]"..
-			"list[current_name;main;0,0;8,4;]"..
-			"list[current_player;main;0,5;8,4;]")
-    -- @@@ Josselin2
---		meta:set_string("infotext", "U-boot chest")
-		meta:set_string("infotext", "U-boat chest")
 		local inv = meta:get_inventory()
-		inv:set_size("main", 8*4)
-	local contents = {}
-	if math.random(1,2) == 1 and minetest.get_modpath("technic_worldgen") then
-		contents = {main = {[1] = "technic:mineral_uranium 18", [2] = "default:sword_steel 2"}}
-	else
-		contents = {main = {[1] = "tnt:tnt 3", [2] = "default:sword_steel 2"}}
-	end
-meta:from_table({
-	inventory = contents,
-	fields = {
-	formspec = "size[8,9;]list[context;main;0,0;8,4;]list[current_player;main;0,5;8,4;]",
-	infotext = "Normal chest"
-	}
-})
-	end,
-	can_dig = function(pos,player)
-		local meta = minetest.get_meta(pos);
-		local inv = meta:get_inventory()
-		return inv:is_empty("main")
-	end,
-	on_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
-		minetest.log("action", player:get_player_name()..
-				" moves stuff in chest at "..minetest.pos_to_string(pos))
-	end,
-	on_metadata_inventory_put = function(pos, listname, index, stack, player)
-		minetest.log("action", player:get_player_name()..
-				" moves stuff to chest at "..minetest.pos_to_string(pos))
-	end,
-	on_metadata_inventory_take = function(pos, listname, index, stack, player)
-		minetest.log("action", player:get_player_name()..
-				" takes stuff from chest at "..minetest.pos_to_string(pos))
+		local inv_size = inv:get_size("main")
+		for idx, item in pairs(contents) do
+			local slot = r:next(1, inv_size)
+			if inv:get_stack("main", slot):is_empty() then
+				inv:set_stack("main", slot, ItemStack(item))
+			else
+				inv:add_item("main", ItemStack(item))
+			end
+		end
 	end,
 })
 
