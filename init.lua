@@ -20,31 +20,6 @@ aus = {}
 aus.path = minetest.get_modpath("australia")
 aus.schematics = {}
 
--- Set the following to 1 to enable biome or 0 to disable
-aus.biome_underground				= 1
-aus.biome_mangroves					= 1
-aus.biome_tasman_sea				= 1
-aus.biome_great_australian_bight	= 1
-aus.biome_indian_ocean				= 1
-aus.biome_great_barrier_reef		= 1
-aus.biome_timor_sea					= 1
-aus.biome_jarrah_karri_forests		= 1
-aus.biome_eastern_coasts			= 1
-aus.biome_goldfields_esperence		= 1
-aus.biome_arnhem_land				= 1
-aus.biome_gulf_of_carpentaria		= 1
-aus.biome_far_north_queensland		= 1
-aus.biome_pilbara					= 1
-aus.biome_kimberley					= 1
-aus.biome_tasmania					= 1
-aus.biome_great_dividing_range		= 1
-aus.biome_victorian_forests			= 1
-aus.biome_murray_darling_basin		= 1
-aus.biome_mulga_lands				= 1
-aus.biome_flinders_lofty			= 1
-aus.biome_central_australia			= 1
-aus.biome_simpson_desert			= 1
-aus.biome_australian_alps			= 1
 
 -- Load files
 dofile(aus.path .. "/functions.lua")

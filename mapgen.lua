@@ -269,86 +269,43 @@ minetest.register_ore({
 --
 -- Biomes
 --
+aus.biomes = {
+-- Underground Biomes
+	"underground",
+-- Coastal Biomes
+	"mangroves",
+	"tasman_sea",
+	"great_australian_bight",
+	"indian_ocean",
+	"great_barrier_reef",
+	"timor_sea",
+-- Lowlands Biomes
+	"jarrah_karri_forests",
+	"eastern_coasts",
+	"goldfields_esperence",
+	"arnhem_land",
+	"gulf_of_carpentaria",
+	"far_north_queensland",
+	"pilbara",
+	"kimberley",
+-- Highland Biomes
+	"tasmania",
+	"great_dividing_range",
+	"victorian_forests",
+	"flinders_lofty",
+	"murray_darling_basin",
+	"mulga_lands",
+	"central_australia",
+	"simpson_desert",
+-- Apline Biomes
+	"australian_alps"
+}
+aus.active_biomes = {}
 
-	-- Underground biome
-if aus.biome_underground == 1 then
-	dofile(aus.path .. "/biome_underground.lua")
+for _,biome in pairs(aus.biomes) do
+	if minetest.settings:get_bool("aus_enable_biome_"..biome,true) then
+		dofile(aus.path.. "/biome_"..biome..".lua")
+		aus.active_biomes[biome] = true
+		print("Australia: biome ".. biome.." loaded")
+	end
 end
-
-	-- Coastal biomes
-if aus.biome_mangroves == 1 then
-	dofile(aus.path .. "/biome_mangroves.lua")
-end
-if aus.biome_tasman_sea == 1 then
-	dofile(aus.path .. "/biome_tasman_sea.lua")
-end
-if aus.biome_great_australian_bight == 1 then
-	dofile(aus.path .. "/biome_great_australian_bight.lua")
-end
-if aus.biome_indian_ocean == 1 then
-	dofile(aus.path .. "/biome_indian_ocean.lua")
-end
-if aus.biome_great_barrier_reef == 1 then
-	dofile(aus.path .. "/biome_great_barrier_reef.lua")
-end
-if aus.biome_timor_sea == 1 then
-	dofile(aus.path .. "/biome_timor_sea.lua")
-end
-
-	-- Lowland biomes
-if aus.biome_jarrah_karri_forests == 1 then
-	dofile(aus.path .. "/biome_jarrah_karri_forests.lua")
-end
-if aus.biome_eastern_coasts == 1 then
-	dofile(aus.path .. "/biome_eastern_coasts.lua")
-end
-if aus.biome_goldfields_esperence == 1 then
-	dofile(aus.path .. "/biome_goldfields_esperence.lua")
-end
-if aus.biome_arnhem_land == 1 then
-	dofile(aus.path .. "/biome_arnhem_land.lua")
-end
-if aus.biome_gulf_of_carpentaria == 1 then
-	dofile(aus.path .. "/biome_gulf_of_carpentaria.lua")
-end
-if aus.biome_far_north_queensland == 1 then
-	dofile(aus.path .. "/biome_far_north_queensland.lua")
-end
-if aus.biome_pilbara == 1 then
-	dofile(aus.path .. "/biome_pilbara.lua")
-end
-if aus.biome_kimberley == 1 then
-	dofile(aus.path .. "/biome_kimberley.lua")
-end
-
-	-- Highland biomes
-if aus.biome_tasmania == 1 then
-	dofile(aus.path .. "/biome_tasmania.lua")
-end
-if aus.biome_great_dividing_range == 1 then
-	dofile(aus.path .. "/biome_great_dividing_range.lua")
-end
-if aus.biome_victorian_forests == 1 then
-	dofile(aus.path .. "/biome_victorian_forests.lua")
-end
-if aus.biome_flinders_lofty == 1 then
-	dofile(aus.path .. "/biome_flinders_lofty.lua")
-end
-if aus.biome_murray_darling_basin == 1 then
-	dofile(aus.path .. "/biome_murray_darling_basin.lua")
-end
-if aus.biome_mulga_lands == 1 then
-	dofile(aus.path .. "/biome_mulga_lands.lua")
-end
-if aus.biome_central_australia == 1 then
-	dofile(aus.path .. "/biome_central_australia.lua")
-end
-if aus.biome_simpson_desert == 1 then
-	dofile(aus.path .. "/biome_simpson_desert.lua")
-end
-
-	-- Alpine biome
-if aus.biome_australian_alps == 1 then
-	dofile(aus.path .. "/biome_australian_alps.lua")
-end
-
