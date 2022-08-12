@@ -12,6 +12,12 @@ local function str2seed(s)
 	return chr
 end
 
+-- Round a number to the given decimal places
+local function round(num, idp)
+  local mult = 10^(idp or 0)
+  return math.floor(num * mult + 0.5) / mult
+end
+
 	-- Rainforest tree
 function aus.generate_rainforest_tree_schematic(trunk_height, r, trunk, leaf)
 	local height = trunk_height * 2 + 1
@@ -422,7 +428,7 @@ function aus.generate_conifer_schematic(trunk_height, radius, trunk, leaf, fruit
 
 			for x = -radius,radius do
 				local i = (z+radius)*width*height + y*width + (x+radius) + 1
-				local dist = math.round(math.sqrt(x^2 + z^2))
+				local dist = round(math.sqrt(x^2 + z^2))
 				if x == 0 and z == 0 then
 					s.data[i].name = trunk
 					s.data[i].param1 = 255

@@ -21,25 +21,3 @@ function aus.schematic_array(width, height, depth)
 
 	return s
 end
-
--- Check if the table contains an element.
-function table.contains(table, element)
-	for key, value in pairs(table) do
-		if value == element then
-			if key then
-				return key
-			else
-				return true
-			end
-		end
-	end
-	return false
-end
-
--- Round a number to the given decimal places
-function math.round(num, idp)
-  local mult = 10^(idp or 0)
-  return math.floor(num * mult + 0.5) / mult
-end
-
-
