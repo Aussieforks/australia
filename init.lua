@@ -2,8 +2,10 @@
 
 -- MOD: australia
 -- See README.md for licensing and other information.
--- Designed for valleys mapgen in Minetest 0.4.14, but will work with mgv5,
--- mgv7, flat and fractal with limitations.
+-- Originally designed for valleys mapgen in Minetest 0.4.14, but would work
+-- with mgv5, mgv7, flat and fractal with limitations.
+-- Aussieforks version now designed for carpathian mapgen in Minetest 5.6.0, 
+-- but will work with others as well.
 
 -- Check for necessary mod functions and abort if they aren't available.
 if not minetest.get_biome_id then
