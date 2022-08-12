@@ -207,7 +207,7 @@ function aus.generate(minp, maxp, seed)
 	-- Deal with memory issues. This, of course, is supposed to be automatic.
 	local mem = math.floor(collectgarbage("count")/1024)
 	if mem > 500 then
-		print("MOD: Australia is manually collecting garbage as memory use has exceeded 500K.")
+		minetest.log("info", "MOD: Australia is manually collecting garbage as memory use has exceeded 500K.")
 		collectgarbage("collect")
 	end
 end

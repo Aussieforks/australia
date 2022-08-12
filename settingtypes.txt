@@ -1,71 +1,98 @@
+# Clear existing biomes
+# You may want to disable this if you are using Australia with another mod
+# that adds biomes.
+australia.clear_biomes (Clear existing biomes) bool true
+
+# Clear existing mapgen decorations
+# You may want to disable this if you are using Australia with another mod
+#that adds mapgen decorations like trees and small plants.
+australia.clear_decorations (Clear existing mapgen decorations) bool true
+
+# Clear existing ore spawns
+# You may want to disable this if you are using Australia with another mod that
+# adds ores to the mapgen.
+australia.clear_ores (Clear existing ore spawns) bool true
+
+# Re-register default ore generation
+# You may want to disable this if you are using custom ore generation in another
+# mod. This will not affect the extra ores addes per-biome by Australia, only
+# the re-registrations of global ore spawns.
+australia.reregister_ores (Re-register default ore generation) bool true
+
 # Enable the underground biome
-aus_enable_biome_underground (Enable underground biome) bool true
+australia.enable_biome_underground (Enable underground biome) bool true
 
 # Enable the mangroves biome
-aus_enable_biome_mangroves (Enable mangroves biome) bool true
+australia.enable_biome_mangroves (Enable mangroves biome) bool true
 
 # Enable the tasman_sea biome
-aus_enable_biome_tasman_sea (Enable tasman_sea biome) bool true
+australia.enable_biome_tasman_sea (Enable tasman_sea biome) bool true
 
 # Enable the great_australian_bight biome
-aus_enable_biome_great_australian_bight (Enable great_australian_bight biome) bool true
+australia.enable_biome_great_australian_bight (Enable great_australian_bight biome) bool true
 
 # Enable the indian_ocean biome
-aus_enable_biome_indian_ocean (Enable indian_ocean biome) bool true
+australia.enable_biome_indian_ocean (Enable indian_ocean biome) bool true
 
 # Enable the great_barrier_reef biome
-aus_enable_biome_great_barrier_reef (Enable great_barrier_reef biome) bool true
+australia.enable_biome_great_barrier_reef (Enable great_barrier_reef biome) bool true
 
 # Enable the timor_sea biome
-aus_enable_biome_timor_sea (Enable timor_sea biome) bool true
+australia.enable_biome_timor_sea (Enable timor_sea biome) bool true
 
 # Enable the jarrah_karri_forests biome
-aus_enable_biome_jarrah_karri_forests (Enable jarrah_karri_forests biome) bool true
+australia.enable_biome_jarrah_karri_forests (Enable jarrah_karri_forests biome) bool true
 
 # Enable the eastern_coasts biome
-aus_enable_biome_eastern_coasts (Enable eastern_coasts biome) bool true
+australia.enable_biome_eastern_coasts (Enable eastern_coasts biome) bool true
 
 # Enable the goldfields_esperence biome
-aus_enable_biome_goldfields_esperence (Enable goldfields_esperence biome) bool true
+australia.enable_biome_goldfields_esperence (Enable goldfields_esperence biome) bool true
 
 # Enable the arnhem_land biome
-aus_enable_biome_arnhem_land (Enable arnhem_land biome) bool true
+australia.enable_biome_arnhem_land (Enable arnhem_land biome) bool true
 
 # Enable the gulf_of_carpentaria biome
-aus_enable_biome_gulf_of_carpentaria (Enable gulf_of_carpentaria biome) bool true
+australia.enable_biome_gulf_of_carpentaria (Enable gulf_of_carpentaria biome) bool true
 
 # Enable the far_north_queensland biome
-aus_enable_biome_far_north_queensland (Enable far_north_queensland biome) bool true
+australia.enable_biome_far_north_queensland (Enable far_north_queensland biome) bool true
 
 # Enable the pilbara biome
-aus_enable_biome_pilbara (Enable pilbara biome) bool true
+australia.enable_biome_pilbara (Enable pilbara biome) bool true
 
 # Enable the kimberley biome
-aus_enable_biome_kimberley (Enable kimberley biome) bool true
+australia.enable_biome_kimberley (Enable kimberley biome) bool true
 
 # Enable the tasmania biome
-aus_enable_biome_tasmania (Enable tasmania biome) bool true
+australia.enable_biome_tasmania (Enable tasmania biome) bool true
 
 # Enable the great_dividing_range biome
-aus_enable_biome_great_dividing_range (Enable great_dividing_range biome) bool true
+australia.enable_biome_great_dividing_range (Enable great_dividing_range biome) bool true
 
 # Enable the victorian_forests biome
-aus_enable_biome_victorian_forests (Enable victorian_forests biome) bool true
+australia.enable_biome_victorian_forests (Enable victorian_forests biome) bool true
 
 # Enable the flinders_lofty biome
-aus_enable_biome_flinders_lofty (Enable flinders_lofty biome) bool true
+australia.enable_biome_flinders_lofty (Enable flinders_lofty biome) bool true
 
 # Enable the murray_darling_basin biome
-aus_enable_biome_murray_darling_basin (Enable murray_darling_basin biome) bool true
+australia.enable_biome_murray_darling_basin (Enable murray_darling_basin biome) bool true
 
 # Enable the mulga_lands biome
-aus_enable_biome_mulga_lands (Enable mulga_lands biome) bool true
+australia.enable_biome_mulga_lands (Enable mulga_lands biome) bool true
 
 # Enable the central_australia biome
-aus_enable_biome_central_australia (Enable central_australia biome) bool true
+australia.enable_biome_central_australia (Enable central_australia biome) bool true
 
 # Enable the simpson_desert biome
-aus_enable_biome_simpson_desert (Enable simpson_desert biome) bool true
+australia.enable_biome_simpson_desert (Enable simpson_desert biome) bool true
 
 # Enable the australian_alps biome
-aus_enable_biome_australian_alps (Enable australian_alps biome) bool true
+australia.enable_biome_australian_alps (Enable australian_alps biome) bool true
+
+# Snow line altitude
+# At or slightly above this altitude, the Australian Alps biome will override
+# other biomes. This is to guarantee some snow will exist in the map even for
+# non-valleys mapgens.
+australia.snowline (Snow line altitude) int 120 0 31000

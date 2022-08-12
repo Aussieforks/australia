@@ -12,7 +12,7 @@ minetest.register_biome({
 	--depth_water_top = ,
 	--node_water = "",
 	--node_river_water = "",
-	y_min = 120,
+	y_min = aus.snowline(),
 	y_max = 31000,
 	heat_point = 10,
 	humidity_point = 50,
@@ -35,7 +35,7 @@ minetest.register_ore({
 	clust_scarcity  = 16 * 16 * 16,
 	clust_size      = 8,
 	biomes          = {"australian_alps"},
-	y_min           = 150,
+	y_min           = aus.snowline(),
 	y_max           = 31000,
 	noise_threshold = 0.0,
 	noise_params    = {
@@ -68,8 +68,8 @@ minetest.register_decoration({
 		persist = 0.66
 	},
 	biomes = {"australian_alps"},
-	y_min = 110,
-	y_max = 170,
+	y_min = aus.snowline(),
+	y_max = aus.snowline()+61,
 	schematic = {
 		size = {x = 3, y = 3, z = 1},
 		data = {
@@ -94,7 +94,7 @@ minetest.register_decoration({
 -- Trees
 --
 
-	-- Snow Gum
+-- Snow Gum
 aus.schematics.snow_gum_tree = {}
 local max_r = 4
 local ht = 4
@@ -109,8 +109,8 @@ for r = 3,max_r do
 		deco_type = "schematic",
 		sidelen = 80,
 		place_on = {"default:snowblock"},
-		y_min = 150,
-		y_max = 180,
+		y_min = aus.snowline(),
+		y_max = aus.snowline()+60,
 		fill_ratio = (max_r-r+1)/2500,
 		biomes = {"australian_alps"},
 		schematic = schem,
@@ -118,4 +118,3 @@ for r = 3,max_r do
 		rotation = "random",
 	})
 end
-
