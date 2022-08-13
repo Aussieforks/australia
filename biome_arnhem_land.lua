@@ -90,53 +90,16 @@ register_grass_decoration(0.03,   0.03,  1)
 -- Trees
 --
 
-	-- Darwin Woollybutt
-aus.schematics.darwin_woollybutt_tree = {}
-local max_r = 4
-local ht = 5
-local fruit = nil
-local limbs = nil
-local tree = "australia:darwin_woollybutt_tree"
-local leaves = "australia:darwin_woollybutt_leaves"
-for r = 3,max_r do
-	local schem = aus.generate_tree_schematic(6, {x=r, y=ht, z=r}, tree, leaves, fruit, limbs)
-	table.insert(aus.schematics.darwin_woollybutt_tree, schem)
-	minetest.register_decoration({
-		deco_type = "schematic",
-		sidelen = 80,
-		place_on = {"default:dirt_with_grass"},
-		y_min = 8,
-		y_max = 35,
-		fill_ratio = (max_r-r+1)/10000,
-		biomes = {"arnhem_land"},
-		schematic = schem,
-		flags = "place_center_x, place_center_z",
-		rotation = "random",
-	})
-end
+aus.register_schem_to_biome("darwin_woollybutt_tree", "arnhem_land", {
+	place_on = {"default:dirt_with_grass"},
+	y_min = 8,
+	y_max = 35,
+	fill_ratio = 10000,
+})
 
-	-- River Oak
-aus.schematics.river_oak_small_tree = {}
-local max_r = 4
-local ht = 6
-local fruit = nil
-local limbs = false
-local tree = "australia:river_oak_tree"
-local leaves = "australia:river_oak_leaves"
-for r = 3,max_r do
-	local schem = aus.generate_tree_schematic(2, {x=r, y=ht, z=r}, tree, leaves, fruit, limbs)
-	table.insert(aus.schematics.river_oak_small_tree, schem)
-	minetest.register_decoration({
-		deco_type = "schematic",
-		sidelen = 80,
-		place_on = {"default:dirt_with_grass"},
-		y_min = 12,
-		y_max = 35,
-		fill_ratio = (max_r-r+1)/12000,
-		biomes = {"arnhem_land"},
-		schematic = schem,
-		flags = "place_center_x, place_center_z",
-		rotation = "random",
-	})
-end
-
+aus.register_schem_to_biome("river_oak_small_tree", "arnhem_land", {
+	place_on = {"default:dirt_with_grass"},
+	y_min = 12,
+	y_max = 35,
+	fill_ratio = 12000,
+})

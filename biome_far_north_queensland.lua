@@ -298,30 +298,13 @@ for r = 6,max_r do
 	})
 end
 
-	-- Darwin Woollybutt
-aus.schematics.darwin_woollybutt_tree = {}
-local max_r = 4
-local ht = 5
-local fruit = nil
-local limbs = nil
-local tree = "australia:darwin_woollybutt_tree"
-local leaves = "australia:darwin_woollybutt_leaves"
-for r = 3,max_r do
-	local schem = aus.generate_tree_schematic(6, {x=r, y=ht, z=r}, tree, leaves, fruit, limbs)
-	table.insert(aus.schematics.darwin_woollybutt_tree, schem)
-	minetest.register_decoration({
-		deco_type = "schematic",
-		sidelen = 80,
-		place_on = {"default:dirt_with_grass"},
-		y_min = 25,
-		y_max = 35,
-		fill_ratio = (max_r-r+1)/12000,
-		biomes = {"far_north_queensland"},
-		schematic = schem,
-		flags = "place_center_x, place_center_z",
-		rotation = "random",
-	})
-end
+-- Darwin Woollybutt
+aus.register_schem_to_biome("darwin_woollybutt_tree", "far_north_queensland", {
+	place_on = {"default:dirt_with_grass"},
+	y_min = 25,
+	y_max = 35,
+	fill_ratio = 12000,
+})
 
 	-- Australian Fan Palm
 aus.schematics.fan_palm_tree = {}

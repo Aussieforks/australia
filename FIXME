@@ -1,0 +1,8 @@
+* Tree system modularisation
+* Leaf decay
+* Schematic with no sapling: Small river oak (river_oak_small_tree)
+	* Just accept it as limited supply OR
+	* Register separate sapling, random drop OR
+	* Register separate sapling, separate leaves OR
+	* Random choice of river oaks upon sapling growth OR
+	* Different schematic sets in different soils
