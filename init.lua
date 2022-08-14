@@ -25,6 +25,7 @@ aus.schematics = {}
 
 -- Load files
 dofile(aus.path .. "/schematics.lua")
+dofile(aus.path .. "/decorations.lua")
 dofile(aus.path .. "/nodes.lua")
 dofile(aus.path .. "/noairblocks.lua")
 dofile(aus.path .. "/craftitems.lua")
