@@ -1,86 +1,10 @@
-# Australia REDO
+# Australia - Aussieforks edition
 Original mod created by vlapsley, updated for Minetest v5.5.1 by Josselin2.
+Maintained by Aussieforks (Blockhead/Montandalar and Maverick2797)
 
 ![Screenshot](screenshot.png)
 
 [Discussion on Minetest Forums](https://forum.minetest.net/viewtopic.php?f=9&t=14412)
-
-As of 28 June 2022, the original version of this mod produces a number of annoying errors/warnings on Minetest v5.5.1. I have updated the code to fix them. 
-
-All changes are preceded by '@@@ Josselin2':
-
-*mod.conf*
-
-Merged in *depends.txt*, and then deleted *depends.txt*
-
-*biome_indian_ocean.lua*
-
-Removed the duplicate brown kelp ABM (biome_great_australian_bight.lua already provides it)
-
-*biome_eastern_coasts.lua*
-
-The Warratah schematic generates an "incorrect number of nodes provided in raw schematic data" error. Fixed it
-
-*biome_flinders_lofty.lua*
-
-The cherry tree was placed in a different biome. This is surely a mistake, so modified it to be placed in the Flinders Lofty biome
-
-Fixed river red gum tree log decoration, which was placed on a non-existent node
-
-*biome_goldfields_esperence.lua*
-
-For backwards compatibility, did *not* fix the typo (it should be Esperance)
-
-*biome_murray_darling_basin.lua*
-
-Fixed river red gum tree log decoration, which was placed on a non-existent node
-
-*biome_pilbara.lua*
-
-In the iron ore definition, changed the ore to iron (instead of "air", which is surely a mistake)
-
-*biome_tasman_sea.lua*
-
-Removed the duplicate brown kelp ABM (biome_great_australian_bight.lua already provides it)
-
-*biome_tasmania.lua*
-
-Fixed typo in the brown mushroom decoration
-
-*biome_victorian_forests.lua*
-
-Fixed typo in the brown mushroom decoration
-
-*noairblocks.lua*
-
-Replaced 'water.alpha = 0' with 'water.use_texture_alpha = "opaque"'
-
-*nodes.lua*
-
-Fixed invalid fields for .inventory_image and .wield_image in several nodes
-
-Fixed typos, climable > climbable, treespaling > treesapling
-
-Replaced 'alpha = 224' with 'use_texture_alpha = "blend"'
-
-Added 'use_texture_alpha = "clip"' to a number of nodes
-
-The mangrove palm had the .description "Mangrove Fern", but there is a separate mangrove fern item. Changed the descriptions
-
-Changed the .description of the submarine chest to "U-Boat" (from U-boot) because most Australians don't speak German as their native language
-
-Removed "australia:fern" and "australia:small_fern" from the not_in_creative_inventory group; it looks like a copy and paste error
-
-*saplings.lua*
-
-Fixed non-existent schematic list, "aus.schematics.river_oak_tree" (should be
-"aus.schematics.river_oak_big_tree", matching "aus.schematics.coast_banksia_big_tree")
-
-*README.md*
-
-Replaced the URL to the screenshot
-
-The rest of this file comprises the original README text.
 
 ## Inspiration
 The inspiration for this mod is my home country, Australia.
@@ -190,6 +114,122 @@ This will also disable plants, trees and more that are unique to that biome.
 All biomes are enabled by default. Currently, disabling the *Underground* biome will have no effect.
 
 ## Changelog
+
+### 0.5.0
+* Biomes and several other mapgen features can now be disabled via the in-game
+settings menu instead of by editing Lua files.
+* Added better compatibility for non-valleys mapgens. Valleys mapgen will have
+the same height limits as before. Other mapgens will now limit the height of
+biomes so that the Australian Alps biome will always generate above a set point
+(configurable). This will ensure you can still get snow.
+* Muddy river water is no longer renewable because normal river water is not,
+and because having it be renewable causes terrible flooding issues on valleys
+mapgen.
+* Added group:seed items as loot to shipwreck chests so that you can start
+European agriculture. This will let you find all the crops from a mod like
+Farming Redo as well.
+	* Shipwreck loot is now reliably generatable - you will always get the same
+	loot for the same ship in the same world seed.
+* Refactored tree schematic code to not generate each tree multiple times for
+each biome, and refactored tree generation.
+    * As a result, fixed a bug that meant Coolabah trees would only spawn in
+    Central Australia.
+	* Fixed the bug where a node of a tree's trunk would generate at the very
+	top of the tree, above the leaves.
+	* Trees will now always generate the same schematics with reliable
+	randomness based on the tree type, adn cache them in your world.
+	* Add fruit lower down on cherry trees
+	* Add more height variation to Fan Palms.
+	* Stop Merbau trees having floating crowns. Added a bit more height to
+	Merbaus so they still dominate over the top of Fan Palms.
+	* Some mangrove trees will be one node taller, making the area slightly more
+	navigable by boat for instance.
+* Refactored grass decoration code to reduce lines of copy-pasted code.
+
+### 0.4.1 (2022-06-29) Josselin2's update
+
+As of 28 June 2022, the original version of this mod produced a number of
+annoying errors/warnings on Minetest v5.5.1. Josselin2 updated the code to fix
+them.
+
+All changes were preceded by '@@@ Josselin2'. These are occasionally being
+removed because they are recorded here and in the git log and there is no
+purpose preserving bad old versions of code.
+
+*mod.conf*
+
+Merged in *depends.txt*, and then deleted *depends.txt*
+
+*biome_indian_ocean.lua*
+
+Removed the duplicate brown kelp ABM (biome_great_australian_bight.lua already provides it)
+
+*biome_eastern_coasts.lua*
+
+The Warratah schematic generates an "incorrect number of nodes provided in raw schematic data" error. Fixed it
+
+*biome_flinders_lofty.lua*
+
+The cherry tree was placed in a different biome. This is surely a mistake, so modified it to be placed in the Flinders Lofty biome
+
+Fixed river red gum tree log decoration, which was placed on a non-existent node
+
+*biome_goldfields_esperence.lua*
+
+For backwards compatibility, did *not* fix the typo (it should be Esperance)
+
+*biome_murray_darling_basin.lua*
+
+Fixed river red gum tree log decoration, which was placed on a non-existent node
+
+*biome_pilbara.lua*
+
+In the iron ore definition, changed the ore to iron (instead of "air", which is surely a mistake)
+
+*biome_tasman_sea.lua*
+
+Removed the duplicate brown kelp ABM (biome_great_australian_bight.lua already provides it)
+
+*biome_tasmania.lua*
+
+Fixed typo in the brown mushroom decoration
+
+*biome_victorian_forests.lua*
+
+Fixed typo in the brown mushroom decoration
+
+*noairblocks.lua*
+
+Replaced 'water.alpha = 0' with 'water.use_texture_alpha = "opaque"'
+
+*nodes.lua*
+
+Fixed invalid fields for .inventory_image and .wield_image in several nodes
+
+Fixed typos, climable > climbable, treespaling > treesapling
+
+Replaced 'alpha = 224' with 'use_texture_alpha = "blend"'
+
+Added 'use_texture_alpha = "clip"' to a number of nodes
+
+The mangrove palm had the .description "Mangrove Fern", but there is a separate mangrove fern item. Changed the descriptions
+
+Changed the .description of the submarine chest to "U-Boat" (from U-boot) because most Australians don't speak German as their native language
+
+Removed "australia:fern" and "australia:small_fern" from the not_in_creative_inventory group; it looks like a copy and paste error
+
+*saplings.lua*
+
+Fixed non-existent schematic list, "aus.schematics.river_oak_tree" (should be
+"aus.schematics.river_oak_big_tree", matching "aus.schematics.coast_banksia_big_tree")
+
+*README.md*
+
+Replaced the URL to the screenshot
+
+The rest of this file comprises the original README text.
+
+
 ### 0.4 (2016-05-24)
 * Added new corals and sea grass.
 * Replaced coral sand with coral stone.
