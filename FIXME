@@ -1,7 +1,9 @@
 # The pile
 
-* Tree system modularisation
+* Schematic/decoration system modularisation/de-duplication
 	* QA Block schematic checks?
+	* Log schematics de-duplication
+	* Grass placement de-duplication
 * Leaf decay
 * Schematic with no sapling: Small river oak (river_oak_small_tree)
 	* Just accept it as limited supply OR

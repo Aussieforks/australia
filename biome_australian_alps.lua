@@ -1,9 +1,12 @@
 -- mods/australia/biome_australian_alps.lua
 
+local biome_name = "australian_alps"
+local node_top = "default:snowblock"
+
 minetest.register_biome({
-	name = "australian_alps",
+	name = biome_name,
 	node_dust = "default:snow",
-	node_top = "default:snowblock",
+	node_top = node_top,
 	depth_top = 2,
 	node_filler = "default:dirt_with_snow",
 	depth_filler = 1,
@@ -57,7 +60,7 @@ minetest.register_ore({
 	-- Snow Gum Log
 minetest.register_decoration({
 	deco_type = "schematic",
-	place_on = {"default:snowblock"},
+	place_on = node_top,
 	sidelen = 16,
 	noise_params = {
 		offset = 0.0018,
@@ -67,7 +70,7 @@ minetest.register_decoration({
 		octaves = 3,
 		persist = 0.66
 	},
-	biomes = {"australian_alps"},
+	biomes = {biome_name},
 	y_min = aus.snowline(),
 	y_max = aus.snowline()+61,
 	schematic = {
@@ -94,27 +97,9 @@ minetest.register_decoration({
 -- Trees
 --
 
--- Snow Gum
-aus.schematics.snow_gum_tree = {}
-local max_r = 4
-local ht = 4
-local fruit = nil
-local limbs = nil
-local tree = "australia:snow_gum_tree"
-local leaves = "australia:snow_gum_leaves"
-for r = 3,max_r do
-	local schem = aus.generate_tree_schematic(1, {x=r, y=ht, z=r}, tree, leaves, fruit, limbs)
-	table.insert(aus.schematics.snow_gum_tree, schem)
-	minetest.register_decoration({
-		deco_type = "schematic",
-		sidelen = 80,
-		place_on = {"default:snowblock"},
-		y_min = aus.snowline(),
-		y_max = aus.snowline()+60,
-		fill_ratio = (max_r-r+1)/2500,
-		biomes = {"australian_alps"},
-		schematic = schem,
-		flags = "place_center_x, place_center_z",
-		rotation = "random",
-	})
-end
+aus.register_schem_to_biome("snow_gum_tree", biome_name, {
+	place_on = {node_top},
+	y_min = aus.snowline(),
+	y_max = aus.snowline()+60,
+	fill_ratio = 2500,
+})

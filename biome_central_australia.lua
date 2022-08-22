@@ -1,9 +1,12 @@
 -- mods/australia/biome_central_australia.lua
 
+local biome_name = "central_australia"
+local node_top = "australia:red_dirt"
+
 minetest.register_biome({
-	name = "central_australia",
+	name = biome_name,
 	--node_dust = "",
-	node_top = "australia:red_dirt",
+	node_top = node_top,
 	depth_top = 1,
 	node_filler = "australia:red_stone",
 	depth_filler = 2,
@@ -86,10 +89,10 @@ register_dry_grass_decoration(0.09, -0.03, 1)
 	-- Mitchell Grass
 minetest.register_decoration({
 	deco_type = "simple",
-	place_on = {"australia:red_dirt"},
+	place_on = {node_top},
 	sidelen = 80,
 	fill_ratio = 0.05,
-	biomes = {"central_australia"},
+	biomes = {biome_name},
 	y_min = 37,
 	y_max = 180,
 	decoration = "australia:mitchell_grass",
@@ -98,10 +101,10 @@ minetest.register_decoration({
 	-- Spinifex
 minetest.register_decoration({
 	deco_type = "simple",
-	place_on = {"australia:red_dirt"},
+	place_on = {node_top},
 	sidelen = 80,
 	fill_ratio = 0.05,
-	biomes = {"central_australia"},
+	biomes = {biome_name},
 	y_min = 37,
 	y_max = 170,
 	decoration = "australia:spinifex",
@@ -112,31 +115,12 @@ minetest.register_decoration({
 --
 -- Trees
 --
-
-	-- Coolabah Tree
-aus.schematics.coolabah_tree = {}
-local max_r = 5
-local ht = 7
-local fruit = nil
-local limbs = nil
-local tree = "australia:coolabah_tree"
-local leaves = "australia:coolabah_leaves"
-for r = 4,max_r do
-	local schem = aus.generate_tree_schematic(3, {x=r, y=ht, z=r}, tree, leaves, fruit, limbs)
-	table.insert(aus.schematics.coolabah_tree, schem)
-	minetest.register_decoration({
-		deco_type = "schematic",
-		sidelen = 80,
-		place_on = {"australia:red_dirt"},
-		y_min = 36,
-		y_max = 140,
-		fill_ratio = (max_r-r+1)/20000,
-		biomes = {"central_australia"},
-		schematic = schem,
-		flags = "place_center_x, place_center_z",
-		rotation = "random",
-	})
-end
+aus.register_schem_to_biome("coolabah_tree", biome_name, {
+	place_on = {node_top},
+	y_min = 36,
+	y_max = 140,
+	fill_ratio = 20000,
+})
 
 	-- Desert Oak
 aus.schematics.desert_oak_tree = {}

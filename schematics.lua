@@ -120,7 +120,7 @@ local function schematic_register_to_biome(self, biome_name, decoparams)
 	end
 end
 
-function TreeSchematic(name, min_r, max_r, ht, fruit,
+function aus.TreeSchematic(name, min_r, max_r, ht, fruit,
 		limbs, tree, leaves, trunk_height)
 
 	return {
@@ -142,8 +142,7 @@ end
 
 aus.schematics_cache = {}
 
--- TODO: Cache TreeSchematic etc. objects to avoid multiple instatiation - remove cache
--- after init.
+-- Caches TreeSchematic etc. objects to avoid multiple instatiation.
 function aus.register_schem_to_biome(name, biome, decoparams)
 	if aus.schematics_cache[name] == nil then
 		local schem_lua = minetest.get_modpath("australia")
@@ -156,8 +155,8 @@ function aus.register_schem_to_biome(name, biome, decoparams)
 	schem:register_to_biome(biome, decoparams)
 end
 
--- The *Schematic objects are not needed after init as the schematic live inside
--- Minetest.
+-- The *Schematic objects are not needed after init as the schematics live
+-- inside Minetest.
 function aus.clear_schem_cache()
 	aus.schematics_cache = nil
 end

@@ -1,9 +1,12 @@
 -- mods/australia/biome_victorian_forests.lua
 
+local biome_name = "victorian_forests"
+local node_top = "default:dirt_with_grass"
+
 minetest.register_biome({
-	name = "victorian_forests",
+	name = biome_name,
 	--node_dust = "",
-	node_top = "default:dirt_with_grass",
+	node_top = node_top,
 	depth_top = 1,
 	node_filler = "default:dirt",
 	depth_filler = 3,
@@ -444,29 +447,13 @@ for r = 6,max_r do
 end
 
 	-- Coolabah Tree
-aus.schematics.coolabah_tree = {}
-local max_r = 5
-local ht = 7
-local fruit = nil
-local limbs = nil
-local tree = "australia:coolabah_tree"
-local leaves = "australia:coolabah_leaves"
-for r = 4,max_r do
-	local schem = aus.generate_tree_schematic(3, {x=r, y=ht, z=r}, tree, leaves, fruit, limbs)
-	table.insert(aus.schematics.coolabah_tree, schem)
-	minetest.register_decoration({
-		deco_type = "schematic",
-		sidelen = 80,
-		place_on = {"australia:dirt_with_grass"},
-		y_min = 36,
-		y_max = 140,
-		fill_ratio = (max_r-r+1)/20000,
-		biomes = {"victorian_forests"},
-		schematic = schem,
-		flags = "place_center_x, place_center_z",
-		rotation = "random",
-	})
-end
+aus.register_schem_to_biome("coolabah_tree", biome_name, {
+	place_on = {node_top},
+	y_min = 36,
+	y_max = 140,
+	fill_ratio = 20000,
+})
+
 
 	-- Golden Wattle
 aus.schematics.golden_wattle_tree = {}
