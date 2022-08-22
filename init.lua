@@ -36,6 +36,6 @@ dofile(aus.path .. "/saplings.lua")
 --dofile(aus.path .. "/voxel.lua")
 
 -- Clear schematic-generating objects that are no longer needed
-function aus.clear_schem_cache()
+aus.clear_schem_cache()
 
 minetest.log("MOD: Australia loaded")

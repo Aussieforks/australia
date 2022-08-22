@@ -1,3 +1,5 @@
+# The pile
+
 * Tree system modularisation
 	* QA Block schematic checks?
 * Leaf decay
@@ -7,4 +9,165 @@
 	* Register separate sapling, separate leaves OR
 	* Random choice of river oaks upon sapling growth OR
 	* Different schematic sets in different soils
+* Schematics regression testing
+	* Seed math.random with same values?
+* Reproduction of smaller plants like spinifex, mitchell grass
+	* Bonemeal addon?
+	* Cultivation item(s)?
 
+# Biomes testing coords
+Mapgen is always carpathian. Teleportation is not safe unless you have fly!
+
+## Arnhem Land
+Seed:
+ciggybuttbrain
+Pos:
+513,18,-1230
+Yaw: 135
+
+## Australian Alps
+Seed:
+ciggybuttbrain
+Pos:
+393,159,1806
+
+## Central Australia
+Seed:
+ciggybuttbrain
+Pos:
+-642,76,95
+
+Pos:
+1795,44,745
+Yaw: 250
+
+### Daintree stringybark
+Pos:
+1077,27,1052
+Yaw: 180
+
+## Eastern Coasts
+Seed:
+ciggybuttbrain
+Pos:
+1721,8,1408
+
+### Macadamia, Illawara Flame
+Seed:
+ciggybuttbrain
+Pos:
+670,19,-770
+
+### Moreton bay fig
+Seed:
+ciggybuttbrain
+Pos:
+1830,10,1677
+
+## Far North Queensland
+Seed:
+ciggybuttbrain
+Pos:
+159,19,1564
+
+## Flinders Lofty
+Seed:
+ciggybuttbrain
+Pos:
+503,68,-748
+
+## Goldfields Esperance (esperence)
+Seed:
+ciggybuttbrain
+Pos:
+650,11,-430
+
+## Great Australian Bight
+Seed:
+ciggybuttbrain
+Pos:
+600,4,-220
+Yaw: 50
+The biome is above and below the waterline and also directly behind (yaw=220)
+
+## Great Barrier Reef
+Seed:
+ciggybuttbrain
+Pos:
+600,4,-220
+
+
+## Gulf of Carpentaria
+Seed:
+ciggybuttbrain
+Pos:
+870,12,-668
+
+## Jarrah Karri Forests
+Seed:
+ciggybuttbrain
+Pos:
+1752,9,1726
+Look: North
+
+## Kimberley
+Seed:
+ciggybuttbrain
+Pos:
+455,13,1648
+
+## Mangrove
+Seed:
+ciggybuttbrain
+Pos:
+421,18,782
+
+## Mulga Lands
+Seed:
+ciggybuttbrain
+Pos:
+1832,77,670
+
+## Murray-Darling Basin
+Seed:
+ciggybuttbrain
+Pos:
+1601,127,509
+Yaw: 70
+
+## Pilbara
+Seed:
+ciggybuttbrain
+Pos:
+1826,16,979
+
+## Simpson Desert
+Seed:
+ciggybuttbrain
+Pos:
+-408,74,96
+
+## Tasmania
+Seed:
+ciggybuttbrain
+Pos:
+889,51,1111
+Yaw: 0
+
+## Timor Sea
+Seed:
+ciggybuttbrain
+Pos:
+163,2,1621
+
+## Victorian Forests
+Seed:
+ciggybuttbrain
+Pos:
+470,38,-840
+
+### Tasmanian Myrtle, Golden Wattle
+Seed:
+ciggybuttbrain
+Pos:
+330,75,-1000
