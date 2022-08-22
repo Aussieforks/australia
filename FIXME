@@ -2,8 +2,11 @@
 
 * Schematic/decoration system modularisation/de-duplication
 	* QA Block schematic checks?
-	* Log schematics de-duplication
-	* Grass placement de-duplication
+	* Log schematics de-duplication & as MTS
+	* Grass and other decoration placement de-duplication (moss, ferns, mushrooms etc)
+	* Woodship schematic as MTS
+	* U-boat schematic as MTS
+* ABMs: Conversion to LBMs or nodetimers where appropriate, especially shipwrecks
 * Leaf decay
 * Schematic with no sapling: Small river oak (river_oak_small_tree)
 	* Just accept it as limited supply OR

@@ -1,9 +1,12 @@
 -- mods/australia/biome_goldfields_esperence.lua
 
+local biome_name = "goldfields_esperence"
+local node_top = "default:desert_sand"
+
 minetest.register_biome({
-	name = "goldfields_esperence",
+	name = biome_name,
 	--node_dust = "",
-	node_top = "default:desert_sand",
+	node_top = node_top,
 	depth_top = 2,
 	node_filler = "default:sandstone",
 	depth_filler = 2,
@@ -53,42 +56,26 @@ minetest.register_ore({
 --
 -- Decorations
 --
-
-local function register_dry_grass_decoration(offset, scale, length)
-	minetest.register_decoration({
-		deco_type = "simple",
-		place_on = {"default:desert_sand"},
-		sidelen = 16,
-		noise_params = {
-			offset = offset,
-			scale = scale,
-			spread = {x = 200, y = 200, z = 200},
-			seed = 329,
-			octaves = 3,
-			persist = 0.6
-		},
-		biomes = {"goldfields_esperence"},
-		y_min = 5,
-		y_max = 35,
-		decoration = "default:dry_grass_"..length,
-	})
-end
-
 	-- Dry grasses
-register_dry_grass_decoration(0.01, 0.05,  5)
-register_dry_grass_decoration(0.03, 0.03,  4)
-register_dry_grass_decoration(0.05, 0.01,  3)
-register_dry_grass_decoration(0.07, -0.01, 2)
-register_dry_grass_decoration(0.09, -0.03, 1)
+aus.biome_register_grass_decorations(
+	{
+		{0.01, 0.05,  5},
+		{0.03, 0.03,  4},
+		{0.05, 0.01,  3},
+		{0.07, -0.01, 2},
+		{0.09, -0.03, 1},
+	},
+	biome_name, node_top, "default:dry_grass_", 5, 35
+)
 
 
 	-- Spinifex
 minetest.register_decoration({
 	deco_type = "simple",
-	place_on = {"default:desert_sand"},
+	place_on = {node_top},
 	sidelen = 80,
 	fill_ratio = 0.05,
-	biomes = {"goldfields_esperence"},
+	biomes = {biome_name},
 	y_min = 6,
 	y_max = 35,
 	decoration = "australia:spinifex",

@@ -1,9 +1,12 @@
 -- mods/australia/biome_kimberley.lua
 
+local biome_name = "kimberley"
+local node_top = "australia:red_dirt"
+
 minetest.register_biome({
-	name = "kimberley",
+	name = biome_name,
 	--node_dust = "",
-	node_top = "australia:red_dirt",
+	node_top = node_top,
 	depth_top = 2,
 	node_filler = "default:sandstone",
 	depth_filler = 3,
@@ -45,58 +48,26 @@ minetest.register_ore({
 -- Decorations
 --
 
-local function register_grass_decoration(offset, scale, length)
-	minetest.register_decoration({
-		deco_type = "simple",
-		place_on = {"australia:red_dirt"},
-		sidelen = 16,
-		noise_params = {
-			offset = offset,
-			scale = scale,
-			spread = {x = 200, y = 200, z = 200},
-			seed = 329,
-			octaves = 3,
-			persist = 0.6
-		},
-		biomes = {"kimberley"},
-		y_min = 4,
-		y_max = 30,
-		decoration = "default:grass_"..length,
-	})
-end
-
-local function register_dry_grass_decoration(offset, scale, length)
-	minetest.register_decoration({
-		deco_type = "simple",
-		place_on = {"australia:red_dirt"},
-		sidelen = 16,
-		noise_params = {
-			offset = offset,
-			scale = scale,
-			spread = {x = 200, y = 200, z = 200},
-			seed = 329,
-			octaves = 3,
-			persist = 0.6
-		},
-		biomes = {"kimberley"},
-		y_min = 7,
-		y_max = 35,
-		decoration = "default:dry_grass_"..length,
-	})
-end
-
 	-- Grasses
-register_grass_decoration(0.015,  0.045, 2)
-register_grass_decoration(0.03,   0.03,  1)
+aus.biome_register_grass_decorations(
+	{
+		{0.015,  0.045, 2},
+		{0.03,   0.03,  1},
+	},
+	biome_name, node_top, "default:grass_", 4, 30
+)
 
 	-- Dry grasses
-register_dry_grass_decoration(0.01, 0.05,  5)
-register_dry_grass_decoration(0.03, 0.03,  4)
-register_dry_grass_decoration(0.05, 0.01,  3)
-register_dry_grass_decoration(0.07, -0.01, 2)
-register_dry_grass_decoration(0.09, -0.03, 1)
-
-
+aus.biome_register_grass_decorations(
+	{
+		{0.01, 0.05,  5},
+		{0.03, 0.03,  4},
+		{0.05, 0.01,  3},
+		{0.07, -0.01, 2},
+		{0.09, -0.03, 1},
+	},
+	biome_name, node_top, "default:dry_grass_", 7, 35
+)
 
 --
 -- Trees

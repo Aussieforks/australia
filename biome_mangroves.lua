@@ -1,9 +1,12 @@
 -- mods/australia/biome_mangroves.lua
 
+local biome_name = "mangroves"
+local node_top = "australia:mangrove_mud"
+
 minetest.register_biome({
-	name = "mangroves",
+	name = biome_name,
 	--node_dust = "",
-	node_top = "australia:mangrove_mud",
+	node_top = node_top,
 	depth_top = 3,
 	node_filler = "default:clay",
 	depth_filler = 1,
@@ -36,12 +39,12 @@ minetest.register_biome({
 	-- Mangrove Fern
 minetest.register_decoration({
 	deco_type = "simple",
-	place_on = {"australia:mangrove_mud",
+	place_on = {node_top,
 		"default:dirt",
 		"default:dirt_with_grass"},
 	sidelen = 80,
 	fill_ratio = 0.2,
-	biomes = {"mangroves"},
+	biomes = {biome_name},
 	y_min = 2,
 	y_max = 3,
 	decoration = "australia:mangrove_fern",
@@ -50,12 +53,12 @@ minetest.register_decoration({
 	-- Mangrove Lily
 minetest.register_decoration({
 	deco_type = "simple",
-	place_on = {"australia:mangrove_mud",
+	place_on = {node_top,
 		"default:dirt",
 		"default:dirt_with_grass"},
 	sidelen = 80,
 	fill_ratio = 0.1,
-	biomes = {"mangroves"},
+	biomes = {biome_name},
 	y_min = 2,
 	y_max = 3,
 	decoration = "australia:mangrove_lily",
@@ -64,11 +67,11 @@ minetest.register_decoration({
 	-- Mangrove Palm
 minetest.register_decoration({
 	deco_type = "schematic",
-	place_on = {"australia:mangrove_mud",
+	place_on = {node_top,
 		"default:dirt"},
 	sidelen = 80,
 	fill_ratio = 0.3,
-	biomes = {"mangroves"},
+	biomes = {biome_name},
 	y_min = 1,
 	y_max = 3,
 	schematic = {
@@ -150,7 +153,7 @@ for h = 4,max_ht do
 		sidelen = 80,
 		place_on = {"australia:mangrove_mud", "default:dirt", "default:sand"},
 		fill_ratio = 0.003,
-		biomes = {"mangroves"},
+		biomes = {biome_name},
 		y_min = -2,
 		y_max = 3,
 		schematic = schem,

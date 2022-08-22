@@ -68,7 +68,7 @@ aus.biome_register_grass_decorations(
 		{0.015,  0.045, 2},
 		{0.03,   0.03,  1},
 	},
-	biome_name, node_top, "default:grass_"
+	biome_name, node_top, "default:grass_", 4, 35
 )
 
 --

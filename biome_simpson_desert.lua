@@ -2,6 +2,7 @@
 
 local biome_name = "simpson_desert"
 local node_top = "australia:red_sand"
+
 minetest.register_biome({
 	name = biome_name,
 	--node_dust = "",

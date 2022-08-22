@@ -1,9 +1,12 @@
 -- mods/australia/biome_far_north_queensland.lua
 
+local biome_name = "far_north_queensland"
+local node_top = "default:dirt_with_grass"
+
 minetest.register_biome({
-	name = "far_north_queensland",
+	name = biome_name,
 	--node_dust = "",
-	node_top = "default:dirt_with_grass",
+	node_top = node_top,
 	depth_top = 1,
 	node_filler = "default:dirt",
 	depth_filler = 3,
@@ -208,58 +211,26 @@ minetest.register_decoration({
 --
 -- Decorations
 --
-
-local function register_grass_decoration(offset, scale, length)
-	minetest.register_decoration({
-		deco_type = "simple",
-		place_on = {"default:dirt_with_grass"},
-		sidelen = 16,
-		noise_params = {
-			offset = offset,
-			scale = scale,
-			spread = {x = 200, y = 200, z = 200},
-			seed = 329,
-			octaves = 3,
-			persist = 0.6
-		},
-		biomes = {"far_north_queensland"},
-		y_min = 5,
-		y_max = 35,
-		decoration = "default:grass_"..length,
-	})
-end
-
-local function register_dry_grass_decoration(offset, scale, length)
-	minetest.register_decoration({
-		deco_type = "simple",
-		place_on = {"default:dirt_with_grass"},
-		sidelen = 16,
-		noise_params = {
-			offset = offset,
-			scale = scale,
-			spread = {x = 200, y = 200, z = 200},
-			seed = 329,
-			octaves = 3,
-			persist = 0.6
-		},
-		biomes = {"far_north_queensland"},
-		y_min = 22,
-		y_max = 35,
-		decoration = "default:dry_grass_"..length,
-	})
-end
-
 	-- Grasses
-register_grass_decoration(-0.03,  0.09,  5)
-register_grass_decoration(-0.015, 0.075, 4)
-register_grass_decoration(0,      0.06,  3)
-register_grass_decoration(0.015,  0.045, 2)
-register_grass_decoration(0.03,   0.03,  1)
+aus.biome_register_grass_decorations(
+	{
+		{-0.03,  0.09,  5},
+		{-0.015, 0.075, 4},
+		{0,      0.06,  3},
+		{0.015,  0.045, 2},
+		{0.03,   0.03,  1},
+	},
+	biome_name, node_top, "default:grass_", 5, 35
+)
 
 	-- Dry grasses
-register_dry_grass_decoration(0.01, 0.05,  5)
-register_dry_grass_decoration(0.03, 0.03,  4)
-
+aus.biome_register_grass_decorations(
+	{
+		{0.01, 0.05,  5},
+		{0.03, 0.03,  4},
+	},
+	biome_name, node_top, "default:dry_grass_", 22, 35
+)
 
 
 --

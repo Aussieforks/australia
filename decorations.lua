@@ -1,4 +1,4 @@
-function aus.biome_register_grass_decorations(decos, biome, place_on, grassnode)
+function aus.biome_register_grass_decorations(decos, biome, place_on, grassnode, y_min, y_max)
 	for idx, deco in pairs(decos) do
 		local offset = deco[1]
 		local scale = deco[2]
@@ -16,8 +16,8 @@ function aus.biome_register_grass_decorations(decos, biome, place_on, grassnode)
 				persist = 0.6
 			},
 			biomes = {biome},
-			y_min = 4,
-			y_max = 35,
+			y_min = y_min,
+			y_max = y_max,
 			decoration = grassnode..tostring(length),
 		})
 	end

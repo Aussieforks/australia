@@ -60,30 +60,15 @@ end
 -- Decorations
 --
 
-local function register_dry_grass_decoration(offset, scale, length)
-	minetest.register_decoration({
-		deco_type = "simple",
-		place_on = {"australia:red_dirt"},
-		sidelen = 16,
-		noise_params = {
-			offset = offset,
-			scale = scale,
-			spread = {x = 200, y = 200, z = 200},
-			seed = 329,
-			octaves = 3,
-			persist = 0.6
-		},
-		biomes = {"central_australia"},
-		y_min = 36,
-		y_max = 190,
-		decoration = "default:dry_grass_"..length,
-	})
-end
-
 	-- Dry grasses
-register_dry_grass_decoration(0.05, 0.01,  3)
-register_dry_grass_decoration(0.07, -0.01, 2)
-register_dry_grass_decoration(0.09, -0.03, 1)
+aus.biome_register_grass_decorations(
+	{
+		{0.05,  0.01, 3},
+		{0.07, -0.01, 2},
+		{0.09, -0.03, 1}
+	},
+	biome_name, node_top, "default:dry_grass_", 36, 190
+)
 
 
 	-- Mitchell Grass

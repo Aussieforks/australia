@@ -1,9 +1,12 @@
 -- mods/australia/biome_great_dividing_range.lua
 
+local biome_name = "great_dividing_range"
+local node_top = "default:dirt_with_grass"
+
 minetest.register_biome({
-	name = "great_dividing_range",
+	name = biome_name,
 	--node_dust = "",
-	node_top = "default:dirt_with_grass",
+	node_top = node_top,
 	depth_top = 1,
 	node_filler = "default:dirt",
 	depth_filler = 3,
@@ -203,34 +206,17 @@ minetest.register_decoration({
 -- Decorations
 --
 
-local function register_grass_decoration(offset, scale, length)
-	minetest.register_decoration({
-		deco_type = "simple",
-		place_on = {"default:dirt_with_grass"},
-		sidelen = 16,
-		noise_params = {
-			offset = offset,
-			scale = scale,
-			spread = {x = 200, y = 200, z = 200},
-			seed = 329,
-			octaves = 3,
-			persist = 0.6
-		},
-		biomes = {"great_dividing_range"},
-		y_min = 36,
-		y_max = 31000,
-		decoration = "default:grass_"..length,
-	})
-end
-
 	-- Grasses
-register_grass_decoration(-0.03,  0.09,  5)
-register_grass_decoration(-0.015, 0.075, 4)
-register_grass_decoration(0,      0.06,  3)
-register_grass_decoration(0.015,  0.045, 2)
-register_grass_decoration(0.03,   0.03,  1)
-
-
+aus.biome_register_grass_decorations(
+	{
+		{-0.03,  0.09,  5},
+		{-0.015, 0.075, 4},
+		{0,      0.06,  3},
+		{0.015,  0.045, 2},
+		{0.03,   0.03,  1},
+	},
+	biome_name, node_top, "default:grass_", 36, 31000
+)
 
 --
 -- Logs

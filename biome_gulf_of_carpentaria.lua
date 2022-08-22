@@ -1,9 +1,12 @@
 -- mods/australia/biome_gulf_of_carpentaria.lua
 
+local biome_name = "gulf_of_carpentaria"
+local node_top = "default:dirt_with_dry_grass"
+
 minetest.register_biome({
-	name = "gulf_of_carpentaria",
+	name = biome_name,
 	--node_dust = "",
-	node_top = "default:dirt_with_dry_grass",
+	node_top = node_top,
 	depth_top = 1,
 	node_filler = "default:dirt",
 	depth_filler = 2,
@@ -54,66 +57,36 @@ minetest.register_ore({
 -- Decorations
 --
 
-local function register_grass_decoration(offset, scale, length)
-	minetest.register_decoration({
-		deco_type = "simple",
-		place_on = {"default:dirt_with_dry_grass"},
-		sidelen = 16,
-		noise_params = {
-			offset = offset,
-			scale = scale,
-			spread = {x = 200, y = 200, z = 200},
-			seed = 329,
-			octaves = 3,
-			persist = 0.6
-		},
-		biomes = {"gulf_of_carpentaria"},
-		y_min = 4,
-		y_max = 9,
-		decoration = "default:grass_"..length,
-	})
-end
-
-local function register_dry_grass_decoration(offset, scale, length)
-	minetest.register_decoration({
-		deco_type = "simple",
-		place_on = {"default:dirt_with_dry_grass"},
-		sidelen = 16,
-		noise_params = {
-			offset = offset,
-			scale = scale,
-			spread = {x = 200, y = 200, z = 200},
-			seed = 329,
-			octaves = 3,
-			persist = 0.6
-		},
-		biomes = {"gulf_of_carpentaria"},
-		y_min = 7,
-		y_max = 35,
-		decoration = "default:dry_grass_"..length,
-	})
-end
-
 	-- Grasses
-register_grass_decoration(0,      0.06,  3)
-register_grass_decoration(0.015,  0.045, 2)
-register_grass_decoration(0.03,   0.03,  1)
+aus.biome_register_grass_decorations(
+	{
+		{0,      0.06,  3},
+		{0.015,  0.045, 2},
+		{0.03,   0.03,  1},
+	},
+	biome_name, node_top, "default:grass_", 4, 9
+)
 
 	-- Dry grasses
-register_dry_grass_decoration(0.01, 0.05,  5)
-register_dry_grass_decoration(0.03, 0.03,  4)
-register_dry_grass_decoration(0.05, 0.01,  3)
-register_dry_grass_decoration(0.07, -0.01, 2)
-register_dry_grass_decoration(0.09, -0.03, 1)
+aus.biome_register_grass_decorations(
+	{
+		{0.01, 0.05,  5},
+		{0.03, 0.03,  4},
+		{0.05, 0.01,  3},
+		{0.07, -0.01, 2},
+		{0.09, -0.03, 1},
+	},
+	biome_name, node_top, "default:dry_grass_", 7, 35
+)
 
 
 	-- Mitchell Grass
 minetest.register_decoration({
 	deco_type = "simple",
-	place_on = {"default:dirt_with_dry_grass"},
+	place_on = {node_top},
 	sidelen = 80,
 	fill_ratio = 0.05,
-	biomes = {"gulf_of_carpentaria"},
+	biomes = {biome_name},
 	y_min = 12,
 	y_max = 35,
 	decoration = "australia:mitchell_grass",

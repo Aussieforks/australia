@@ -1,9 +1,12 @@
 -- mods/australia/biome_pilbara.lua
 
+local biome_name = "pilbara"
+local node_top = "australia:red_gravel"
+
 minetest.register_biome({
-	name = "pilbara",
+	name = biome_name,
 	--node_dust = "",
-	node_top = "australia:red_gravel",
+	node_top = node_top,
 	depth_top = 2,
 	node_filler = "australia:red_stone",
 	depth_filler = 2,
@@ -56,38 +59,23 @@ minetest.register_ore({
 -- Decorations
 --
 
-local function register_dry_grass_decoration(offset, scale, length)
-	minetest.register_decoration({
-		deco_type = "simple",
-		place_on = {"australia:red_gravel"},
-		sidelen = 16,
-		noise_params = {
-			offset = offset,
-			scale = scale,
-			spread = {x = 200, y = 200, z = 200},
-			seed = 329,
-			octaves = 3,
-			persist = 0.6
-		},
-		biomes = {"pilbara"},
-		y_min = 5,
-		y_max = 31000,
-		decoration = "default:dry_grass_"..length,
-	})
-end
-
 	-- Dry grasses
-register_dry_grass_decoration(0.07, -0.01, 2)
-register_dry_grass_decoration(0.09, -0.03, 1)
+aus.biome_register_grass_decorations(
+	{
+		{0.07, -0.01, 2},
+		{0.09, -0.03, 1},
+	},
+	biome_name, node_top, "default:dry_grass_", 5, 31000
+)
 
 
 	-- Mitchell Grass
 minetest.register_decoration({
 	deco_type = "simple",
-	place_on = {"australia:red_gravel"},
+	place_on = {node_top},
 	sidelen = 80,
 	fill_ratio = 0.05,
-	biomes = {"pilbara"},
+	biomes = {biome_name},
 	y_min = 6,
 	y_max = 31000,
 	decoration = "australia:mitchell_grass",
@@ -96,10 +84,10 @@ minetest.register_decoration({
 	-- Spinifex
 minetest.register_decoration({
 	deco_type = "simple",
-	place_on = {"australia:red_gravel"},
+	place_on = {node_top},
 	sidelen = 80,
 	fill_ratio = 0.02,
-	biomes = {"pilbara"},
+	biomes = {biome_name},
 	y_min = 8,
 	y_max = 31000,
 	decoration = "australia:spinifex",

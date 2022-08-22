@@ -1,7 +1,7 @@
 -- mods/australia/biome_jarrah_karri_forests.lua
 
 local biome_name = "jarrah_karri_forests"
-local node_top = "default_dirt_with_grass"
+local node_top = "default:dirt_with_grass"
 
 minetest.register_biome({
 	name = biome_name,
@@ -57,65 +57,34 @@ minetest.register_ore({
 -- Decorations
 --
 
-local function register_grass_decoration(offset, scale, length)
-	minetest.register_decoration({
-		deco_type = "simple",
-		place_on = {"default:dirt_with_grass"},
-		sidelen = 16,
-		noise_params = {
-			offset = offset,
-			scale = scale,
-			spread = {x = 200, y = 200, z = 200},
-			seed = 329,
-			octaves = 3,
-			persist = 0.6
-		},
-		biomes = {"jarrah_karri_forests"},
-		y_min = 5,
-		y_max = 31000,
-		decoration = "default:grass_"..length,
-	})
-end
-
-local function register_dry_grass_decoration(offset, scale, length)
-	minetest.register_decoration({
-		deco_type = "simple",
-		place_on = {"default:dirt_with_grass"},
-		sidelen = 16,
-		noise_params = {
-			offset = offset,
-			scale = scale,
-			spread = {x = 200, y = 200, z = 200},
-			seed = 329,
-			octaves = 3,
-			persist = 0.6
-		},
-		biomes = {"jarrah_karri_forests"},
-		y_min = 5,
-		y_max = 31000,
-		decoration = "default:dry_grass_"..length,
-	})
-end
-
 	-- Grasses
-register_grass_decoration(0.015,  0.045, 2)
-register_grass_decoration(0.03,   0.03,  1)
+aus.biome_register_grass_decorations(
+	{
+		{0.015,  0.045, 2},
+		{0.03,   0.03,  1},
+	},
+	biome_name, node_top, "default:grass_", 5, 31000
+)
 
 	-- Dry grasses
-register_dry_grass_decoration(0.01, 0.05,  5)
-register_dry_grass_decoration(0.03, 0.03,  4)
-register_dry_grass_decoration(0.05, 0.01,  3)
-register_dry_grass_decoration(0.07, -0.01, 2)
-register_dry_grass_decoration(0.09, -0.03, 1)
-
+aus.biome_register_grass_decorations(
+	{
+		{0.01, 0.05,  5},
+		{0.03, 0.03,  4},
+		{0.05, 0.01,  3},
+		{0.07, -0.01, 2},
+		{0.09, -0.03, 1},
+	},
+	biome_name, node_top, "default:dry_grass_", 5, 31000
+)
 
 	-- Couch Honeypot
 minetest.register_decoration({
 	deco_type = "simple",
-	place_on = {"default:dirt_with_grass"},
+	place_on = {node_top},
 	sidelen = 80,
 	fill_ratio = 0.02,
-	biomes = {"jarrah_karri_forests"},
+	biomes = {biome_name},
 	decoration = "australia:couch_honeypot",
 })
 

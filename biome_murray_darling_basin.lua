@@ -36,65 +36,35 @@ minetest.register_biome({
 -- Decorations
 --
 
-local function register_grass_decoration(offset, scale, length)
-	minetest.register_decoration({
-		deco_type = "simple",
-		place_on = {"default:dirt_with_dry_grass"},
-		sidelen = 16,
-		noise_params = {
-			offset = offset,
-			scale = scale,
-			spread = {x = 200, y = 200, z = 200},
-			seed = 329,
-			octaves = 3,
-			persist = 0.6
-		},
-		biomes = {"murray_darling_basin"},
-		y_min = 36,
-		y_max = 200,
-		decoration = "default:grass_"..length,
-	})
-end
-
-local function register_dry_grass_decoration(offset, scale, length)
-	minetest.register_decoration({
-		deco_type = "simple",
-		place_on = {"default:dirt_with_dry_grass"},
-		sidelen = 16,
-		noise_params = {
-			offset = offset,
-			scale = scale,
-			spread = {x = 200, y = 200, z = 200},
-			seed = 329,
-			octaves = 3,
-			persist = 0.6
-		},
-		biomes = {"murray_darling_basin"},
-		y_min = 36,
-		y_max = 200,
-		decoration = "default:dry_grass_"..length,
-	})
-end
-
 	-- Grasses
-register_grass_decoration(0.015,  0.045, 2)
-register_grass_decoration(0.03,   0.03,  1)
+aus.biome_register_grass_decorations(
+	{
+		{0.015,  0.045, 2},
+		{0.03,   0.03,  1},
+	},
+	biome_name, node_top, "default:grass_", 36, 200
+)
 
 	-- Dry grasses
-register_dry_grass_decoration(0.01, 0.05,  5)
-register_dry_grass_decoration(0.03, 0.03,  4)
-register_dry_grass_decoration(0.05, 0.01,  3)
-register_dry_grass_decoration(0.07, -0.01, 2)
-register_dry_grass_decoration(0.09, -0.03, 1)
+aus.biome_register_grass_decorations(
+	{
+		{0.01, 0.05,  5},
+		{0.03, 0.03,  4},
+		{0.05, 0.01,  3},
+		{0.07, -0.01, 2},
+		{0.09, -0.03, 1},
+	},
+	biome_name, node_top, "default:dry_grass_", 36, 200
+)
 
 
 	-- Darling Lily
 minetest.register_decoration({
 	deco_type = "simple",
-	place_on = {"default:dirt_with_dry_grass"},
+	place_on = {node_top},
 	sidelen = 80,
 	fill_ratio = 0.02,
-	biomes = {"murray_darling_basin"},
+	biomes = {biome_name},
 	y_min = 36,
 	y_max = 200,
 	decoration = "australia:darling_lily",
@@ -103,10 +73,10 @@ minetest.register_decoration({
 	-- Saltbush
 minetest.register_decoration({
 	deco_type = "simple",
-	place_on = {"default:dirt_with_dry_grass"},
+	place_on = {node_top},
 	sidelen = 80,
 	fill_ratio = 0.01,
-	biomes = {"murray_darling_basin"},
+	biomes = {biome_name},
 	y_min = 36,
 	y_max = 200,
 	decoration = "australia:saltbush",
@@ -115,10 +85,10 @@ minetest.register_decoration({
 	-- Silver Daisy
 minetest.register_decoration({
 	deco_type = "simple",
-	place_on = {"default:dirt_with_dry_grass"},
+	place_on = {node_top},
 	sidelen = 80,
 	fill_ratio = 0.02,
-	biomes = {"murray_darling_basin"},
+	biomes = {biome_name},
 	y_min = 36,
 	y_max = 200,
 	decoration = "australia:silver_daisy",

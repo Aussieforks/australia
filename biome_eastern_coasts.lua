@@ -80,34 +80,17 @@ minetest.register_ore({
 --
 -- Decorations
 --
-
-local function register_grass_decoration(offset, scale, length)
-	minetest.register_decoration({
-		deco_type = "simple",
-		place_on = {"default:dirt_with_grass"},
-		sidelen = 16,
-		noise_params = {
-			offset = offset,
-			scale = scale,
-			spread = {x = 200, y = 200, z = 200},
-			seed = 329,
-			octaves = 3,
-			persist = 0.6
-		},
-		biomes = {"eastern_coasts"},
-		y_min = 4,
-		y_max = 35,
-		decoration = "default:grass_"..length,
-	})
-end
-
 	-- Grasses
-register_grass_decoration(-0.03,  0.09,  5)
-register_grass_decoration(-0.015, 0.075, 4)
-register_grass_decoration(0,      0.06,  3)
-register_grass_decoration(0.015,  0.045, 2)
-register_grass_decoration(0.03,   0.03,  1)
-
+aus.biome_register_grass_decorations(
+	{
+		{-0.03,  0.09,  5},
+		{-0.015, 0.075, 4},
+		{0,      0.06,  3},
+		{0.015,  0.045, 2},
+		{0.03,   0.03,  1},
+	},
+	biome_name, node_top, "default:grass_", 4, 35
+)
 
 	-- Waratah
 minetest.register_decoration({
@@ -119,8 +102,6 @@ minetest.register_decoration({
 	y_min = 6,
 	y_max = 35,
 	schematic = {
--- @@@ Josselin2
---		size = { x = 2, y = 3, z = 2},
 		size = { x = 2, y = 4, z = 2},
 		data = {
 			{ name = "ignore", param1 = 0, param2 = 0 },

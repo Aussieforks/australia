@@ -1,9 +1,12 @@
 -- mods/australia/biome_timor_sea.lua
 
+local biome_name = "timor_sea"
+local node_top = "default:sand"
+
 minetest.register_biome({
-	name = "timor_sea",
+	name = biome_name,
 	--node_dust = "",
-	node_top = "default:sand",
+	node_top = node_top,
 	depth_top = 1,
 	node_filler = "default:sand",
 	depth_filler = 2,
@@ -30,7 +33,7 @@ minetest.register_biome({
 minetest.register_ore({
 	ore_type       = "scatter",
 	ore            = "australia:submarine",
-	wherein        = "default:sand",
+	wherein        = node_top,
 	clust_scarcity = 80*80*80,
 	clust_num_ores = 1,
 	clust_size     = 12,
@@ -45,40 +48,25 @@ minetest.register_ore({
 -- Decorations
 --
 
-local function register_grass_decoration(offset, scale, length)
-	minetest.register_decoration({
-		deco_type = "simple",
-		place_on = {"default:sand"},
-		sidelen = 16,
-		noise_params = {
-			offset = offset,
-			scale = scale,
-			spread = {x = 200, y = 200, z = 200},
-			seed = 329,
-			octaves = 3,
-			persist = 0.6
-		},
-		biomes = {"timor_sea"},
-		y_min = 3,
-		y_max = 3,
-		decoration = "default:grass_"..length,
-	})
-end
-
 	-- Grasses
-register_grass_decoration(-0.03,  0.09,  5)
-register_grass_decoration(-0.015, 0.075, 4)
-register_grass_decoration(0,      0.06,  3)
-register_grass_decoration(0.015,  0.045, 2)
-register_grass_decoration(0.03,   0.03,  1)
+aus.biome_register_grass_decorations(
+	{
+		{-0.03,  0.09,  5},
+		{-0.015, 0.075, 4},
+		{0,      0.06,  3},
+		{0.015,  0.045, 2},
+		{0.03,   0.03,  1},
+	},
+	biome_name, node_top, "default:grass_", 3, 3
+)
 
 	-- Narrowleaf Seagrass
 minetest.register_decoration({
 	deco_type = "simple",
-	place_on = {"default:sand"},
+	place_on = {node_top},
 	sidelen = 80,
 	fill_ratio = 0.02,
-	biomes = {"timor_sea"},
+	biomes = {biome_name},
 	y_min     = -10,
 	y_max     = -2,
 	decoration = "australia:sea_grass",

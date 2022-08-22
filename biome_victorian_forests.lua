@@ -168,11 +168,11 @@ local f2 = { name = "australia:tree_fern_leaves_02" }
 minetest.register_decoration({
 	deco_type = "schematic",
 	sidelen = 80,
-	place_on = {"default:dirt_with_grass"},
+	place_on = {node_top},
 	y_min = 36,
 	y_max = 80,
 	fill_ratio = 0.008,
-	biomes = {"victorian_forests"},
+	biomes = {biome_name},
 	schematic = {
 		size = {y = 4, x = 1, z = 1},
 	data = {
@@ -185,7 +185,7 @@ minetest.register_decoration({
 	-- Ruddy Ground Fern
 minetest.register_decoration({
 	deco_type = "simple",
-	place_on = {"default:dirt_with_grass"},
+	place_on = {node_top},
 	sidelen = 16,
 	noise_params = {
 		offset = 0,
@@ -195,7 +195,7 @@ minetest.register_decoration({
 		octaves = 3,
 		persist = 0.66
 	},
-	biomes = {"victorian_forests"},
+	biomes = {biome_name},
 	y_min = 36,
 	y_max = 160,
 	decoration = "australia:fern",
@@ -204,7 +204,7 @@ minetest.register_decoration({
 	-- Sickle Fern
 minetest.register_decoration({
 	deco_type = "simple",
-	place_on = {"default:dirt_with_grass"},
+	place_on = {node_top},
 	sidelen = 16,
 	noise_params = {
 		offset = 0,
@@ -214,7 +214,7 @@ minetest.register_decoration({
 		octaves = 3,
 		persist = 0.66
 	},
-	biomes = {"victorian_forests"},
+	biomes = {biome_name},
 	y_min = 36,
 	y_max = 140,
 	decoration = "australia:small_fern",
@@ -226,32 +226,17 @@ minetest.register_decoration({
 -- Decorations
 --
 
-local function register_grass_decoration(offset, scale, length)
-	minetest.register_decoration({
-		deco_type = "simple",
-		place_on = {"default:dirt_with_grass"},
-		sidelen = 16,
-		noise_params = {
-			offset = offset,
-			scale = scale,
-			spread = {x = 200, y = 200, z = 200},
-			seed = 329,
-			octaves = 3,
-			persist = 0.6
-		},
-		biomes = {"victorian_forests"},
-		y_min = 36,
-		y_max = 190,
-		decoration = "default:grass_"..length,
-	})
-end
-
 	-- Grasses
-register_grass_decoration(-0.03,  0.09,  5)
-register_grass_decoration(-0.015, 0.075, 4)
-register_grass_decoration(0,      0.06,  3)
-register_grass_decoration(0.015,  0.045, 2)
-register_grass_decoration(0.03,   0.03,  1)
+aus.biome_register_grass_decorations(
+	{
+		{-0.03,  0.09,  5},
+		{-0.015, 0.075, 4},
+		{0,      0.06,  3},
+		{0.015,  0.045, 2},
+		{0.03,   0.03,  1},
+	},
+	biome_name, node_top, "default:grass_", 36, 190
+)
 
 
 

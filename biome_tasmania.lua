@@ -1,9 +1,12 @@
 -- mods/australia/biome_tasmania.lua
 
+local biome_name = "tasmania"
+local node_top = "default:dirt_with_grass"
+
 minetest.register_biome({
-	name = "tasmania",
+	name = biome_name,
 	--node_dust = "",
-	node_top = "default:dirt_with_grass",
+	node_top = node_top,
 	depth_top = 1,
 	node_filler = "default:dirt",
 	depth_filler = 3,
@@ -99,11 +102,11 @@ local f2 = { name = "australia:tree_fern_leaves_02" }
 minetest.register_decoration({
 	deco_type = "schematic",
 	sidelen = 80,
-	place_on = {"default:dirt_with_grass"},
+	place_on = {node_top},
 	y_min = 36,
 	y_max = 80,
 	fill_ratio = 0.01,
-	biomes = {"tasmania"},
+	biomes = {biome_name},
 	schematic = {
 		size = {y = 4, x = 1, z = 1},
 	data = {
@@ -116,7 +119,7 @@ minetest.register_decoration({
 	-- Ruddy Ground Fern
 minetest.register_decoration({
 	deco_type = "simple",
-	place_on = {"default:dirt_with_grass"},
+	place_on = {node_top},
 	sidelen = 16,
 	noise_params = {
 		offset = 0,
@@ -126,7 +129,7 @@ minetest.register_decoration({
 		octaves = 3,
 		persist = 0.66
 	},
-	biomes = {"tasmania"},
+	biomes = {biome_name},
 	y_min = 36,
 	y_max = 160,
 	decoration = "australia:fern",
@@ -135,7 +138,7 @@ minetest.register_decoration({
 	-- Sickle Fern
 minetest.register_decoration({
 	deco_type = "simple",
-	place_on = {"default:dirt_with_grass"},
+	place_on = {node_top},
 	sidelen = 16,
 	noise_params = {
 		offset = 0,
@@ -145,7 +148,7 @@ minetest.register_decoration({
 		octaves = 3,
 		persist = 0.66
 	},
-	biomes = {"tasmania"},
+	biomes = {biome_name},
 	y_min = 36,
 	y_max = 140,
 	decoration = "australia:small_fern",
@@ -157,32 +160,17 @@ minetest.register_decoration({
 -- Decorations
 --
 
-local function register_grass_decoration(offset, scale, length)
-	minetest.register_decoration({
-		deco_type = "simple",
-		place_on = {"default:dirt_with_grass"},
-		sidelen = 16,
-		noise_params = {
-			offset = offset,
-			scale = scale,
-			spread = {x = 200, y = 200, z = 200},
-			seed = 329,
-			octaves = 3,
-			persist = 0.6
-		},
-		biomes = {"tasmania"},
-		y_min = 3,
-		y_max = 31000,
-		decoration = "default:grass_"..length,
-	})
-end
-
 	-- Grasses
-register_grass_decoration(-0.03,  0.09,  5)
-register_grass_decoration(-0.015, 0.075, 4)
-register_grass_decoration(0,      0.06,  3)
-register_grass_decoration(0.015,  0.045, 2)
-register_grass_decoration(0.03,   0.03,  1)
+aus.biome_register_grass_decorations(
+	{
+		{-0.03,  0.09,  5},
+		{-0.015, 0.075, 4},
+		{0,      0.06,  3},
+		{0.015,  0.045, 2},
+		{0.03,   0.03,  1},
+	},
+	biome_name, node_top, "default:grass_", 3, 31000
+)
 
 
 
@@ -192,10 +180,10 @@ register_grass_decoration(0.03,   0.03,  1)
 
 minetest.register_decoration({
 	deco_type = "simple",
-	place_on = {"default:dirt_with_grass"},
+	place_on = {node_top},
 	sidelen = 80,
 	fill_ratio = 0.9,
-	biomes = {"tasmania"},
+	biomes = {biome_name},
 	y_min = 8,
 	y_max = 31000,
 	decoration = "australia:moss",
@@ -203,10 +191,10 @@ minetest.register_decoration({
 
 minetest.register_decoration({
 	deco_type = "simple",
-	place_on = {"default:dirt_with_grass"},
+	place_on = {node_top},
 	sidelen = 80,
 	fill_ratio = 0.02,
-	biomes = {"tasmania"},
+	biomes = {biome_name},
 	y_min = 8,
 	y_max = 31000,
 	decoration = "australia:moss_with_fungus",
@@ -221,7 +209,7 @@ minetest.register_decoration({
 	-- Brown Mushroom
 minetest.register_decoration({
 	deco_type = "simple",
-	place_on = {"default:dirt_with_grass"},
+	place_on = {node_top},
 	sidelen = 16,
 	noise_params = {
 		offset = 0,
@@ -231,18 +219,16 @@ minetest.register_decoration({
 		octaves = 3,
 		persist = 0.66
 	},
-	biomes = {"tasmania"},
+	biomes = {biome_name},
 	y_min = 7,
 	y_max = 31000,
-    -- @@@ Josselin2
---	decoration = "flowers:Mushroom_brown",
 	decoration = "flowers:mushroom_brown",
 })
 
 	-- Red Mushroom
 minetest.register_decoration({
 	deco_type = "simple",
-	place_on = {"default:dirt_with_grass"},
+	place_on = {node_top},
 	sidelen = 16,
 	noise_params = {
 		offset = 0,
@@ -252,7 +238,7 @@ minetest.register_decoration({
 		octaves = 3,
 		persist = 0.66
 	},
-	biomes = {"tasmania"},
+	biomes = {biome_name},
 	y_min = 7,
 	y_max = 31000,
 	decoration = "flowers:mushroom_red",
