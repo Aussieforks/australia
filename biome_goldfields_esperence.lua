@@ -88,27 +88,10 @@ minetest.register_decoration({
 --
 
 	-- Desert Quandong
-aus.schematics.quandong_tree = {}
-local max_r = 4
-local ht = 4
-local fruit = "australia:quandong"
-local limbs = false
-local tree = "australia:quandong_tree"
-local leaves = "australia:quandong_leaves"
-for r = 3,max_r do
-	local schem = aus.generate_tree_schematic(2, {x=r, y=ht, z=r}, tree, leaves, fruit, limbs)
-	table.insert(aus.schematics.quandong_tree, schem)
-	minetest.register_decoration({
-		deco_type = "schematic",
-		sidelen = 80,
-		place_on = {"default:desert_sand"},
-		y_min = 6,
-		y_max = 35,
-		fill_ratio = (max_r-r+1)/15000,
-		biomes = {"goldfields_esperence"},
-		schematic = schem,
-		flags = "place_center_x, place_center_z",
-		rotation = "random",
-	})
-end
+aus.register_schem_to_biome("quandong_tree", biome_name, {
+	place_on = {node_top},
+	y_min = 6,
+	y_max = 35,
+	fill_ratio = 15000,
+})
 

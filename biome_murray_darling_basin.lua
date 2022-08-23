@@ -168,29 +168,12 @@ for r = 6,max_r do
 end
 
 	-- Black Wattle
-aus.schematics.black_wattle_tree = {}
-local max_r = 6
-local ht = 8
-local fruit = nil
-local limbs = false
-local tree = "australia:black_wattle_tree"
-local leaves = "australia:black_wattle_leaves"
-for r = 5,max_r do
-	local schem = aus.generate_tree_schematic(4, {x=r, y=ht, z=r}, tree, leaves, fruit, limbs)
-	table.insert(aus.schematics.black_wattle_tree, schem)
-	minetest.register_decoration({
-		deco_type = "schematic",
-		sidelen = 80,
-		place_on = {"default:dirt_with_dry_grass"},
-		y_min = 36,
-		y_max = 150,
-		fill_ratio = (max_r-r+1)/15000,
-		biomes = {"murray_darling_basin"},
-		schematic = schem,
-		flags = "place_center_x, place_center_z",
-		rotation = "random",
-	})
-end
+aus.register_schem_to_biome("black_wattle_tree", biome_name, {
+	place_on = {node_top},
+	y_min = 36,
+	y_max = 150,
+	fill_ratio = 15000,
+})
 
 	-- Coolabah Tree
 aus.register_schem_to_biome("coolabah_tree", biome_name, {
@@ -227,29 +210,12 @@ for r = 2,max_r do
 end
 
 	-- Desert Quandong
-aus.schematics.quandong_tree = {}
-local max_r = 4
-local ht = 4
-local fruit = "australia:quandong"
-local limbs = false
-local tree = "australia:quandong_tree"
-local leaves = "australia:quandong_leaves"
-for r = 3,max_r do
-	local schem = aus.generate_tree_schematic(2, {x=r, y=ht, z=r}, tree, leaves, fruit, limbs)
-	table.insert(aus.schematics.quandong_tree, schem)
-	minetest.register_decoration({
-		deco_type = "schematic",
-		sidelen = 80,
-		place_on = {"default:dirt_with_dry_grass"},
-		y_min = 36,
-		y_max = 150,
-		fill_ratio = (max_r-r+1)/15000,
-		biomes = {"murray_darling_basin"},
-		schematic = schem,
-		flags = "place_center_x, place_center_z",
-		rotation = "random",
-	})
-end
+aus.register_schem_to_biome("quandong_tree", biome_name, {
+	place_on = {node_top},
+	y_min = 36,
+	y_max = 150,
+	fill_ratio = 15000,
+})
 
 	-- River Red Gum
 aus.schematics.river_red_gum_tree = {}

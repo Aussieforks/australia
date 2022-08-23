@@ -7,8 +7,12 @@
 	* Woodship schematic as MTS
 	* U-boat schematic as MTS
 * ABMs: Conversion to LBMs or nodetimers where appropriate, especially shipwrecks
+	* Tree growth to nodetimers (according to MTG practice)
 * Leaf decay
-* Schematic with no sapling: Small river oak (river_oak_small_tree)
+* Tree Schematics with no sapling:
+	* Small river oak (river_oak_small_tree)
+	* Small Coast Banksia
+	*
 	* Just accept it as limited supply OR
 	* Register separate sapling, random drop OR
 	* Register separate sapling, separate leaves OR
@@ -57,7 +61,7 @@ ciggybuttbrain
 Pos:
 1721,8,1408
 
-### Macadamia, Illawara Flame
+### Macadamia, Illawarra Flame
 Seed:
 ciggybuttbrain
 Pos:
@@ -75,6 +79,18 @@ ciggybuttbrain
 Pos:
 159,19,1564
 
+### Darwin Woollybutt, Lemon Eucalyptus
+Seed:
+ciggybuttbrain
+Pos:
+160,31,1410
+
+### Lilly Pilly
+Seed:
+ciggybuttbrain
+Pos:
+256,27,970
+
 ## Flinders Lofty
 Seed:
 ciggybuttbrain
@@ -85,7 +101,7 @@ Pos:
 Seed:
 ciggybuttbrain
 Pos:
-650,11,-430
+650,11,-430,
 
 ## Great Australian Bight
 Seed:
@@ -99,14 +115,25 @@ The biome is above and below the waterline and also directly behind (yaw=220)
 Seed:
 ciggybuttbrain
 Pos:
-600,4,-220
+-420,1,1410
 
+## Great Dividing Range
+Seed:
+ciggybuttbrain
+Pos:
+3600,66,2100
 
 ## Gulf of Carpentaria
 Seed:
 ciggybuttbrain
 Pos:
 870,12,-668
+
+## Indian Ocean
+Seed:
+ciggybuttbrain
+Pos:
+-350,1,-820
 
 ## Jarrah Karri Forests
 Seed:
@@ -120,6 +147,12 @@ Seed:
 ciggybuttbrain
 Pos:
 455,13,1648
+
+### Swamp Bloodwood
+Seed:
+ciggybuttbrain
+Pos:
+261,16,1032
 
 ## Mangrove
 Seed:
@@ -140,6 +173,15 @@ Pos:
 1601,127,509
 Yaw: 70
 
+Pos:
+5920,92,170
+
+### Quandong
+Seed:
+ciggybuttbrain
+Pos:
+-4550,100,1050
+
 ## Pilbara
 Seed:
 ciggybuttbrain
@@ -153,11 +195,31 @@ Pos:
 -408,74,96
 
 ## Tasmania
+
+### Tasmanian Myrtle
+Seed:
+ciggybuttbrain
+Pos;
+-595,65,1000
+
+### Doughnut valley
+Seed:
+ciggybuttbrain
+Pos:
+1480,71,3620
+
+### Marginal
 Seed:
 ciggybuttbrain
 Pos:
 889,51,1111
 Yaw: 0
+
+## Tasman Sea
+Seed:
+ciggybuttbrain
+Pos:
+1910,1,2115
 
 ## Timor Sea
 Seed:
@@ -176,3 +238,15 @@ Seed:
 ciggybuttbrain
 Pos:
 330,75,-1000
+
+### Lilly Pilly
+Seed:
+ciggybuttbrain
+Pos:
+460,63,-790
+
+### Larger Valley
+Seed:
+ciggybuttbrain
+Pos:
+-4965,62,-280

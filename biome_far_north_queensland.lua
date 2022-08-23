@@ -269,7 +269,7 @@ for r = 6,max_r do
 	})
 end
 
--- Darwin Woollybutt
+	-- Darwin Woollybutt
 aus.register_schem_to_biome("darwin_woollybutt_tree", "far_north_queensland", {
 	place_on = {"default:dirt_with_grass"},
 	y_min = 25,
@@ -326,29 +326,12 @@ for r = 4,max_r do
 end
 
 	-- Lilly Pilly
-aus.schematics.lilly_pilly_tree = {}
-local max_r = 5
-local ht = 8
-local fruit = "australia:lilly_pilly_berries"
-local limbs = false
-local tree = "australia:lilly_pilly_tree"
-local leaves = "australia:lilly_pilly_leaves"
-for r = 4,max_r do
-	local schem = aus.generate_tree_schematic(1, {x=r, y=ht, z=r}, tree, leaves, fruit, limbs)
-	table.insert(aus.schematics.lilly_pilly_tree, schem)
-	minetest.register_decoration({
-		deco_type = "schematic",
-		sidelen = 80,
-		place_on = {"default:dirt_with_grass"},
-		y_min = 20,
-		y_max = 35,
-		fill_ratio = (max_r-r+1)/12000,
-		biomes = {"far_north_queensland"},
-		schematic = schem,
-		flags = "place_center_x, place_center_z",
-		rotation = "random",
-	})
-end
+aus.register_schem_to_biome("lilly_pilly_tree", biome_name, {
+	place_on = {node_top},
+	y_min = 20,
+	y_max = 35,
+	fill_ratio = 12000,
+})
 
 	-- Merbau
 aus.schematics.merbau_tree = {}

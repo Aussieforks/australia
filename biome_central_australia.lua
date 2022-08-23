@@ -100,6 +100,7 @@ minetest.register_decoration({
 --
 -- Trees
 --
+	-- Coolabah
 aus.register_schem_to_biome("coolabah_tree", biome_name, {
 	place_on = {node_top},
 	y_min = 36,
@@ -108,79 +109,28 @@ aus.register_schem_to_biome("coolabah_tree", biome_name, {
 })
 
 	-- Desert Oak
-aus.schematics.desert_oak_tree = {}
-local max_r = 8
-local ht = 5
-local fruit = nil
-local limbs = nil
-local tree = "australia:desert_oak_tree"
-local leaves = "australia:desert_oak_leaves"
-for r = 6,max_r do
-	local schem = aus.generate_tree_schematic(6, {x=r, y=ht, z=r}, tree, leaves, fruit, limbs)
-	table.insert(aus.schematics.desert_oak_tree, schem)
-	minetest.register_decoration({
-		deco_type = "schematic",
-		sidelen = 80,
-		place_on = {"australia:red_dirt"},
-		y_min = 36,
-		y_max = 140,
-		fill_ratio = (max_r-r+1)/15000,
-		biomes = {"central_australia"},
-		schematic = schem,
-		flags = "place_center_x, place_center_z",
-		rotation = "random",
-	})
-end
+aus.register_schem_to_biome("desert_oak_tree", biome_name, {
+	place_on = {node_top},
+	y_min = 36,
+	y_max = 140,
+	fill_ratio = 15000,
+})
 
 	-- Desert Quandong
-aus.schematics.quandong_tree = {}
-local max_r = 4
-local ht = 4
-local fruit = "australia:quandong"
-local limbs = false
-local tree = "australia:quandong_tree"
-local leaves = "australia:quandong_leaves"
-for r = 3,max_r do
-	local schem = aus.generate_tree_schematic(2, {x=r, y=ht, z=r}, tree, leaves, fruit, limbs)
-	table.insert(aus.schematics.quandong_tree, schem)
-	minetest.register_decoration({
-		deco_type = "schematic",
-		sidelen = 80,
-		place_on = {"australia:red_dirt"},
-		y_min = 36,
-		y_max = 130,
-		fill_ratio = (max_r-r+1)/15000,
-		biomes = {"central_australia"},
-		schematic = schem,
-		flags = "place_center_x, place_center_z",
-		rotation = "random",
-	})
-end
+aus.register_schem_to_biome("quandong_tree", biome_name, {
+	place_on = {node_top},
+	y_min = 36,
+	y_max = 130,
+	fill_ratio = 15000,
+})
 
 	-- Wirewood
-aus.schematics.wirewood_tree = {}
-local max_r = 4
-local ht = 4
-local fruit = nil
-local limbs = false
-local tree = "australia:wirewood_tree"
-local leaves = "australia:wirewood_leaves"
-for r = 3,max_r do
-	local schem = aus.generate_tree_schematic(2, {x=r, y=ht, z=r}, tree, leaves, fruit, limbs)
-	table.insert(aus.schematics.wirewood_tree, schem)
-	minetest.register_decoration({
-		deco_type = "schematic",
-		sidelen = 80,
-		place_on = {"australia:red_dirt"},
-		y_min = 36,
-		y_max = 150,
-		fill_ratio = (max_r-r+1)/12000,
-		biomes = {"central_australia"},
-		schematic = schem,
-		flags = "place_center_x, place_center_z",
-		rotation = "random",
-	})
-end
+aus.register_schem_to_biome("wirewood_tree", biome_name, {
+	place_on = {node_top},
+	y_min = 36,
+	y_max = 150,
+	fill_ratio = 12000,
+})
 
 	-- River Red Gum
 aus.schematics.river_red_gum_tree = {}
@@ -196,7 +146,7 @@ for r = 10,max_r do
 	minetest.register_decoration({
 		deco_type = "schematic",
 		sidelen = 80,
-		place_on = {"australia:red_dirt"},
+		place_on = {node_top},
 		y_min = 36,
 		y_max = 140,
 		fill_ratio = (max_r-r+1)/20000,
@@ -208,27 +158,10 @@ for r = 10,max_r do
 end
 
 	-- Sugar Gum
-aus.schematics.sugar_gum_tree = {}
-local max_r = 11
-local ht = 10
-local fruit = nil
-local limbs = nil
-local tree = "australia:sugar_gum_tree"
-local leaves = "australia:sugar_gum_leaves"
-for r = 9,max_r do
-	local schem = aus.generate_tree_schematic(8, {x=r, y=ht, z=r}, tree, leaves, fruit, limbs)
-	table.insert(aus.schematics.sugar_gum_tree, schem)
-	minetest.register_decoration({
-		deco_type = "schematic",
-		sidelen = 80,
-		place_on = {"australia:red_dirt"},
-		y_min = 36,
-		y_max = 140,
-		fill_ratio = (max_r-r+1)/20000,
-		biomes = {"central_australia"},
-		schematic = schem,
-		flags = "place_center_x, place_center_z",
-		rotation = "random",
-	})
-end
+aus.register_schem_to_biome("sugar_gum_tree", biome_name, {
+	place_on = {node_top},
+	y_min = 36,
+	y_max = 140,
+	fill_ratio = 20000,
+})
 
