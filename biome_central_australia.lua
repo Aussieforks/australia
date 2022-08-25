@@ -105,7 +105,7 @@ aus.register_schem_to_biome("coolabah_tree", biome_name, {
 	place_on = {node_top},
 	y_min = 36,
 	y_max = 140,
-	fill_ratio = 20000,
+	fill_ratio_divisor = 20000,
 })
 
 	-- Desert Oak
@@ -113,7 +113,7 @@ aus.register_schem_to_biome("desert_oak_tree", biome_name, {
 	place_on = {node_top},
 	y_min = 36,
 	y_max = 140,
-	fill_ratio = 15000,
+	fill_ratio_divisor = 15000,
 })
 
 	-- Desert Quandong
@@ -121,7 +121,7 @@ aus.register_schem_to_biome("quandong_tree", biome_name, {
 	place_on = {node_top},
 	y_min = 36,
 	y_max = 130,
-	fill_ratio = 15000,
+	fill_ratio_divisor = 15000,
 })
 
 	-- Wirewood
@@ -129,39 +129,22 @@ aus.register_schem_to_biome("wirewood_tree", biome_name, {
 	place_on = {node_top},
 	y_min = 36,
 	y_max = 150,
-	fill_ratio = 12000,
+	fill_ratio_divisor = 12000,
 })
 
 	-- River Red Gum
-aus.schematics.river_red_gum_tree = {}
-local max_r = 13
-local ht = 13
-local fruit = nil
-local limbs = nil
-local tree = "australia:river_red_gum_tree"
-local leaves = "australia:river_red_gum_leaves"
-for r = 10,max_r do
-	local schem = aus.generate_giant_tree_schematic(7, {x=r, y=ht, z=r}, tree, leaves, fruit, limbs)
-	table.insert(aus.schematics.river_red_gum_tree, schem)
-	minetest.register_decoration({
-		deco_type = "schematic",
-		sidelen = 80,
-		place_on = {node_top},
-		y_min = 36,
-		y_max = 140,
-		fill_ratio = (max_r-r+1)/20000,
-		biomes = {"central_australia"},
-		schematic = schem,
-		flags = "place_center_x, place_center_z",
-		rotation = "random",
-	})
-end
+aus.register_schem_to_biome("river_red_gum_tree", biome_name, {
+	place_on = {node_top},
+	y_min = 36,
+	y_max = 140,
+	fill_ratio_divisor = 20000,
+})
 
 	-- Sugar Gum
 aus.register_schem_to_biome("sugar_gum_tree", biome_name, {
 	place_on = {node_top},
 	y_min = 36,
 	y_max = 140,
-	fill_ratio = 20000,
+	fill_ratio_divisor = 20000,
 })
 

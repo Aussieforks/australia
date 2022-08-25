@@ -11,6 +11,7 @@
 * ABMs: Conversion to LBMs or nodetimers where appropriate, especially shipwrecks
 	* Tree growth to nodetimers (according to MTG practice)
 * Leaf decay
+* Bonemeal support?
 * Tree Schematics with no sapling:
 	* Small river oak (river_oak_small_tree)
 	* Small Coast Banksia

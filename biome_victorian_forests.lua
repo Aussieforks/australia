@@ -386,221 +386,83 @@ aus.register_schem_to_biome("black_wattle_tree", biome_name, {
 	place_on = {node_top},
 	y_min = 36,
 	y_max = 150,
-	fill_ratio = 12000,
+	fill_ratio_divisor = 12000,
 })
 
 	-- Blue Gum
-aus.schematics.blue_gum_tree = {}
-local max_r = 7
-local ht = 12
-local fruit = nil
-local limbs = nil
-local tree = "australia:blue_gum_tree"
-local leaves = "australia:blue_gum_leaves"
-for r = 6,max_r do
-	local schem = aus.generate_tree_schematic(10, {x=r, y=ht, z=r}, tree, leaves, fruit, limbs)
-	table.insert(aus.schematics.blue_gum_tree, schem)
-	minetest.register_decoration({
-		deco_type = "schematic",
-		sidelen = 80,
-		place_on = {"default:dirt_with_grass"},
-		y_min = 36,
-		y_max = 180,
-		fill_ratio = (max_r-r+1)/7000,
-		biomes = {"victorian_forests"},
-		schematic = schem,
-		flags = "place_center_x, place_center_z",
-		rotation = "random",
-	})
-end
-
+aus.register_schem_to_biome("blue_gum_tree", biome_name, {
+	place_on = {node_top},
+	y_min = 36,
+	y_max = 180,
+	fill_ratio_divisor = 7000,
+})
 	-- Coolabah Tree
 aus.register_schem_to_biome("coolabah_tree", biome_name, {
 	place_on = {node_top},
 	y_min = 36,
 	y_max = 140,
-	fill_ratio = 20000,
+	fill_ratio_divisor = 20000,
 })
 
-
 	-- Golden Wattle
-aus.schematics.golden_wattle_tree = {}
-local max_r = 3
-local ht = 3
-local fruit = nil
-local limbs = false
-local tree = "australia:golden_wattle_tree"
-local leaves = "australia:golden_wattle_leaves"
-for r = 2,max_r do
-	local schem = aus.generate_tree_schematic(2, {x=r, y=ht, z=r}, tree, leaves, fruit, limbs)
-	table.insert(aus.schematics.golden_wattle_tree, schem)
-	minetest.register_decoration({
-		deco_type = "schematic",
-		sidelen = 80,
-		place_on = {"default:dirt_with_grass"},
-		y_min = 36,
-		y_max = 150,
-		fill_ratio = (max_r-r+1)/12000,
-		biomes = {"victorian_forests"},
-		schematic = schem,
-		flags = "place_center_x, place_center_z",
-		rotation = "random",
-	})
-end
-
+aus.register_schem_to_biome("golden_wattle_tree", biome_name, {
+	place_on = {node_top},
+	y_min = 36,
+	y_max = 150,
+	fill_ratio_divisor = 12000,
+})
 	-- Lilly Pilly
 aus.register_schem_to_biome("lilly_pilly_tree", biome_name, {
 	place_on = {node_top},
 	y_min = 36,
 	y_max = 150,
-	fill_ratio = 12000,
+	fill_ratio_divisor = 12000,
 })
 
 	-- Red Bottlebrush
-aus.schematics.red_bottlebrush_tree = {}
-local max_r = 3
-local ht = 4
-local fruit = nil
-local limbs = false
-local tree = "australia:red_bottlebrush_tree"
-local leaves = "australia:red_bottlebrush_leaves"
-for r = 2,max_r do
-	local schem = aus.generate_tree_schematic(1, {x=r, y=ht, z=r}, tree, leaves, fruit, limbs)
-	table.insert(aus.schematics.red_bottlebrush_tree, schem)
-	minetest.register_decoration({
-		deco_type = "schematic",
-		sidelen = 80,
-		place_on = {"default:dirt_with_grass"},
-		y_min = 36,
-		y_max = 150,
-		fill_ratio = (max_r-r+1)/12000,
-		biomes = {"victorian_forests"},
-		schematic = schem,
-		flags = "place_center_x, place_center_z",
-		rotation = "random",
-	})
-end
+aus.register_schem_to_biome("red_bottlebrush_tree", biome_name, {
+	place_on = {node_top},
+	y_min = 36,
+	y_max = 150,
+	fill_ratio_divisor = 12000,
+})
 
 	-- River Red Gum
-aus.schematics.river_red_gum_tree = {}
-local max_r = 13
-local ht = 13
-local fruit = nil
-local limbs = nil
-local tree = "australia:river_red_gum_tree"
-local leaves = "australia:river_red_gum_leaves"
-for r = 10,max_r do
-	local schem = aus.generate_giant_tree_schematic(7, {x=r, y=ht, z=r}, tree, leaves, fruit, limbs)
-	table.insert(aus.schematics.river_red_gum_tree, schem)
-	minetest.register_decoration({
-		deco_type = "schematic",
-		sidelen = 80,
-		place_on = {"default:dirt_with_grass"},
-		y_min = 36,
-		y_max = 140,
-		fill_ratio = (max_r-r+1)/20000,
-		biomes = {"victorian_forests"},
-		schematic = schem,
-		flags = "place_center_x, place_center_z",
-		rotation = "random",
-	})
-end
+aus.register_schem_to_biome("river_red_gum_tree", biome_name, {
+	place_on = {node_top},
+	y_min = 36,
+	y_max = 140,
+	fill_ratio_divisor = 20000,
+})
 
 	-- Southern Sassafras
-aus.schematics.southern_sassafras_tree = {}
-local max_r = 5
-local fruit = nil
-local tree = "australia:southern_sassafras_tree"
-local leaves = "australia:southern_sassafras_leaves"
-for r = 4,max_r do
-	local schem = aus.generate_conifer_schematic(6, r, tree, leaves, fruit)
-	table.insert(aus.schematics.southern_sassafras_tree, schem)
-	minetest.register_decoration({
-		deco_type = "schematic",
-		sidelen = 80,
-		place_on = {"default:dirt_with_grass"},
-		y_min = 36,
-		y_max = 160,
-		fill_ratio = (max_r-r+1)/15000,
-		biomes = {"victorian_forests"},
-		schematic = schem,
-		flags = "place_center_x, place_center_z",
-		rotation = "random",
-	})
-end
+aus.register_schem_to_biome("southern_sassafras_tree", biome_name, {
+	place_on = {node_top},
+	y_min = 36,
+	y_max = 160,
+	fill_ratio_divisor = 15000,
+})
 
 	-- Swamp Gum
-aus.schematics.swamp_gum_tree = {}
-local max_r = 6
-local ht = 18
-local fruit = nil
-local limbs = nil
-local tree = "australia:swamp_gum_tree"
-local leaves = "australia:swamp_gum_leaves"
-for r = 6,max_r do
-	local schem = aus.generate_giant_tree_schematic(26, {x=r, y=ht, z=r}, tree, leaves, fruit, limbs)
-	table.insert(aus.schematics.swamp_gum_tree, schem)
-	minetest.register_decoration({
-		deco_type = "schematic",
-		sidelen = 80,
-		place_on = {"default:dirt_with_grass"},
-		y_min = 36,
-		y_max = 120,
-		fill_ratio = (max_r-r+1)/15000,
-		biomes = {"victorian_forests"},
-		schematic = schem,
-		flags = "place_center_x, place_center_z",
-		rotation = "random",
-	})
-end
+aus.register_schem_to_biome("swamp_gum_tree", biome_name, {
+	place_on = {node_top},
+	y_min = 36,
+	y_max = 120,
+	fill_ratio_divisor = 15000,
+})
 
 	-- Tasmanian Myrtle
-aus.schematics.tasmanian_myrtle_tree = {}
-local max_r = 8
-local ht = 14
-local fruit = nil
-local limbs = nil
-local tree = "australia:tasmanian_myrtle_tree"
-local leaves = "australia:tasmanian_myrtle_leaves"
-for r = 6,max_r do
-	local schem = aus.generate_big_tree_schematic(6, {x=r, y=ht, z=r}, tree, leaves, fruit, limbs)
-	table.insert(aus.schematics.tasmanian_myrtle_tree, schem)
-	minetest.register_decoration({
-		deco_type = "schematic",
-		sidelen = 80,
-		place_on = {"default:dirt_with_grass"},
-		y_min = 36,
-		y_max = 150,
-		fill_ratio = (max_r-r+1)/15000,
-		biomes = {"victorian_forests"},
-		schematic = schem,
-		flags = "place_center_x, place_center_z",
-		rotation = "random",
-	})
-end
+aus.register_schem_to_biome("tasmanian_myrtle_tree", biome_name, {
+	place_on = {node_top},
+	y_min = 36,
+	y_max = 150,
+	fill_ratio_divisor = 15000,
+})
 
 	-- White Box
-aus.schematics.white_box_tree = {}
-local max_r = 8
-local ht = 7
-local fruit = nil
-local limbs = nil
-local tree = "australia:white_box_tree"
-local leaves = "australia:white_box_leaves"
-for r = 6,max_r do
-	local schem = aus.generate_tree_schematic(5, {x=r, y=ht, z=r}, tree, leaves, fruit, limbs)
-	table.insert(aus.schematics.white_box_tree, schem)
-	minetest.register_decoration({
-		deco_type = "schematic",
-		sidelen = 80,
-		place_on = {"default:dirt_with_grass"},
-		y_min = 36,
-		y_max = 175,
-		fill_ratio = (max_r-r+1)/10000,
-		biomes = {"victorian_forests"},
-		schematic = schem,
-		flags = "place_center_x, place_center_z",
-		rotation = "random",
-	})
-end
-
+aus.register_schem_to_biome("white_box_tree", biome_name, {
+	place_on = {node_top},
+	y_min = 36,
+	y_max = 175,
+	fill_ratio_divisor = 10000,
+})

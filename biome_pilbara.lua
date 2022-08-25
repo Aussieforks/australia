@@ -104,6 +104,6 @@ aus.register_schem_to_biome("desert_oak_tree", biome_name, {
 	place_on = {node_top},
 	y_min = 10,
 	y_max = 35,
-	fill_ratio = 15000,
+	fill_ratio_divisor = 15000,
 })
 

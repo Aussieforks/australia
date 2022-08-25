@@ -136,38 +136,22 @@ aus.register_schem_to_biome("black_wattle_tree", biome_name, {
 	place_on = {node_top},
 	y_min = 7,
 	y_max = 35,
-	fill_ratio = 15000,
+	fill_ratio_divisor = 15000,
 })
 
 	-- Australian Cherry
-aus.schematics.cherry_tree = {}
-local max_r = 3
-local fruit = "australia:cherry"
-local tree = "australia:cherry_tree"
-local leaves = "australia:cherry_leaves"
-for r = 2,max_r do
-	local schem = aus.generate_conifer_schematic(3, r, tree, leaves, fruit)
-	table.insert(aus.schematics.cherry_tree, schem)
-	minetest.register_decoration({
-		deco_type = "schematic",
-		sidelen = 80,
-		place_on = {"default:dirt_with_grass"},
-		y_min = 7,
-		y_max = 35,
-		fill_ratio = (max_r-r+1)/15000,
-		biomes = {"eastern_coasts"},
-		schematic = schem,
-		flags = "place_center_x, place_center_z",
-		rotation = "random",
-	})
-end
-
+aus.register_schem_to_biome("cherry_tree", biome_name, {
+	place_on = {"default:dirt_with_grass"},
+	y_min = 7,
+	y_max = 35,
+	fill_ratio_divisor = 15000,
+})
 	-- Coast Banksia (big)
 aus.register_schem_to_biome("coast_banksia_big_tree", biome_name, {
 	place_on = {node_top},
 	y_min = 12,
 	y_max = 35,
-	fill_ratio = 15000,
+	fill_ratio_divisor = 15000,
 })
 
 	-- Coast Banksia (small)
@@ -175,7 +159,7 @@ aus.register_schem_to_biome("coast_banksia_small_tree", biome_name, {
 	place_on = {node_top},
 	y_min = 6,
 	y_max = 10,
-	fill_ratio = 12000,
+	fill_ratio_divisor = 12000,
 })
 
 	-- Coolabah Tree
@@ -183,7 +167,7 @@ aus.register_schem_to_biome("coolabah_tree", biome_name, {
 	place_on = {node_top},
 	y_min = 7,
 	y_max = 35,
-	fill_ratio = 20000,
+	fill_ratio_divisor = 20000,
 })
 
 	-- Illawarra Flame Tree
@@ -191,7 +175,7 @@ aus.register_schem_to_biome("illawarra_flame_tree", biome_name, {
 	place_on = {node_top},
 	y_min = 7,
 	y_max = 35,
-	fill_ratio = 15000,
+	fill_ratio_divisor = 15000,
 })
 
 	-- Lemon Myrtle
@@ -199,7 +183,7 @@ aus.register_schem_to_biome("lemon_myrtle_tree", biome_name, {
 	place_on = {node_top},
 	y_min = 7,
 	y_max = 35,
-	fill_ratio = 15000,
+	fill_ratio_divisor = 15000,
 })
 
 	-- Lilly Pilly
@@ -207,7 +191,7 @@ aus.register_schem_to_biome("lilly_pilly_tree", biome_name, {
 	place_on = {node_top},
 	y_min = 7,
 	y_max = 35,
-	fill_ratio = 12000,
+	fill_ratio_divisor = 12000,
 })
 
 	-- Macadamia Tree
@@ -215,178 +199,53 @@ aus.register_schem_to_biome("macadamia_tree", biome_name, {
 	place_on = {node_top},
 	y_min = 8,
 	y_max = 35,
-	fill_ratio = 15000,
+	fill_ratio_divisor = 15000,
 })
 
 	-- Moreton Bay Fig
-aus.schematics.moreton_bay_fig_tree = {}
-local max_r = 13
-local ht = 12
-local fruit = "australia:moreton_bay_fig"
-local limbs = nil
-local tree = "australia:moreton_bay_fig_tree"
-local leaves = "australia:moreton_bay_fig_leaves"
-for r = 11,max_r do
-	local schem = aus.generate_giant_tree_schematic(2, {x=r, y=ht, z=r}, tree, leaves, fruit, limbs)
-	table.insert(aus.schematics.moreton_bay_fig_tree, schem)
-	minetest.register_decoration({
-		deco_type = "schematic",
-		sidelen = 80,
-		place_on = {"default:dirt_with_grass"},
-		y_min = 8,
-		y_max = 35,
-		fill_ratio = (max_r-r+1)/15000,
-		biomes = {"eastern_coasts"},
-		schematic = schem,
-		flags = "place_center_x, place_center_z",
-		rotation = "random",
-	})
-end
-
 aus.register_schem_to_biome("moreton_bay_fig_tree", biome_name, {
 	place_on = {node_top},
 	y_min = 8,
 	y_max = 35,
-	fill_ratio = 15000,
+	fill_ratio_divisor = 15000,
 })
 
 	-- Paperbark Tree
-aus.schematics.paperbark_tree = {}
-local max_r = 5
-local ht = 8
-local fruit = nil
-local limbs = nil
-local tree = "australia:paperbark_tree"
-local leaves = "australia:paperbark_leaves"
-for r = 4,max_r do
-	local schem = aus.generate_tree_schematic(4, {x=r, y=ht, z=r}, tree, leaves, fruit, limbs)
-	table.insert(aus.schematics.paperbark_tree, schem)
-	minetest.register_decoration({
-		deco_type = "schematic",
-		sidelen = 80,
-		place_on = {"default:dirt_with_grass"},
-		y_min = 7,
-		y_max = 35,
-		fill_ratio = (max_r-r+1)/15000,
-		biomes = {"eastern_coasts"},
-		schematic = schem,
-		flags = "place_center_x, place_center_z",
-		rotation = "random",
-	})
-end
-
-	-- River Oak
-aus.schematics.river_oak_big_tree = {}
-local max_r = 5
-local ht = 9
-local fruit = nil
-local limbs = false
-local tree = "australia:river_oak_tree"
-local leaves = "australia:river_oak_leaves"
-for r = 4,max_r do
-	local schem = aus.generate_tree_schematic(3, {x=r, y=ht, z=r}, tree, leaves, fruit, limbs)
-	table.insert(aus.schematics.river_oak_big_tree, schem)
-	minetest.register_decoration({
-		deco_type = "schematic",
-		sidelen = 80,
-		place_on = {"default:dirt_with_grass"},
-		y_min = 25,
-		y_max = 35,
-		fill_ratio = (max_r-r+1)/15000,
-		biomes = {"eastern_coasts"},
-		schematic = schem,
-		flags = "place_center_x, place_center_z",
-		rotation = "random",
-	})
-end
-
---[[
-aus.register_schem_to_biome("river_oak_big_tree", biome_name, {
-	place_on = {"default:dirt_with_grass"},
-	y_min = 25,
-	y_max = 35
-	fill_ratio = 15000,
+aus.register_schem_to_biome("paperbark_tree", biome_name, {
+	place_on = {node_top},
+	y_min = 7,
+	y_max = 35,
+	fill_ratio_divisor = 15000,
 })
 
-
-return aus.TreeSchematic("river_oak_big_tree", 4, 5, 9, nil, false,
-	"australia:river_oak_tree", "australia:river_oak_leaves", 3)
-
---]]
-
+	-- River Oak (big)
+aus.register_schem_to_biome("river_oak_big_tree", biome_name, {
+	place_on = {node_top},
+	y_min = 25,
+	y_max = 35,
+	fill_ratio_divisor = 15000,
+})
 
 	-- River Red Gum
-aus.schematics.river_red_gum_tree = {}
-local max_r = 13
-local ht = 13
-local fruit = nil
-local limbs = nil
-local tree = "australia:river_red_gum_tree"
-local leaves = "australia:river_red_gum_leaves"
-for r = 10,max_r do
-	local schem = aus.generate_giant_tree_schematic(7, {x=r, y=ht, z=r}, tree, leaves, fruit, limbs)
-	table.insert(aus.schematics.river_red_gum_tree, schem)
-	minetest.register_decoration({
-		deco_type = "schematic",
-		sidelen = 80,
-		place_on = {"default:dirt_with_grass"},
-		y_min = 25,
-		y_max = 35,
-		fill_ratio = (max_r-r+1)/20000,
-		biomes = {"eastern_coasts"},
-		schematic = schem,
-		flags = "place_center_x, place_center_z",
-		rotation = "random",
-	})
-end
+aus.register_schem_to_biome("river_red_gum_tree", biome_name, {
+	place_on = {node_top},
+	y_min = 25,
+	y_max = 35,
+	fill_ratio_divisor = 20000,
+})
 
 	-- Scribbly Gum
-aus.schematics.scribbly_gum_tree = {}
-local max_r = 5
-local ht = 5
-local fruit = nil
-local limbs = nil
-local tree = "australia:scribbly_gum_tree"
-local leaves = "australia:scribbly_gum_leaves"
-for r = 4,max_r do
-	local schem = aus.generate_tree_schematic(4, {x=r, y=ht, z=r}, tree, leaves, fruit, limbs)
-	table.insert(aus.schematics.scribbly_gum_tree, schem)
-	minetest.register_decoration({
-		deco_type = "schematic",
-		sidelen = 80,
-		place_on = {"default:dirt_with_grass"},
-		y_min = 7,
-		y_max = 35,
-		fill_ratio = (max_r-r+1)/12000,
-		biomes = {"eastern_coasts"},
-		schematic = schem,
-		flags = "place_center_x, place_center_z",
-		rotation = "random",
-	})
-end
+aus.register_schem_to_biome("scribbly_gum_tree", biome_name, {
+	place_on = {node_top},
+	y_min = 7,
+	y_max = 35,
+	fill_ratio_divisor = 12000,
+})
 
 	-- Tea Tree
-aus.schematics.tea_tree_tree = {}
-local max_r = 3
-local ht = 4
-local fruit = nil
-local limbs = false
-local tree = "australia:tea_tree_tree"
-local leaves = "australia:tea_tree_leaves"
-for r = 2,max_r do
-	local schem = aus.generate_tree_schematic(1, {x=r, y=ht, z=r}, tree, leaves, fruit, limbs)
-	table.insert(aus.schematics.tea_tree_tree, schem)
-	minetest.register_decoration({
-		deco_type = "schematic",
-		sidelen = 80,
-		place_on = {"default:dirt_with_grass"},
-		y_min = 7,
-		y_max = 35,
-		fill_ratio = (max_r-r+1)/12000,
-		biomes = {"eastern_coasts"},
-		schematic = schem,
-		flags = "place_center_x, place_center_z",
-		rotation = "random",
-	})
-end
-
+aus.register_schem_to_biome("tea_tree_tree", biome_name, {
+	place_on = {"default:dirt_with_grass"},
+	y_min = 7,
+	y_max = 35,
+	fill_ratio_divisor = 12000,
+})

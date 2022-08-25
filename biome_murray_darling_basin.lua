@@ -143,36 +143,18 @@ minetest.register_decoration({
 --
 
 	-- Black Box
-aus.schematics.black_box_tree = {}
-local max_r = 8
-local ht = 8
-local fruit = nil
-local limbs = nil
-local tree = "australia:black_box_tree"
-local leaves = "australia:black_box_leaves"
-for r = 6,max_r do
-	local schem = aus.generate_big_tree_schematic(4, {x=r, y=ht, z=r}, tree, leaves, fruit, limbs)
-	table.insert(aus.schematics.black_box_tree, schem)
-	minetest.register_decoration({
-		deco_type = "schematic",
-		sidelen = 80,
-		place_on = {"default:dirt_with_dry_grass"},
-		y_min = 36,
-		y_max = 150,
-		fill_ratio = (max_r-r+1)/15000,
-		biomes = {"murray_darling_basin"},
-		schematic = schem,
-		flags = "place_center_x, place_center_z",
-		rotation = "random",
-	})
-end
-
+aus.register_schem_to_biome("black_box_tree", biome_name, {
+	place_on = {node_top},
+	y_min = 36,
+	y_max = 150,
+	fill_ratio_divisor = 15000,
+})
 	-- Black Wattle
 aus.register_schem_to_biome("black_wattle_tree", biome_name, {
 	place_on = {node_top},
 	y_min = 36,
 	y_max = 150,
-	fill_ratio = 15000,
+	fill_ratio_divisor = 15000,
 })
 
 	-- Coolabah Tree
@@ -180,65 +162,29 @@ aus.register_schem_to_biome("coolabah_tree", biome_name, {
 	place_on = {node_top},
 	y_min = 36,
 	y_max = 140,
-	fill_ratio = 20000,
+	fill_ratio_divisor = 20000,
 })
 
-
 	-- Golden Wattle
-aus.schematics.golden_wattle_tree = {}
-local max_r = 3
-local ht = 3
-local fruit = nil
-local limbs = false
-local tree = "australia:golden_wattle_tree"
-local leaves = "australia:golden_wattle_leaves"
-for r = 2,max_r do
-	local schem = aus.generate_tree_schematic(2, {x=r, y=ht, z=r}, tree, leaves, fruit, limbs)
-	table.insert(aus.schematics.golden_wattle_tree, schem)
-	minetest.register_decoration({
-		deco_type = "schematic",
-		sidelen = 80,
-		place_on = {"default:dirt_with_dry_grass"},
-		y_min = 36,
-		y_max = 150,
-		fill_ratio = (max_r-r+1)/15000,
-		biomes = {"murray_darling_basin"},
-		schematic = schem,
-		flags = "place_center_x, place_center_z",
-		rotation = "random",
-	})
-end
+aus.register_schem_to_biome("golden_wattle_tree", biome_name, {
+	place_on = {node_top},
+	y_min = 36,
+	y_max = 150,
+	fill_ratio_divisor = 15000,
+})
 
 	-- Desert Quandong
 aus.register_schem_to_biome("quandong_tree", biome_name, {
 	place_on = {node_top},
 	y_min = 36,
 	y_max = 150,
-	fill_ratio = 15000,
+	fill_ratio_divisor = 15000,
 })
 
 	-- River Red Gum
-aus.schematics.river_red_gum_tree = {}
-local max_r = 13
-local ht = 13
-local fruit = nil
-local limbs = nil
-local tree = "australia:river_red_gum_tree"
-local leaves = "australia:river_red_gum_leaves"
-for r = 10,max_r do
-	local schem = aus.generate_giant_tree_schematic(7, {x=r, y=ht, z=r}, tree, leaves, fruit, limbs)
-	table.insert(aus.schematics.river_red_gum_tree, schem)
-	minetest.register_decoration({
-		deco_type = "schematic",
-		sidelen = 80,
-		place_on = {"default:dirt_with_dry_grass"},
-		y_min = 36,
-		y_max = 140,
-		fill_ratio = (max_r-r+1)/10000,
-		biomes = {"murray_darling_basin"},
-		schematic = schem,
-		flags = "place_center_x, place_center_z",
-		rotation = "random",
-	})
-end
-
+aus.register_schem_to_biome("river_red_gum_tree", biome_name, {
+	place_on = {node_top},
+	y_min = 36,
+	y_max = 140,
+	fill_ratio_divisor = 10000,
+})

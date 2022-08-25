@@ -41,7 +41,7 @@ aus.register_schem_to_biome("coolabah_tree", biome_name, {
 	place_on = {node_top},
 	y_min = 36,
 	y_max = 150,
-	fill_ratio = 20000,
+	fill_ratio_divisor = 20000,
 })
 
 	-- Desert Quandong
@@ -49,6 +49,6 @@ aus.register_schem_to_biome("quandong_tree", biome_name, {
 	place_on = {node_top},
 	y_min = 36,
 	y_max = 130,
-	fill_ratio = 15000,
+	fill_ratio_divisor = 15000,
 })
 

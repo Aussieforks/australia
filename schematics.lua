@@ -55,9 +55,9 @@ local function schematic_cacheMTS(self, idx)
 	end
 end
 
--- FIXME: Below 2 functions: consnt_fill_ratio should be available not just a
--- divisor. fill_ratio_divisor or const_fill_ratio should be available, not
--- fill_ratio as it is now.
+-- In the below 2 functions: Provide either const_fill_ratio to have all
+-- schematics have the same fill ratio, or fill_ratio_divisor to have the fill
+-- ratio scale with the size (radius or height) of the tree
 
 local function schematic_register_to_biome_iter_r(self, biome_name, decoparams)
 	local r
@@ -67,17 +67,24 @@ local function schematic_register_to_biome_iter_r(self, biome_name, decoparams)
 	local place_on = decoparams.place_on
 	local y_min = decoparams.y_min
 	local y_max = decoparams.y_max
-	local fill_ratio_divisor = decoparams.fill_ratio
 	for idx, schem in pairs(aus.schematics[name]) do
 		-- index and radius are a fixed amount apart so we can reconstruct r
 		r = idx + (min_r-1)
+		local fill_ratio
+		if (decoparams.fill_ratio_divisor) then
+			fill_ratio = (max_r-r+1)/decoparams.fill_ratio_divisor
+		elseif (decoparams.const_fill_ratio) then
+			fill_ratio = decoparams.const_fill_ratio
+		else
+			assert(false, "No fill ratio provided: " .. self.name)
+		end
 		minetest.register_decoration({
 			deco_type = "schematic",
 			sidelen = 80,
 			place_on = place_on,
 			y_min = y_min,
 			y_max = y_max,
-			fill_ratio = (max_r-r+1)/fill_ratio_divisor,
+			fill_ratio = fill_ratio,
 			biomes = {biome_name},
 			schematic = schem,
 			flags = "place_center_x, place_center_z",
@@ -87,7 +94,6 @@ local function schematic_register_to_biome_iter_r(self, biome_name, decoparams)
 end
 
 local function schematic_register_to_biome_iter_h(self, biome_name, decoparams)
-	--fill_ratio = (max_ht-r+1)/6000,
 	--local h
 	local r = self.r
 	local name = self.name
@@ -96,18 +102,27 @@ local function schematic_register_to_biome_iter_h(self, biome_name, decoparams)
 	local place_on = decoparams.place_on
 	local y_min = decoparams.y_min
 	local y_max = decoparams.y_max
-	local fill_ratio_divisor = decoparams.fill_ratio
 	for --[[idx]]_, schem in pairs(aus.schematics[name]) do
 		-- index and height are a fixed amount apart so we can reconstruct h,
 		-- however, existing code uses r, making fill_ratio constant. Fix?
 		--h = idx + (min_ht-1)
+
+		local fill_ratio
+		if (decoparams.fill_ratio_divisor) then
+			fill_ratio = (max_ht-r+1)/decoparams.fill_ratio_divisor
+		elseif (decoparams.const_fill_ratio) then
+			fill_ratio = decoparams.const_fill_ratio
+		else
+			assert(false, "No fill ratio provided: " .. self.name)
+		end
+
 		minetest.register_decoration({
 			deco_type = "schematic",
 			sidelen = 80,
 			place_on = place_on,
 			y_min = y_min,
 			y_max = y_max,
-			fill_ratio = (max_ht-r+1)/fill_ratio_divisor,
+			fill_ratio = fill_ratio,
 			biomes = {biome_name},
 			schematic = schem,
 			flags = "place_center_x, place_center_z",
@@ -217,6 +232,14 @@ local function schematic_giant_tree_schematic_gen_schematic(self, r)
 		{x=r, y=self.h, z=r}--[[<-radii--]],
 		self.tree, self.leaves, self.fruit, self.limbs)
 end
+
+-- Variable scalar radius, per-instance height
+-- function aus.generate_conifer_schematic(trunk_height, radius, trunk, leaf, fruit)
+local function schematic_conifer_schematic_gen_schematic(self, r)
+	return aus.generate_conifer_schematic(self.trunk_height,
+		r, self.tree, self.leaves, self.fruit)
+end
+
 --[[ ITreeSchem
 {
 	name: ItemString,
@@ -259,7 +282,16 @@ local function ITreeSchemIterR(name, tree, leaves, min_r, max_r, h)
 	return t
 end
 
-local function GenericTreeSchematic(name, tree, leaves, min_r, max_r, h,
+function aus.ConiferSchematic(name, tree, leaves, min_r, max_r,
+		fruit, trunk_height)
+	local t = ITreeSchemIterR(name, tree, leaves, min_r, max_r)
+	t.trunk_height  = trunk_height
+	t.fruit = fruit
+	t.gen_schematic = schematic_conifer_schematic_gen_schematic
+	return t
+end
+
+local function IGenericTreeSchematic(name, tree, leaves, min_r, max_r, h,
 		fruit, limbs, trunk_height)
 	local t = ITreeSchemIterR(name, tree, leaves, min_r, max_r, h)
 	t.fruit = fruit
@@ -270,7 +302,7 @@ end
 
 function aus.TreeSchematic(name, tree, leaves, min_r, max_r, h,
 		fruit, limbs, trunk_height)
-	local t = GenericTreeSchematic(name, tree, leaves, min_r, max_r, h,
+	local t = IGenericTreeSchematic(name, tree, leaves, min_r, max_r, h,
 		fruit, limbs, trunk_height)
 	t.gen_schematic = schematic_tree_schematic_gen_schematic
 	return t
@@ -278,7 +310,7 @@ end
 
 function aus.BigTreeSchematic(name, tree, leaves, min_r, max_r, h,
 		fruit, limbs, trunk_height)
-	local t = GenericTreeSchematic(name, tree, leaves, min_r, max_r, h,
+	local t = IGenericTreeSchematic(name, tree, leaves, min_r, max_r, h,
 		fruit, limbs, trunk_height)
 	t.gen_schematic = schematic_big_tree_schematic_gen_schematic
 	return t
@@ -286,7 +318,7 @@ end
 
 function aus.GiantTreeSchematic(name, tree, leaves, min_r, max_r, h,
 		fruit, limbs, trunk_height)
-	local t = GenericTreeSchematic(name, tree, leaves, min_r, max_r, h,
+	local t = IGenericTreeSchematic(name, tree, leaves, min_r, max_r, h,
 		fruit, limbs, trunk_height)
 	t.gen_schematic = schematic_giant_tree_schematic_gen_schematic
 	return t

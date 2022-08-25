@@ -99,40 +99,25 @@ minetest.register_decoration({
 --
 
 	-- Cloncurry Box
-aus.schematics.cloncurry_box_tree = {}
-local max_r = 6
-local ht = 4
-local fruit = nil
-local limbs = nil
-local tree = "australia:cloncurry_box_tree"
-local leaves = "australia:cloncurry_box_leaves"
-for r = 5,max_r do
-	local schem = aus.generate_tree_schematic(3, {x=r, y=ht, z=r}, tree, leaves, fruit, limbs)
-	table.insert(aus.schematics.cloncurry_box_tree, schem)
-	minetest.register_decoration({
-		deco_type = "schematic",
-		sidelen = 80,
-		place_on = {"default:dirt_with_dry_grass"},
-		y_min = 6,
-		y_max = 35,
-		fill_ratio = (max_r-r+1)/10000,
-		biomes = {"gulf_of_carpentaria"},
-		schematic = schem,
-		flags = "place_center_x, place_center_z",
-		rotation = "random",
-	})
-end
-
-aus.register_schem_to_biome("darwin_woollybutt_tree", "gulf_of_carpentaria", {
-	place_on = {"default:dirt_with_dry_grass"},
-	y_min = 8,
+aus.register_schem_to_biome("cloncurry_box_tree", biome_name, {
+	place_on = {node_top},
+	y_min = 6,
 	y_max = 35,
-	fill_ratio = 12000,
+	fill_ratio_divisor = 10000,
 })
 
+	-- Darwin Woollybutt
+aus.register_schem_to_biome("darwin_woollybutt_tree", "gulf_of_carpentaria", {
+	place_on = {node_top},
+	y_min = 8,
+	y_max = 35,
+	fill_ratio_divisor = 12000,
+})
+
+	-- River Oak (small)
 aus.register_schem_to_biome("river_oak_small_tree", "gulf_of_carpentaria", {
-	place_on = {"default:dirt_with_dry_grass"},
+	place_on = {node_top},
 	y_min = 12,
 	y_max = 35,
-	fill_ratio = 12000,
+	fill_ratio_divisor = 12000,
 })

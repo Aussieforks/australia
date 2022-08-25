@@ -79,12 +79,12 @@ aus.register_schem_to_biome("darwin_woollybutt_tree", biome_name, {
 	place_on = {"default:dirt_with_grass"},
 	y_min = 8,
 	y_max = 35,
-	fill_ratio = 10000,
+	fill_ratio_divisor = 10000,
 })
 
 aus.register_schem_to_biome("river_oak_small_tree", biome_name, {
 	place_on = {"default:dirt_with_grass"},
 	y_min = 12,
 	y_max = 35,
-	fill_ratio = 12000,
+	fill_ratio_divisor = 12000,
 })

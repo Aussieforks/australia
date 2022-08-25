@@ -101,5 +101,5 @@ aus.register_schem_to_biome("snow_gum_tree", biome_name, {
 	place_on = {node_top},
 	y_min = aus.snowline(),
 	y_max = aus.snowline()+60,
-	fill_ratio = 2500,
+	fill_ratio_divisor = 2500,
 })
