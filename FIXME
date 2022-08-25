@@ -2,6 +2,8 @@
 
 * Schematic/decoration system modularisation/de-duplication
 	* QA Block schematic checks?
+	* Highly Reproducible schematic mode - sets all probabilities to 255.
+	Useful for comparing map renders to further reduce diff noise.
 	* Log schematics de-duplication & as MTS
 	* Grass and other decoration placement de-duplication (moss, ferns, mushrooms etc)
 	* Woodship schematic as MTS

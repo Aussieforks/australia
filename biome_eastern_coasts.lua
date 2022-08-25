@@ -243,6 +243,13 @@ for r = 11,max_r do
 	})
 end
 
+aus.register_schem_to_biome("moreton_bay_fig_tree", biome_name, {
+	place_on = {node_top},
+	y_min = 8,
+	y_max = 35,
+	fill_ratio = 15000,
+})
+
 	-- Paperbark Tree
 aus.schematics.paperbark_tree = {}
 local max_r = 5
@@ -292,6 +299,21 @@ for r = 4,max_r do
 		rotation = "random",
 	})
 end
+
+--[[
+aus.register_schem_to_biome("river_oak_big_tree", biome_name, {
+	place_on = {"default:dirt_with_grass"},
+	y_min = 25,
+	y_max = 35
+	fill_ratio = 15000,
+})
+
+
+return aus.TreeSchematic("river_oak_big_tree", 4, 5, 9, nil, false,
+	"australia:river_oak_tree", "australia:river_oak_leaves", 3)
+
+--]]
+
 
 	-- River Red Gum
 aus.schematics.river_red_gum_tree = {}
