@@ -62,7 +62,7 @@ minetest.register_node("australia:tree_fern_leaves", {
 		max_items = 1,
 		items = {
 			{
-				items = {"autralia:sapling_tree_fern"},
+				items = {"australia:sapling_tree_fern"},
 				rarity = 20,
 			},
 			{
