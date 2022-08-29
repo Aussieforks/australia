@@ -265,7 +265,7 @@ aus.register_schem_to_biome("fan_palm_tree", biome_name, {
 	place_on = {node_top},
 	y_min = 5,
 	y_max = 20,
-	fill_ratio_divisor = 300,
+	fill_ratio_divisor = --[[300]]1500,
 })
 
 	-- Lemon Eucalyptus
