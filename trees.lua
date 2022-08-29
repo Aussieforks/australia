@@ -18,6 +18,15 @@ local function round(num, idp)
   return math.floor(num * mult + 0.5) / mult
 end
 
+local function rainforest_tree_xz(rand)
+	local x, z = 0, 0
+	while x == 0 and z == 0 do
+		x = rand:next(-1,1) * 2
+		z = rand:next(-1,1) * 2
+	end
+	return x, z
+end
+
 	-- Rainforest tree
 function aus.generate_rainforest_tree_schematic(trunk_height, r, trunk, leaf)
 	local height = trunk_height * 2 + 1
@@ -48,19 +57,26 @@ function aus.generate_rainforest_tree_schematic(trunk_height, r, trunk, leaf)
 		end
 	end
 
--- canopy
-	for y = 1,trunk_top+3 do
-		if y > trunk_height and (y == trunk_top or rand:next(1,height - y) == 1) then
-			local x, z = 0, 0
-			while x == 0 and z == 0 do
-				x = rand:next(-1,1) * 2
-				z = rand:next(-1,1) * 2
-			end
+-- canopies part way up trunk
+
+	for y = trunk_height+1, trunk_top-1 do
+		if (rand:next(1,height - y) == 1) then
+			local x, z = rainforest_tree_xz(rand)
 			for j = -2,2,2 do
 				aus.generate_canopy(s, leaf, {x=j*x, y=y, z=j*z})
 			end
 		end
 	end
+
+-- topmost canopy
+	local topcanopyheight = rand:next(1,4)
+	for y = trunk_top, trunk_top+topcanopyheight do
+		local x, z = rainforest_tree_xz(rand)
+		for j = -2,2,2 do
+			aus.generate_canopy(s, leaf, {x=j*x, y=y, z=j*z})
+		end
+	end
+
 	return s
 end
 
