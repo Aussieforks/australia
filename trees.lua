@@ -453,7 +453,7 @@ function aus.generate_conifer_schematic(trunk_height, radius, trunk, leaf, fruit
 			for x = -1,1 do
 				local i = (z+radius)*width*height + y*width + (x+radius) + 1
 				if (x == 0 and z == 0) or y < height - 1 then
-					if fruit and rand:next(1,10) == 1 then
+					if fruit and rand:next(1,10) == 2 then
 						s.data[i].name = fruit
 						s.data[i].param1 = 127
 					else
