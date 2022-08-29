@@ -3,8 +3,6 @@
 --
 
 aus.treelist = {
-    -- @@@ Josselin2
---	--treename, treedesc, treetrunk_dia, treespaling, treefruit, treefruit_desc, treefruit_scale, treefruit_health
 	--treename, treedesc, treetrunk_dia, treesapling, treefruit, treefruit_desc, treefruit_scale, treefruit_health
 	{"black_box", "Eucalyptus largiflorens: Black Box", 1.0, "eucalyptus", nil, nil, nil, nil },
 	{"black_wattle", "Acacia melanoxylon: Black Wattle", 0.75, "acacia", nil, nil, nil, nil },
@@ -60,8 +58,6 @@ for i in ipairs(aus.treelist) do
 	local treename			= aus.treelist[i][1]
 	local treedesc			= aus.treelist[i][2]
 	local treetrunk_dia		= aus.treelist[i][3]
-    -- @@@ Josselin2
---	local treespaling		= aus.treelist[i][4]
 	local treesapling		= aus.treelist[i][4]
 	local treefruit			= aus.treelist[i][5]
 	local treefruit_desc	= aus.treelist[i][6]
@@ -82,7 +78,7 @@ for i in ipairs(aus.treelist) do
 		sounds = default.node_sound_wood_defaults(),
 		on_place = minetest.rotate_node,
 	}
-	-- Some trunks aren't a meter wide.
+	-- Some trunks aren't a metre wide.
 	if treetrunk_dia and treetrunk_dia ~= 1 then
 		local radius = treetrunk_dia / 2
 		node_d.paramtype = "light"
@@ -94,7 +90,8 @@ for i in ipairs(aus.treelist) do
 			fixed = { {-radius, -0.5, -radius, radius, 0.5, radius}, }
 		}
 	end
-	minetest.register_node("australia:"..treename.."_tree", node_d)
+	local trunk_node_name = "australia:"..treename.."_tree"
+	minetest.register_node(trunk_node_name, node_d)
 
 	-- wood
 	minetest.register_node("australia:"..treename.."_wood", {
@@ -104,8 +101,10 @@ for i in ipairs(aus.treelist) do
 		sounds = default.node_sound_wood_defaults(),
 	})
 
+
+	local tree_leaf_name = "australia:"..treename.."_leaves"
 	-- leaves
-	minetest.register_node("australia:"..treename.."_leaves", {
+	minetest.register_node(tree_leaf_name, {
 		description = treedesc.." Leaves",
 		drawtype = "allfaces_optional",
 		visual_scale = 1.3,
@@ -128,12 +127,6 @@ for i in ipairs(aus.treelist) do
 		description = treedesc.." Sapling",
 		drawtype = "plantlike",
 		visual_scale = 1.0,
-        -- @@@ Josselin2
-        --[[
-		tiles = {"aus_"..treespaling.."_sapling.png"},
-		inventory_image = "aus_"..treespaling.."_sapling.png",
-		wield_image = "aus_"..treespaling.."_sapling.png",
-        ]]--
 		tiles = {"aus_"..treesapling.."_sapling.png"},
 		inventory_image = "aus_"..treesapling.."_sapling.png",
 		wield_image = "aus_"..treesapling.."_sapling.png",
@@ -150,8 +143,10 @@ for i in ipairs(aus.treelist) do
 	})
 
 	-- fruit, if applicable
+	local treefruit_name
 	if treefruit then
-		minetest.register_node("australia:"..treefruit.."", {
+		treefruit_name = "australia:"..treefruit..""
+		minetest.register_node(treefruit_name, {
 			description = treefruit_desc,
 			drawtype = "plantlike",
 			visual_scale = treefruit_scale,
@@ -166,7 +161,7 @@ for i in ipairs(aus.treelist) do
 				type = "fixed",
 				fixed = {-0.1, -0.5, -0.1, 0.1, -0.25, 0.1},
 			},
-			groups = {fleshy=3,dig_immediate=3,flammable=2,leafdecay=3,leafdecay_drop=1},
+			groups = {fleshy=3,dig_immediate=3,flammable=2,leafdecay=2,leafdecay_drop=1},
 			-- Fruit makes you healthy.
 			on_use = minetest.item_eat(treefruit_health),
 			sounds = default.node_sound_leaves_defaults(),
@@ -177,6 +172,13 @@ for i in ipairs(aus.treelist) do
 			end,
 		})
 	end
+
+	-- leaf decay
+	default.register_leafdecay({
+		trunks = {trunk_node_name},
+		leaves = {tree_leaf_name, treefruit_name},
+		radius = 2,
+	})
 
 	-- fence
 	default.register_fence("australia:fence_"..treename.."_wood", {
