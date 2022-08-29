@@ -434,8 +434,14 @@ function aus.generate_conifer_schematic(trunk_height, radius, trunk, leaf, fruit
 					s.data[i].param1 = 255
 					s.data[i].force_place = true
 				elseif y > trunk_height and dist <= r1 then
-					s.data[i].name = leaf
-					s.data[i].param1 = probs[dist]
+					-- Fruits, but only on the outside
+					if fruit and dist >= radius-1 and rand:next(1,10) == 1 then
+						s.data[i].name = fruit
+						s.data[i].param1 = 127
+					else
+						s.data[i].name = leaf
+						s.data[i].param1 = probs[dist]
+					end
 				end
 			end
 		end
@@ -451,7 +457,7 @@ function aus.generate_conifer_schematic(trunk_height, radius, trunk, leaf, fruit
 						s.data[i].name = fruit
 						s.data[i].param1 = 127
 					else
-					s.data[i].name = leaf
+						s.data[i].name = leaf
 					end
 					if x == 0 and z == 0 then
 						s.data[i].param1 = 255
