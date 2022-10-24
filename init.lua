@@ -24,17 +24,17 @@ aus.schematics = {}
 
 
 -- Load files
+dofile(aus.path .. "/tree_gen.lua")
+dofile(aus.path .. "/nulda.lua")
 dofile(aus.path .. "/schematics.lua")
 dofile(aus.path .. "/schematics_commands.lua")
 dofile(aus.path .. "/decorations.lua")
-dofile(aus.path .. "/nulda.lua")
+dofile(aus.path .. "/mapgen.lua")
+dofile(aus.path .. "/saplings.lua")
 dofile(aus.path .. "/nodes.lua")
 dofile(aus.path .. "/noairblocks.lua")
 dofile(aus.path .. "/craftitems.lua")
 dofile(aus.path .. "/crafting.lua")
-dofile(aus.path .. "/tree_gen.lua")
-dofile(aus.path .. "/mapgen.lua")
-dofile(aus.path .. "/saplings.lua")
 --dofile(aus.path .. "/voxel.lua")
 
 -- Clear schematic-generating objects that are no longer needed

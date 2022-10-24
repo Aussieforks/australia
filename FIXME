@@ -9,7 +9,8 @@
 	* Woodship schematic as MTS
 	* U-boat schematic as MTS
 * ABMs: Conversion to LBMs or nodetimers where appropriate, especially shipwrecks
-	* Tree growth to nodetimers (according to MTG practice)
+	* Coral ABMs to nodetimers
+	* Shipwreck LBMs?
 * Bonemeal support?
 * Tree Schematics with no sapling:
 	* Small river oak (river_oak_small_tree)
@@ -23,6 +24,7 @@
 * Reproduction of smaller plants like spinifex, mitchell grass
 	* Bonemeal addon?
 	* Cultivation item(s)?
+* Internationalise strings
 
 # Biomes testing coords
 Mapgen is always carpathian. Teleportation is not safe unless you have fly!

@@ -124,13 +124,31 @@ for _, treedef in ipairs(aus.treelist) do
 	})
 
 	-- sapling
-	minetest.register_node("australia:"..treename.."_sapling", {
+	local saplingname = "australia:"..treename.."_sapling"
+	local sapling_texname = "aus_"..treesapling.."_sapling.png"
+	--[[print(saplingname)
+	print(dump(aus.saplings2schems))--]]
+	local sapling_schems = aus.saplings2schems[saplingname]
+	local sap_max_size_x = 0
+	local sap_max_size_y = 0
+	local sap_max_size_z = 0
+	for schemidx, schem in pairs(sapling_schems) do
+		sap_max_size_x = math.max(sap_max_size_x, schem.size.x)
+		sap_max_size_y = math.max(sap_max_size_y, schem.size.y)
+		sap_max_size_z = math.max(sap_max_size_z, schem.size.z)
+	end
+	-- Due to rotations, we have to always check the largest axis. They should
+	-- be equal anyway.
+	local sap_max_bounds_horiz = math.floor(math.max(sap_max_size_x, sap_max_size_z)/2)
+	local sap_size = vector.new(sap_max_size_x, sap_max_size_y, sap_max_size_z)
+
+	minetest.register_node(saplingname, {
 		description = treedesc.." Sapling",
 		drawtype = "plantlike",
 		visual_scale = 1.0,
-		tiles = {"aus_"..treesapling.."_sapling.png"},
-		inventory_image = "aus_"..treesapling.."_sapling.png",
-		wield_image = "aus_"..treesapling.."_sapling.png",
+		tiles = {sapling_texname},
+		inventory_image = sapling_texname,
+		wield_image = sapling_texname,
 		paramtype = "light",
 		sunlight_propagates = true,
 		walkable = false,
@@ -139,8 +157,22 @@ for _, treedef in ipairs(aus.treelist) do
 			type = "fixed",
 			fixed = {-0.3, -0.5, -0.3, 0.3, 0.35, 0.3}
 		},
-		groups = {snappy=2,dig_immediate=3,flammable=2,attached_node=1},
+		groups = {snappy=2,dig_immediate=3,flammable=2,attached_node=1,sapling=1},
 		sounds = default.node_sound_leaves_defaults(),
+
+		on_construct = function(pos)
+			minetest.get_node_timer(pos):start(math.random(300, 1500)) --300,1500 mtg default
+		end,
+		on_timer = aus.grow_sapling,
+
+		on_place = function(itemstack, placer, pointed_thing)
+			return default.sapling_on_place(itemstack, placer, pointed_thing,
+				itemstack:get_name(),
+				vector.new(-sap_max_bounds_horiz, 1, -sap_max_bounds_horiz),
+				vector.new(sap_max_bounds_horiz, sap_max_size_y, sap_max_bounds_horiz),
+				4
+			)
+		end
 	})
 
 	-- fruit, if applicable
