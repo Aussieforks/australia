@@ -1,4 +1,5 @@
--- mods/australia/trees.lua
+-- mods/australia/tree_gen.lua
+-- was mods/australia/trees.lua previously
 
 local function str2seed(s)
 	local nleaf = #s

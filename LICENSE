@@ -1,4 +1,7 @@
+Licence of original source code and assets
+------------------------------------------
 Copyright (c) 2016, Vaughan Lapsley
+Copyright (c) 2022, Blockhead, Maverick2797 and Josselin2
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -21,3 +24,21 @@ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+
+Licence of re-used code
+-----------------------
+
+nulda.lua contains code from Minetest Game, licensed under the GNU Lesser
+General Public License, version 2.1
+Copyright (C) 2011-2018 celeron55 (Perttu Ahola) <celeron55@gmail.com>
+Copyright (C) 2011-2018 Various Minetest developers and contributors
+
+This program is free software; you can redistribute it and/or modify it under the terms
+of the GNU Lesser General Public License as published by the Free Software Foundation;
+either version 2.1 of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+See the GNU Lesser General Public License for more details:
+https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html

@@ -115,6 +115,11 @@ All biomes are enabled by default. Currently, disabling the *Underground* biome 
 
 ## Changelog
 
+### 0.5.1
+* Australian trees now finally support leaf decay.
+* A new series of commands will let server operators spawn aus schematics.
+* Fixed sapling drops for fern trees.
+
 ### 0.5.0
 * Biomes and several other mapgen features can now be disabled via the in-game
 settings menu instead of by editing Lua files.
