@@ -9,8 +9,8 @@ aus.treelist = {
 	{"blue_gum", "Eucalyptus globulus: Blue Gum", 1.0, "eucalyptus", nil, nil, nil, nil, 3},
 	{"boab", "Adansonia gregorii: Boab", 1.0, "boab", nil, nil, nil, nil, 3},
 	{"bull_banksia", "Banksia grandis: Bull Banksia", 0.33, "banksia", nil, nil, nil, nil, 3},
-	{"celery_top_pine", "Phyllocladus aspleniifolius: Celery-top Pine", 1, "pine", nil, nil, nil, nil, vector.new(3,4,3)},
-	{"cherry", "Exocarpos cupressiformis: Australian Cherry", 0.5, "berry", "cherry", "Australian Cherries", 0.67, 1, 3},
+	{"celery_top_pine", "Phyllocladus aspleniifolius: Celery-top Pine", 1, "pine", nil, nil, nil, nil, vector.new(4,6,4)},
+	{"cherry", "Exocarpos cupressiformis: Australian Cherry", 0.5, "berry", "cherry", "Australian Cherries", 0.67, 1, vector.new(3,4,3)},
 	{"cloncurry_box", "Eucalyptus leucophylla: Cloncurry Box", 1.0, "eucalyptus", nil, nil, nil, nil, 3},
 	{"coast_banksia", "Banksia integrifolia: Coast Banksia", 1.0, "banksia", nil, nil, nil, nil, 3},
 	{"coolabah", "Eucalyptus coolabah: Coolabah", 1.0, "eucalyptus", nil, nil, nil, nil, 3},
@@ -126,8 +126,6 @@ for _, treedef in ipairs(aus.treelist) do
 	-- sapling
 	local saplingname = "australia:"..treename.."_sapling"
 	local sapling_texname = "aus_"..treesapling.."_sapling.png"
-	--[[print(saplingname)
-	print(dump(aus.saplings2schems))--]]
 	local sapling_schems = aus.saplings2schems[saplingname]
 	local sap_max_size_x = 0
 	local sap_max_size_y = 0
@@ -141,6 +139,8 @@ for _, treedef in ipairs(aus.treelist) do
 	-- be equal anyway.
 	local sap_max_bounds_horiz = math.floor(math.max(sap_max_size_x, sap_max_size_z)/2)
 	local sap_size = vector.new(sap_max_size_x, sap_max_size_y, sap_max_size_z)
+	local sap_growthrate_a, sap_growthrate_b = aus.sapling_growthrate(
+		sapling_schems, saplingname, (treefruit and "australia:"..treefruit))
 
 	minetest.register_node(saplingname, {
 		description = treedesc.." Sapling",
@@ -161,7 +161,8 @@ for _, treedef in ipairs(aus.treelist) do
 		sounds = default.node_sound_leaves_defaults(),
 
 		on_construct = function(pos)
-			minetest.get_node_timer(pos):start(math.random(300, 1500)) --300,1500 mtg default
+			minetest.get_node_timer(pos):start(math.random(
+					sap_growthrate_a, sap_growthrate_b))
 		end,
 		on_timer = aus.grow_sapling,
 
@@ -170,7 +171,7 @@ for _, treedef in ipairs(aus.treelist) do
 				itemstack:get_name(),
 				vector.new(-sap_max_bounds_horiz, 1, -sap_max_bounds_horiz),
 				vector.new(sap_max_bounds_horiz, sap_max_size_y, sap_max_bounds_horiz),
-				4
+				4 -- kind of a magic number but meh
 			)
 		end
 	})
@@ -178,7 +179,7 @@ for _, treedef in ipairs(aus.treelist) do
 	-- fruit, if applicable
 	local treefruit_name
 	if treefruit then
-		treefruit_name = "australia:"..treefruit..""
+		treefruit_name = "australia:"..treefruit
 		minetest.register_node(treefruit_name, {
 			description = treefruit_desc,
 			drawtype = "plantlike",
