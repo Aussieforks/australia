@@ -106,6 +106,12 @@ aus.saplings2schems = {
 }
 
 function aus.grow_sapling(pos)
+	if not default.can_grow(pos) then
+		-- Try again 2 minutes later (we'll be more generous than default because
+		-- some trees take ages)
+		minetest.get_node_timer(pos):start(120)
+		return
+	end
 	local node = minetest.get_node(pos)
 	local schems = aus.saplings2schems[node.name]
 	assert(schems ~= nil, string.format("No such sapling registered: %s @%s", node.name, pos))
@@ -118,4 +124,34 @@ function aus.grow_sapling(pos)
 							 z = pos.z - math.floor(schem.size.z / 2)}
 
 	minetest.place_schematic(adj, schem, 'random', nil, true)
+end
+
+function aus.sapling_growthrate(schems, species, fruit)
+	local nschems = #schems
+	local node_counts = {}
+	for schem_idx, schem in pairs(schems) do
+		for data_idx, data_point in pairs(schem.data) do
+			local nodename = data_point.name
+			node_counts[nodename] = (node_counts[nodename] or 0) + 1
+		end
+	end
+	local treemass = 0
+	for node, count in pairs(node_counts) do
+		local avg_count = node_counts[node] / nschems
+		node_counts[node] = avg_count
+		if node:match("tree") then
+			treemass = treemass + avg_count
+		elseif node:match("leaves")
+			or (fruit and node:match(fruit))
+		then
+			-- Leaves and fruit take less to grow than wood (but leaves
+			-- sometimes simulate branches, so not a huge penalty to mass either)
+			treemass = treemass + (1/3) * avg_count
+		end
+	end
+
+	-- Slight bias in favour of smaller trees
+	-- From lightest (golden wattle) to heaviest (river red gum) this means 10-57+-10% minute wait times
+	local avg_time = 10*treemass^0.7 + 500
+	return 0.9*avg_time, 1.1*avg_time
 end
