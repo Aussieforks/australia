@@ -119,6 +119,9 @@ All biomes are enabled by default. Currently, disabling the *Underground* biome 
 * Trees' growth rate is now scaled by their volume. Bigger trees grow slower
 than smaller trees, at a bias for smaller trees.
 * Internally, trees now use nodetimers instead of ABMs.
+* Coral-growing stone nodes now appear in the creative inventory
+* Hammer coral is a hard coral and so has been made to act like one instead of a
+soft coral as before.
 
 ### 0.5.1
 * Australian trees now finally support leaf decay.

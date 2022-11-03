@@ -10,7 +10,19 @@
 	* U-boat schematic as MTS
 * ABMs: Conversion to LBMs or nodetimers where appropriate, especially shipwrecks
 	* Coral ABMs to nodetimers
-	* Shipwreck LBMs?
+		* Coral rocks spawning below the first layer of sand
+	* Kelp
+		* Giant Brown kelp
+			* Knocking out the stem does not knock out the upper
+			* Nerf growth rate (move to nodetimer), it's too fast otherwise
+			* but try to make it appear in full size at worldgen time.
+			* Craft kelp-stone with 8 kelp + 1 stone
+		* Investigate edibility of other species
+	* Shipwrecks
+		* on_place
+		* lbm
+		* Above two sufficient?
+	* Aquatic ABMS: Idle 28-33% Minetest
 * Bonemeal support?
 * Tree Schematics with no sapling:
 	* Small river oak (river_oak_small_tree)
@@ -25,6 +37,9 @@
 	* Bonemeal addon?
 	* Cultivation item(s)?
 * Internationalise strings
+* Move schematics to subdirectory to avoid potential name clashes
+* Make submarines not exceedingly rare
+	* Murray-darling spawn (holbrook)?
 
 # Biomes testing coords
 Mapgen is always carpathian. Teleportation is not safe unless you have fly!
