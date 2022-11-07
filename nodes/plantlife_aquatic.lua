@@ -15,7 +15,7 @@ minetest.register_node("australia:kelp_giant_brown", {
 		fixed = {-0.3, -0.5, -0.3, 0.3, 0.3, 0.3}
 	},
 	post_effect_color = {a=64, r=100, g=100, b=200},
-	groups = {snappy=3, seaplants=1, sea=1},
+	groups = {snappy=3, seaplants=1, sea=1, food_seaweed=1},
 	sounds = default.node_sound_leaves_defaults(),
 	on_use = minetest.item_eat(1),
 })
@@ -71,7 +71,7 @@ minetest.register_node("australia:kelp_brown", {
 	climbable = true,
 	drowning = 1,
 	is_ground_content = true,
-	groups = {snappy=3, seaplants=1, sea=1},
+	groups = {snappy=3, seaplants=1, sea=1, food_seaweed=1},
 	sounds = default.node_sound_leaves_defaults(),
 	selection_box = {
 		type = "fixed",

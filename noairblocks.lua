@@ -1,5 +1,6 @@
---
+-- DEPRECATED:
 -- noairblocks
+-- Nodetimers are now used
 --
 -- Code modified from Duane Robertson's valleys_c mod
 -- (https://github.com/duane-r/valleys_c).
@@ -24,6 +25,11 @@
 local water_nodes = {"default:water_source", "default:water_flowing", "default:river_water_source", "default:river_water_flowing"}
 local aus_nodes = {"australia:water_source", "australia:water_flowing", "australia:river_water_source", "australia:river_water_flowing"}
 
+for idx, node in pairs(aus_nodes) do
+	minetest.register_alias(node, water_nodes[idx])
+end
+
+--[[
 for _, name in pairs(water_nodes) do
 	local water = table.copy(minetest.registered_nodes[name])
 	local new_name = string.gsub(name, 'default', 'australia')
@@ -80,3 +86,4 @@ minetest.register_abm({
 		end
 	end,
 })
+--]]

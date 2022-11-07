@@ -1,7 +1,7 @@
 -- mods/australia/biome_indian_ocean.lua
 
 local biome_name = "indian_ocean"
-local node_top = "default:sand"
+local node_top = "australia:sand_top"
 
 minetest.register_biome({
 	name = biome_name,

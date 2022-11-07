@@ -1,7 +1,7 @@
 -- mods/australia/biome_tasman_sea.lua
 
 local biome_name = "tasman_sea"
-local node_top = "default:sand"
+local node_top = "australia:sand_top"
 
 minetest.register_biome({
 	name = biome_name,

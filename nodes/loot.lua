@@ -254,6 +254,7 @@ minetest.register_node("australia:woodshipchest", {
 minetest.register_lbm({
 	nodenames = {"australia:woodship"},
 	name = "australia:convert_placed_woodships",
+	run_at_every_load = true,
 	action = place_woodship
 })
 

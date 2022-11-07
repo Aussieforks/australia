@@ -9,8 +9,6 @@
 	* Woodship schematic as MTS
 	* U-boat schematic as MTS
 * ABMs: Conversion to LBMs or nodetimers where appropriate, especially shipwrecks
-	* Coral ABMs to nodetimers
-		* Coral rocks spawning below the first layer of sand
 	* Kelp
 		* Giant Brown kelp
 			* Knocking out the stem does not knock out the upper
@@ -18,12 +16,10 @@
 			* but try to make it appear in full size at worldgen time.
 			* Craft kelp-stone with 8 kelp + 1 stone
 		* Investigate edibility of other species
-	* Shipwrecks
-		* on_place
-		* lbm
-		* Above two sufficient?
-	* Aquatic ABMS: Idle 28-33% Minetest
-* Bonemeal support?
+	* Aquatic ABMS: Idle 28-33% Minetest before any changes
+* Bonemeal support:
+	* Growth requirement to be scaled per tree so that mulch is not a positive 
+	feedback loop or break-even by default, then configurable multiplier.
 * Tree Schematics with no sapling:
 	* Small river oak (river_oak_small_tree)
 	* Small Coast Banksia
