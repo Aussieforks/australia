@@ -29,6 +29,7 @@
 	* Register separate sapling, separate leaves OR
 	* Random choice of river oaks upon sapling growth OR
 	* Different schematic sets in different soils
+* Fern saplings do not work; do they even have schematics?
 * Reproduction of smaller plants like spinifex, mitchell grass
 	* Bonemeal addon?
 	* Cultivation item(s)?
@@ -36,6 +37,7 @@
 * Move schematics to subdirectory to avoid potential name clashes
 * Make submarines not exceedingly rare
 	* Murray-darling spawn (holbrook)?
+* Fern saplings, how do they work??
 
 # Biomes testing coords
 Mapgen is always carpathian. Teleportation is not safe unless you have fly!

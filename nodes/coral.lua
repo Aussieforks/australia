@@ -1,72 +1,13 @@
 -- aus/nodes/coral.lua
 -- Corals and other nodes that grow from stony beds on the sea floor.
+local pa = aus.plantlife_aquatic
 
-local coral_growth_targets = {}
+local growth_targets = pa.growth_targets
+local iswater = aus.iswater
 
--- Since light won't be sampled at a frequent interval we assume daytime growth
--- over time. Minimum interval: 60, (artificially shallow) max: 1600
--- (minimum light level of 1 needed to grow at all)
-local function coral_photosynthesis_interval(pos)
-	local day_ll = minetest.get_node_light(vector.new(pos.x, pos.y+1, pos.z), 0.5)
-	if day_ll == nil then
-		-- REPORT: Only triggered when LBMs don't run on first world run,
-		-- whereby no corals spawn at first.
-		minetest.log("warning", string.format(
-			"[Australia] Nil light above %s when calculating coral photosynthesis"
-			.."assuming 0",
-			pos))
-		day_ll = 0
-	end
-	local median_interval = 60*(minetest.LIGHT_MAX - day_ll + 3)
-	return (1/3)*median_interval, (5/3)*median_interval
-end
-
-local function coral_start_timer(pos)
-	local timer = minetest.get_node_timer(pos)
-	local min_interval, max_interval = coral_photosynthesis_interval(pos)
-	timer:start(math.random(min_interval, max_interval))
-end
-
-local function iswater(node)
-	return node.name == "default:water_source"
-		or node.name == "default:water_flowing"
-end
-
---[[
-@arg pos: The position of the stone.
-@arg node: The node information table as provided in callbacks.
-@arg gentime: Whether the coral is being grown at world generation time.
-coral reefs can grow as low as 50m, but minetest's topography is
-exagerrated. We therefore limit it to where light is available.
---]]
-local function coral_grow(pos, node, gentime)
-	local above = {x = pos.x, y = pos.y + 1, z = pos.z}
-	local above_node = minetest.get_node(above)
-
-	if iswater (above_node) then
-		local above_above_node =
-			minetest.get_node(vector.new(above.x, above.y+1, above.z))
-		-- Too shallow, coral would die after growth
-		if not iswater(above_above_node) then
-			coral_start_timer(pos)
-			if gentime then
-				minetest.set_node(pos, {name = "default:sand"})
-			end
-			return
-		end
-
-		if (minetest.get_node_light(above) >= 1 or gentime) then
-			minetest.set_node(above, {name = coral_growth_targets[node.name]})
-		else
-			coral_start_timer(pos)
-		end
-	else
-		if not above_node.name == coral_growth_targets[node.name] then
-			minetest.set_node(pos, {name = "default:stone"})
-		end
-		coral_start_timer(pos)
-	end
-end
+local photosynthesis_interval = pa.photosynthesis_interval
+local coral_start_timer = pa.start_timer
+local coral_grow = pa.grow
 
 --[[
 Register a coral species and its spawning stone. The stone must be registered
@@ -76,7 +17,7 @@ CoralDef = {
 	nodename = "australia:"..., -- the coral
 	nodename_stone? = "australia:, -- defaults to a pattern based on nodename,
 		as in e.g. hammer_coral or staghorn_coral_blue
-	nodename_bleached? = "australia:"... -- defaults to a suffix based on
+	nodename_dead? = "australia:"... -- defaults to a suffix based on
 		nodename, but can be overriden for e.g. groups of colour varieties
 	image = "*.png", -- the coral's inventory image. .JPEG is NOT supported
 		without providing an explicit image_bleached. (use .jpg instead)
@@ -123,126 +64,59 @@ function aus.register_coral(def)
 
 	-- coral_grow will look up this table in the nodetimer. I _think_ this a
 	-- better approach than closures.
-	coral_growth_targets[nodename_stone] = nodename
-	local nn_bleached = def.nodename_bleached or nodename.."_bleached"
+	growth_targets[nodename_stone] = nodename
+	local nn_bleached = def.nodename_dead or nodename.."_bleached"
 
 	local nodebox = def.node_box or {
 		type = "fixed",
 		fixed = {-0.40625, -0.40625, -0.40625, 0.40625, 0.375, 0.40625},
 	}
 
-	minetest.register_node(nodename, {
-		description = description,
-		drawtype = def.drawtype or "plantlike",
-		waving = 0,
-		visual_scale = 1.0,
-		tiles = {image},
-		inventory_image = image,
-		wield_image = image,
-		paramtype = "light",
-		sunlight_propagates = true,
-		walkable = false,
-		liquid_move_physics = true,
-		move_resistance = 3,
-		buildable_to = false,
-		drowning = 1,
-		is_ground_content = true,
-		groups = groups,
-		sounds = sounds,
-		selection_box = nodebox,
-		node_box = nodebox,
-		collision_box = nodebox,
-
-		-- Keep a timer where we will check if the coral will still live
-		on_construct = function(pos)
-			local timer = minetest.get_node_timer(pos)
-			timer:start(math.random(22,38))
-		end,
-
-		-- Die if not kept underwater.
-		on_timer = function(pos)
-			local above = minetest.get_node(vector.new(pos.x, pos.y+1, pos.z))
-			if not iswater(above) then
-				minetest.set_node(pos, {name=nn_bleached})
-				local below = vector.new(pos.x, pos.y-1, pos.z)
-				if minetest.get_node(below).name == nodename_stone then
-					minetest.set_node(vector.new(pos.x, pos.y-1, pos.z), {name="default:stone"})
-				end
-			else
-				minetest.get_node_timer(pos):start(math.random(22,38))
-			end
-		end,
-
-		-- Restart timer of any coral spawning stone below
-		on_destruct = function(pos)
-			local below = vector.new(pos.x, pos.y-1, pos.z)
-			if minetest.get_node(below).name ~= nodename_stone then
-				return
-			end
-			coral_start_timer(below)
-		end,
-
-		--[[on_punch = function(pos)
-			local tmr = minetest.get_node_timer(pos)
-			print(string.format("is_started = %s, timeout = %s", tmr:is_started(), tmr:get_timeout()))
-		end--]]
-	})
+	local base_def = table.copy(pa.aquatic_life_base_def)
+	base_def.description = description
+	base_def.drawtype = def.drawtype or base_def.drawtype
+	base_def.tiles = {image}
+	base_def.inventory_image = image
+	base_def.wield_image = image
+	base_def.groups = groups
+	base_def.sounds = sounds
+	base_def.on_timer = pa.base_def_on_timer_closure(nn_bleached, nodename_stone)
+	base_def.on_destruct = pa.base_def_on_destruct_closure(nodename_stone)
+	--[[base_def.on_punch = function(pos)
+		local tmr = minetest.get_node_timer(pos)
+		print(string.format("is_started = %s, timeout = %s", tmr:is_started(), tmr:get_timeout()))
+	end--]]
+	minetest.register_node(nodename, base_def)
 
 	local desc_bleached = def.desc_bleached or string.format("%s (bleached)", description)
 	local image_bleached = def.image_bleached or string.sub(image, 1, -5) .. "_bleached.png"
-	minetest.register_node(nn_bleached, {
-		description = string.format("%s (bleached)", description),
-		drawtype = def.drawtype or "plantlike",
-		waving = 0,
-		visual_scale = 1.0,
-		tiles = {image_bleached},
-		inventory_image = image_bleached,
-		wield_image = image_bleached,
-		paramtype = "light",
-		sunlight_propagates = true,
-		walkable = true,
-		damage_per_second = 1,
-		liquid_move_physics = true,
-		move_resistance = 7,
-		buildable_to = false,
-		is_ground_content = true,
-		-- All dead corals are hard.. I think
-		groups = {cracky=3, coral=1, stone=1, attached_node=1, sea=1},
-		sounds = default.node_sound_stone_defaults(),
-		selection_box = nodebox,
-		node_box = nodebox,
-		collision_box = nodebox,
-	})
+	local bleached_def = table.copy(pa.aquatic_life_base_def)
+	bleached_def.description = desc_bleached
+	bleached_def.drawtype = def.drawtype or base_def.drawtype
+	bleached_def.waving = 0
+	bleached_def.tiles = {image_bleached}
+	bleached_def.inventory_image = image_bleached
+	bleached_def.wield_image = image_bleached
+	bleached_def.walkable = true
+	bleached_def.damage_per_second = 1
+	bleached_def.liquid_move_physics = true
+	bleached_def.drowning = 0
+	bleached_def.move_resistance = 7
+	-- All dead corals are hard.. I think
+	bleached_def.groups = {cracky=3, coral=1, stone=1, attached_node=1, sea=1}
+	bleached_def.sounds = default.node_sound_stone_defaults()
+	minetest.register_node(nn_bleached, bleached_def)
 
-	minetest.register_node(nodename_stone, {
-		description = string.format("%s stone", description),
-		tiles = {"aus_coral_stone.png"},
-		inventory_image = "aus_coral_stone.png^" .. image,
-		is_ground_content = true,
-		groups = {cracky=3, stone=1},
-		drop = "default:stone",
-		sounds = sounds,
-		on_construct = function(pos)
-			local timer = minetest.get_node_timer(pos)
-			local min_interval, max_interval = coral_photosynthesis_interval(pos)
-			minetest.get_node_timer(pos):start(math.random(min_interval, max_interval))
-		end,
+	local stone_def = table.copy(pa.stone_basedef)
+	stone_def.description = string.format("%s stone", description)
+	stone_def.inventory_image = stone_def.inventory_image .. image
+	stone_def.on_timer = pa.stone_basedef_on_timer_closure(nodename)
+	--[[stone_def.on_punch = function(pos)
+		local tmr = minetest.get_node_timer(pos)
+		print(string.format("is_started = %s, timeout = %s", tmr:is_started(), tmr:get_timeout()))
+	end--]]
 
-		on_timer = function(pos)
-			local above = minetest.get_node(vector.new(pos.x, pos.y+1, pos.z))
-			if not (iswater(above) or above.name == nodename) then
-				minetest.set_node(pos, {name="default:stone"})
-			else
-				coral_grow(pos, minetest.get_node(pos))
-			end
-		end,
-
-		--[[on_punch = function(pos)
-			local tmr = minetest.get_node_timer(pos)
-			print(string.format("is_started = %s, timeout = %s", tmr:is_started(), tmr:get_timeout()))
-		end--]]
-	})
-
+	minetest.register_node(nodename_stone, stone_def)
 end
 
 aus.register_coral({
@@ -277,10 +151,10 @@ aus.register_coral({
 -- nodebox-corals are ever needed.
 minetest.override_item("australia:brain_coral", { inventory_image = "", })
 
-for i, colour in pairs({"green", "orange", "purple"}) do
+for _, colour in pairs({"green", "orange", "purple"}) do
 	aus.register_coral({
 		nodename = string.format("australia:cluster_coral_%s", colour),
-		nodename_bleached = "australia:cluster_coral_bleached",
+		nodename_dead = "australia:cluster_coral_bleached",
 		desc_bleached = "Acropora millepora: Cluster Coral (bleached)",
 		description = string.format(
 			"Acropora millepora: Cluster Coral (%s)", colour),
@@ -304,10 +178,10 @@ aus.register_coral({
 	hard = false,
 })
 
-for i, colour in pairs({"brown", "green", "pink"}) do
+for _, colour in pairs({"brown", "green", "pink"}) do
 	aus.register_coral({
 		nodename = string.format("australia:cauliflower_coral_%s", colour),
-		nodename_bleached = "australia:cauliflower_coral_bleached",
+		nodename_dead = "australia:cauliflower_coral_bleached",
 		desc_bleached = "Pocillopora damicornis: Cauliflower Coral (bleached)",
 		description = string.format(
 			"Pocillopora damicornis: Cauliflower Coral (%s)", colour),
@@ -317,10 +191,10 @@ for i, colour in pairs({"brown", "green", "pink"}) do
 	})
 end
 
-for i, colour in pairs({"blue", "pink", "purple", "yellow"}) do
+for _, colour in pairs({"blue", "pink", "purple", "yellow"}) do
 	aus.register_coral({
 		nodename = string.format("australia:staghorn_coral_%s", colour),
-		nodename_bleached = "australia:staghorn_coral_bleached",
+		nodename_dead = "australia:staghorn_coral_bleached",
 		desc_bleached = "Acropora cervicornis: Staghorn Coral (bleached)",
 		description = string.format(
 			"Acropora cervicornis: Staghorn Coral (%s)", colour),
@@ -329,25 +203,3 @@ for i, colour in pairs({"blue", "pink", "purple", "yellow"}) do
 		hard = true,
 	})
 end
-
-local lbm_targets = {}
-for stone, coral in pairs(coral_growth_targets) do
-	table.insert(lbm_targets, stone)
-end
-
-minetest.register_lbm({
-	label = "Ensure aussie coral growth",
-	name = "australia:ensure_coral_growth",
-	nodenames = lbm_targets,
-	-- It does not seem we can remove this, because we rely on it to spawn
-	-- corals at worldgen time as well as upgrade old corals.
-	run_at_every_load = true,
-	action = function(pos, node)
-		local timer = minetest.get_node_timer(pos)
-		if not timer:is_started() then
-			coral_grow(pos, node, true)
-		end
-	end,
-})
-
-aus.coral_growth_targets = coral_growth_targets
