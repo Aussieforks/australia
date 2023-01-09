@@ -61,8 +61,8 @@ function pa.register_coral(def)
 
 	local nn_bleached = def.nodename_dead or nodename.."_bleached"
 
-    -- Spawning stone crafting recipe
-    pa.register_stone_craft(nodename, nodename_stone)
+	-- Spawning stone crafting recipe
+	pa.register_stone_craft(nodename, nodename_stone)
 
 
 	local base_def = table.copy(pa.aquatic_life_base_def)

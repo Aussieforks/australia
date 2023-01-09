@@ -290,9 +290,9 @@ local function basedef_do_common_properties(tab,
 	tab.wield_image = image
 	tab.groups = groups
 	tab.sounds = sounds
-    tab.selection_box = nodebox
-    tab.node_box = nodebox
-    tab.collision_box = nodebox
+	tab.selection_box = nodebox
+	tab.node_box = nodebox
+	tab.collision_box = nodebox
 end
 pa.basedef_do_common_properties = basedef_do_common_properties
 

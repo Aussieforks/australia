@@ -5,13 +5,13 @@ local pa = aus.plantlife_aquatic
 -- override until it seems worth forking the coral code or refactoring to allow
 -- further subclassing.
 function pa.register_sponge(def)
-    pa.register_coral(def)
+	pa.register_coral(def)
 
 	local nn_bleached = def.nodename_dead or def.nodename.."_bleached"
-    minetest.override_item(nn_bleached, {
-        groups = {cracky=0, stone=0, coral=1, attached_node=1, oddly_breakable_by_hand=1},
-        sounds = default.node_sound_leaves_defaults(),
-    })
+	minetest.override_item(nn_bleached, {
+		groups = {cracky=0, stone=0, coral=1, attached_node=1, oddly_breakable_by_hand=1},
+		sounds = default.node_sound_leaves_defaults(),
+	})
 end
 
 pa.register_sponge({
