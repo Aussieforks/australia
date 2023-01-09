@@ -3,11 +3,6 @@
 local pa = aus.plantlife_aquatic
 
 local growth_targets = pa.growth_targets
-local iswater = aus.iswater
-
-local photosynthesis_interval = pa.photosynthesis_interval
-local coral_start_timer = pa.start_timer
-local coral_grow = pa.grow
 
 --[[
 Register a coral species and its spawning stone. The stone must be registered
@@ -27,9 +22,11 @@ CoralDef = {
 	nodebox?, -- for nodebox drawtype, the nodebox definition
 }
 --]]
-function aus.register_coral(def)
+function pa.register_coral(def)
+	pa.register_plantlife_aquatic_common_start(def)
 	local nodename = def.nodename
-	assert(nodename, "Coral needs nodename")
+	local description = def.description
+	local image = def.image
 
 	local nodename_stone = def.nodename_stone
 	if not nodename_stone then
@@ -46,10 +43,10 @@ function aus.register_coral(def)
 		end
 	end
 
-	local description = def.description
-	assert(description, "Coral needs a description")
-	local image = def.image
-	assert(image, "Coral needs an image")
+	-- common function `grow` will look up this table in the nodetimer. I _think_ this a
+	-- better approach than closures.
+	growth_targets[nodename_stone] = nodename
+
 	local hard = def.hard
 	assert(hard == true or hard == false, "Coral needs a hard/soft boolean")
 
@@ -62,24 +59,15 @@ function aus.register_coral(def)
 		sounds = default.node_sound_leaves_defaults()
 	end
 
-	-- coral_grow will look up this table in the nodetimer. I _think_ this a
-	-- better approach than closures.
-	growth_targets[nodename_stone] = nodename
 	local nn_bleached = def.nodename_dead or nodename.."_bleached"
 
-	local nodebox = def.node_box or {
-		type = "fixed",
-		fixed = {-0.40625, -0.40625, -0.40625, 0.40625, 0.375, 0.40625},
-	}
+    -- Spawning stone crafting recipe
+    pa.register_stone_craft(nodename, nodename_stone)
+
 
 	local base_def = table.copy(pa.aquatic_life_base_def)
-	base_def.description = description
-	base_def.drawtype = def.drawtype or base_def.drawtype
-	base_def.tiles = {image}
-	base_def.inventory_image = image
-	base_def.wield_image = image
-	base_def.groups = groups
-	base_def.sounds = sounds
+	pa.basedef_do_common_properties(base_def,
+		description, def.drawtype or base_def.drawtype, image, groups, sounds, base_def.nodebox)
 	base_def.on_timer = pa.base_def_on_timer_closure(nn_bleached, nodename_stone)
 	base_def.on_destruct = pa.base_def_on_destruct_closure(nodename_stone)
 	--[[base_def.on_punch = function(pos)
@@ -89,7 +77,8 @@ function aus.register_coral(def)
 	minetest.register_node(nodename, base_def)
 
 	local desc_bleached = def.desc_bleached or string.format("%s (bleached)", description)
-	local image_bleached = def.image_bleached or string.sub(image, 1, -5) .. "_bleached.png"
+	local image_bleached = def.image_bleached
+		or aus.fname_with_suffix_ext(image, "_bleached")
 	local bleached_def = table.copy(pa.aquatic_life_base_def)
 	bleached_def.description = desc_bleached
 	bleached_def.drawtype = def.drawtype or base_def.drawtype
@@ -103,7 +92,7 @@ function aus.register_coral(def)
 	bleached_def.drowning = 0
 	bleached_def.move_resistance = 7
 	-- All dead corals are hard.. I think
-	bleached_def.groups = {cracky=3, coral=1, stone=1, attached_node=1, sea=1}
+	bleached_def.groups = {cracky=3, coral=1, stone=1, attached_node=1}
 	bleached_def.sounds = default.node_sound_stone_defaults()
 	minetest.register_node(nn_bleached, bleached_def)
 
@@ -119,15 +108,7 @@ function aus.register_coral(def)
 	minetest.register_node(nodename_stone, stone_def)
 end
 
-aus.register_coral({
-	nodename = "australia:tube_sponge",
-	nodename_stone = "australia:coral_stone_tube_sponge",
-	description = "Pipestela candelabra: Bob Marley Sponge",
-	image = "aus_tube_sponge.png",
-	hard = false,
-})
-
-aus.register_coral({
+pa.register_coral({
 	nodename = "australia:brain_coral",
 	description = "Dipsastraea speciosa: Brain Coral",
 	image = "aus_brain_coral.png",
@@ -152,7 +133,7 @@ aus.register_coral({
 minetest.override_item("australia:brain_coral", { inventory_image = "", })
 
 for _, colour in pairs({"green", "orange", "purple"}) do
-	aus.register_coral({
+	pa.register_coral({
 		nodename = string.format("australia:cluster_coral_%s", colour),
 		nodename_dead = "australia:cluster_coral_bleached",
 		desc_bleached = "Acropora millepora: Cluster Coral (bleached)",
@@ -164,14 +145,14 @@ for _, colour in pairs({"green", "orange", "purple"}) do
 	})
 end
 
-aus.register_coral({
+pa.register_coral({
 	nodename = "australia:hammer_coral",
 	description = "Euphyllia ancora: Hammer coral",
 	image = "aus_hammer_coral.png",
 	hard = true,
 })
 
-aus.register_coral({
+pa.register_coral({
 	nodename = "australia:seafan_coral",
 	description = "Acabaria splendens: Sea Fan",
 	image = "aus_seafan_coral.png",
@@ -179,7 +160,7 @@ aus.register_coral({
 })
 
 for _, colour in pairs({"brown", "green", "pink"}) do
-	aus.register_coral({
+	pa.register_coral({
 		nodename = string.format("australia:cauliflower_coral_%s", colour),
 		nodename_dead = "australia:cauliflower_coral_bleached",
 		desc_bleached = "Pocillopora damicornis: Cauliflower Coral (bleached)",
@@ -192,7 +173,7 @@ for _, colour in pairs({"brown", "green", "pink"}) do
 end
 
 for _, colour in pairs({"blue", "pink", "purple", "yellow"}) do
-	aus.register_coral({
+	pa.register_coral({
 		nodename = string.format("australia:staghorn_coral_%s", colour),
 		nodename_dead = "australia:staghorn_coral_bleached",
 		desc_bleached = "Acropora cervicornis: Staghorn Coral (bleached)",

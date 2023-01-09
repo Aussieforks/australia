@@ -3,11 +3,11 @@
 local pa = aus.plantlife_aquatic
 
 local growth_targets = pa.growth_targets
-local iswater = aus.iswater
 
-local photosynthesis_interval = pa.photosynthesis_interval
-local coral_start_timer = pa.start_timer
-local coral_grow = pa.grow
+local nodebox = {
+        type = "fixed",
+        fixed = {-0.5, -0.5, -0.5, 0.5, -0.3125, 0.5},
+}
 
 --[[
 Register a short kelp species and its spawning stone. The stone must be
@@ -18,7 +18,7 @@ ShortKelpDef = {
 	nodename_stone? = "australia:, -- defaults to prefixing nodename with :_stone
 	nodename_dead? = "australia:"... -- defaults to a suffix based on
 		nodename, but can be overriden for e.g. groups of colour varieties
-	image = "*.png", -- the coral's inventory image. .JPEG is NOT supported
+	image = "*.png", -- the kelp's inventory image. .JPEG is NOT supported
 		without providing an explicit image_dead. (use .jpg instead)
 	image_dead = "*.png" -- the image to use when the plant dies due to lack of
         water
@@ -27,167 +27,69 @@ ShortKelpDef = {
 	nodebox?, -- for nodebox drawtype, the nodebox definition
 }
 --]]
-function aus.register_short_kelp(def)
+function pa.register_short_kelp(def)
+	pa.register_plantlife_aquatic_common_start(def)
 	local nodename = def.nodename
-	assert(nodename, "Short kelp needs nodename")
+	local description = def.description
+	local image = def.image
 
 	local nodename_stone = def.nodename_stone
-	if not nodename_stone then
-        local colonidx = nodename:find(":")
-        assert(colonidx, string.format("No colon found in nodename: %s", nodename))
+        or pa.derive_stone_name(def.nodename)
+    -- common function `grow` will look up this table in the nodetimer. I _think_ this a
+    -- better approach than closures.
+    growth_targets[nodename_stone] = nodename
 
-        -- Prefix the part after the colon with 'stone_'
-        nodename_stone = nodename:sub(0, colonidx) .. 'stone_' ..
-            nodename:sub(colonidx+1,-1)
-	end
-
-	local description = def.description
-	assert(description, "Short kelp needs a description")
-	local image = def.image
-	assert(image, "Short kelp needs an image")
-
-    local groups = {snappy=3, coral=1, attached_node=1, sea=1}
+    local groups = {attached_node=1, snappy=3, seaplants=1, sea=1}
     local sounds = default.node_sound_leaves_defaults()
+    local nn_dead = def.nodename_dead or (nodename .. "_dried")
 
-	-- grow will look up this table in the nodetimer. I _think_ this a
-	-- better approach than closures.
-	growth_targets[nodename_stone] = nodename
-	local nn_dead = def.nodename_dead or nodename.."_dead"
+    -- Spawning stone crafting recipe
+    pa.register_stone_craft(nodename, nodename_stone)
 
-	local nodebox = def.node_box or {
-		type = "fixed",
-		fixed = {-0.40625, -0.40625, -0.40625, 0.40625, 0.375, 0.40625},
-	}
+	local base_def = table.copy(pa.aquatic_life_base_def)
+    pa.basedef_do_common_properties(base_def,
+        description, base_def.drawtype, image, groups, sounds, nodebox)
+	base_def.on_timer = pa.base_def_on_timer_closure(nn_dead, nodename_stone)
+	base_def.on_destruct = pa.base_def_on_destruct_closure(nodename_stone)
+	base_def.on_punch = function(pos)
+		local tmr = minetest.get_node_timer(pos)
+		print(string.format("is_started = %s, timeout = %s", tmr:is_started(), tmr:get_timeout()))
+	end--]]
+	minetest.register_node(nodename, base_def)
 
-	minetest.register_node(nodename, {
-		description = description,
-		drawtype = def.drawtype or "plantlike",
-		waving = 1,
-		tiles = {image},
-		inventory_image = image,
-		wield_image = image,
-		paramtype = "light",
-		sunlight_propagates = true,
-		walkable = false,
-		liquid_move_physics = true,
-		move_resistance = 3,
-		buildable_to = false,
-		drowning = 1,
-		is_ground_content = true,
-		groups = groups,
-		sounds = sounds,
-		selection_box = nodebox,
-		node_box = nodebox,
-		collision_box = nodebox,
+	local desc_dead = def.desc_dead or string.format("%s (dried)", description)
+	local image_dead = def.image_dead
+        or aus.fname_with_suffix_ext(image, "_dried")
+    local groups_dead = {attached_node=1, snappy=3, food_seaweed=1}
+    local dead_def = table.copy(pa.aquatic_life_base_def)
+    pa.basedef_do_common_properties(dead_def,
+        desc_dead, base_def.drawtype, image_dead, groups_dead, sounds, nodebox)
+    dead_def.waving = 0
+    dead_def.drowning = 0
+    dead_def.liquid_move_physics = false
+    dead_def.climbable = false
+    minetest.register_node(nn_dead, dead_def)
 
-		-- Keep a timer where we will check if the coral will still live
-		on_construct = function(pos)
-			local timer = minetest.get_node_timer(pos)
-			timer:start(math.random(22,38))
-		end,
-
-		-- Die if not kept underwater.
-		on_timer = function(pos)
-			local above = minetest.get_node(vector.new(pos.x, pos.y+1, pos.z))
-			if not iswater(above) then
-				minetest.set_node(pos, {name=nn_dead})
-				local below = vector.new(pos.x, pos.y-1, pos.z)
-				if minetest.get_node(below).name == nodename_stone then
-					minetest.set_node(vector.new(pos.x, pos.y-1, pos.z), {name="default:stone"})
-				end
-			else
-				minetest.get_node_timer(pos):start(math.random(22,38))
-			end
-		end,
-
-		-- Restart timer of any coral spawning stone below
-		on_destruct = function(pos)
-			local below = vector.new(pos.x, pos.y-1, pos.z)
-			if minetest.get_node(below).name ~= nodename_stone then
-				return
-			end
-			coral_start_timer(below)
-		end,
-
-		--[[on_punch = function(pos)
-			local tmr = minetest.get_node_timer(pos)
-			print(string.format("is_started = %s, timeout = %s", tmr:is_started(), tmr:get_timeout()))
-		end--]]
-	})
-
-	local desc_dead = def.desc_dead or string.format("%s (dead)", description)
-	local image_dead = def.image_dead or string.sub(image, 1, -5) .. "_dead.png"
-	minetest.register_node(nn_dead, {
-		description = desc_dead,
-		drawtype = def.drawtype or "plantlike",
-		waving = 0,
-		tiles = {image_dead},
-		inventory_image = image_dead,
-		wield_image = image_dead,
-		paramtype = "light",
-		sunlight_propagates = true,
-		walkable = true,
-		damage_per_second = 1,
-		liquid_move_physics = true,
-		move_resistance = 7,
-		buildable_to = false,
-		is_ground_content = true,
-		-- All dead corals are hard.. I think
-		groups = {cracky=3, coral=1, stone=1, attached_node=1, sea=1},
-		sounds = default.node_sound_stone_defaults(),
-		selection_box = nodebox,
-		node_box = nodebox,
-		collision_box = nodebox,
-	})
-
-	minetest.register_node(nodename_stone, {
-		description = string.format("%s stone", description),
-		tiles = {"aus_coral_stone.png"},
-		inventory_image = "aus_coral_stone.png^" .. image,
-		is_ground_content = true,
-		groups = {cracky=3, stone=1},
-		drop = "default:stone",
-		sounds = sounds,
-		on_construct = function(pos)
-			local min_interval, max_interval = photosynthesis_interval(pos)
-			minetest.get_node_timer(pos):start(math.random(min_interval, max_interval))
-		end,
-
-		on_timer = function(pos)
-			local above = minetest.get_node(vector.new(pos.x, pos.y+1, pos.z))
-			if not (iswater(above) or above.name == nodename) then
-				minetest.set_node(pos, {name="default:stone"})
-			else
-				coral_grow(pos, minetest.get_node(pos))
-			end
-		end,
-
-		--[[on_punch = function(pos)
-			local tmr = minetest.get_node_timer(pos)
-			print(string.format("is_started = %s, timeout = %s", tmr:is_started(), tmr:get_timeout()))
-		end--]]
-	})
-
+    local stone_def = table.copy(pa.stone_basedef)
+    stone_def.description = string.format("%s stone", description)
+    stone_def.inventory_image = stone_def.inventory_image .. image
+    stone_def.on_timer = pa.stone_basedef_on_timer_closure(nodename)
+    --[[stone_def.on_punch = function(pos)
+        local tmr = minetest.get_node_timer(pos)
+        print(string.format("is_started = %s, timeout = %s", tmr:is_started(), tmr:get_timeout()))
+    end--]]
+    minetest.register_node(nodename_stone, stone_def)
 end
 
-minetest.register_abm({
-	nodenames = {"australia:stone_kelp_brown"},
-	interval = 15,
-	chance = 5,
-	action = function(pos)--, node, active_object_count, active_object_count_wider)
-		local yp = {x = pos.x, y = pos.y + 1, z = pos.z}
-		if (minetest.get_node(yp).name == "default:water_source" or
-			minetest.get_node(yp).name == "australia:water_source")
-		then
-			pos.y = pos.y + 1
-			minetest.add_node(pos, {name = "australia:kelp_brown"})
-		else
-			return
-		end
-	end
+-- Ecklonia radiata: Common Kelp (new)
+pa.register_short_kelp({
+    nodename = "australia:kelp_brown",
+    description = "Ecklonia radiata: Common Kelp",
+    image = "aus_kelp_brown.png",
 })
 
--- Ecklonia radiata: Common Kelp
+--[[
+-- Ecklonia radiata: Common Kelp (old)
 minetest.register_node("australia:kelp_brown", {
 	description = "Ecklonia radiata: Common Kelp",
 	drawtype = "plantlike",
@@ -218,3 +120,20 @@ minetest.register_node("australia:stone_kelp_brown", {
 	drop = 'default:stone',
 	sounds = default.node_sound_stone_defaults(),
 })
+
+minetest.register_abm({
+	nodenames = {"australia:stone_kelp_brown"},
+	interval = 15,
+	chance = 5,
+	action = function(pos)--, node, active_object_count, active_object_count_wider)
+		local yp = {x = pos.x, y = pos.y + 1, z = pos.z}
+		if (minetest.get_node(yp).name == "default:water_source" or
+			minetest.get_node(yp).name == "australia:water_source")
+		then
+			pos.y = pos.y + 1
+			minetest.add_node(pos, {name = "australia:kelp_brown"})
+		else
+			return
+		end
+	end
+})--]]

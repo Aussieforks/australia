@@ -33,7 +33,7 @@ minetest.register_biome({
 minetest.register_ore({
 	ore_type       = "scatter",
 	ore            = "australia:stone_kelp_brown",
-	wherein        = "default:sand",
+	wherein        = node_top,
 	clust_scarcity = 9*9*9,
 	clust_num_ores = 25,
 	clust_size     = 6,
@@ -45,7 +45,7 @@ minetest.register_ore({
 minetest.register_ore({
 	ore_type       = "scatter",
 	ore            = "australia:stone_kelp_giant_brown",
-	wherein        = "default:sand",
+	wherein        = node_top,
 	clust_scarcity = 10*10*10,
 	clust_num_ores = 24,
 	clust_size     = 8,
@@ -57,7 +57,7 @@ minetest.register_ore({
 minetest.register_ore({
 	ore_type       = "scatter",
 	ore            = "australia:woodship",
-	wherein        = "default:sand",
+	wherein        = node_top,
 	clust_scarcity = 60*60*60,
 	clust_num_ores = 1,
 	clust_size     = 12,

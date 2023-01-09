@@ -9,6 +9,7 @@ dofile(aus.path .. "/nodes/plantlife_aquatic.lua")
 dofile(aus.path .. "/nodes/coral.lua")
 dofile(aus.path .. "/nodes/short_kelp.lua")
 dofile(aus.path .. "/nodes/tall_kelp.lua")
+dofile(aus.path .. "/nodes/sponges.lua")
 aus.plantlife_aquatic.finalise_plantlife_aquatic()
 
 dofile(aus.path .. "/nodes/plantlife_terrestrial.lua")

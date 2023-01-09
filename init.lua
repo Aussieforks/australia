@@ -24,6 +24,7 @@ aus.schematics = {}
 
 
 -- Load files
+dofile(aus.path .. "/functions.lua")
 dofile(aus.path .. "/tree_gen.lua")
 dofile(aus.path .. "/nulda.lua")
 dofile(aus.path .. "/schematics.lua")

@@ -4,11 +4,10 @@ aus.plantlife_aquatic = pa
 local growth_targets = {}
 pa.growth_targets = growth_targets
 
-local iswater = function(node)
-	return node.name == "default:water_source"
-		or node.name == "default:water_flowing"
-end
-aus.iswater = iswater
+local grown_from = {}
+pa.grown_from = grown_from
+
+local iswater = aus.iswater
 
 -- Since light won't be sampled at a frequent interval we assume daytime growth
 -- over time. Minimum interval: 60, (artificially shallow) max: 1600
@@ -25,16 +24,22 @@ local function photosynthesis_interval(pos)
 		day_ll = 0
 	end
 	local median_interval = 60*(minetest.LIGHT_MAX - day_ll + 3)
-	return 3, 5--(1/3)*median_interval, (5/3)*median_interval
+	return 3,5--(1/3)*median_interval, (5/3)*median_interval
 end
 pa.photosynthesis_interval = photosynthesis_interval
 
-local function start_timer(pos)
+local function start_timer_growth(pos)
 	local timer = minetest.get_node_timer(pos)
 	local min_interval, max_interval = photosynthesis_interval(pos)
 	timer:start(math.random(min_interval, max_interval))
 end
-pa.start_timer = start_timer
+pa.start_timer_growth = start_timer_growth
+
+local function start_timer_checkup(pos)
+	local warn_start_timer_checkup
+	minetest.get_node_timer(pos):start(math.random(3,4))--22,38))
+end
+pa.start_timer_checkup = start_timer_checkup
 
 --[[
 @arg pos: The position of the stone.
@@ -52,7 +57,7 @@ local function grow(pos, node, gentime)
 			minetest.get_node(vector.new(above.x, above.y+1, above.z))
 		-- Too shallow, coral would die after growth
 		if not iswater(above_above_node) then
-			start_timer(pos)
+			start_timer_growth(pos)
 			if gentime then
 				minetest.set_node(pos, {name = "default:sand"})
 			end
@@ -62,16 +67,33 @@ local function grow(pos, node, gentime)
 		if (minetest.get_node_light(above) >= 1 or gentime) then
 			minetest.set_node(above, {name = growth_targets[node.name]})
 		else
-			start_timer(pos)
+			start_timer_growth(pos)
 		end
 	else
-		if above_node.name ~= growth_targets[node.name] then
+		if above_node.name ~= growth_targets[node.name]
+			 -- for e.g. middle of kelp
+			and (not grown_from[above_node.name] == node.name)
+		then
 			minetest.set_node(pos, {name = "default:stone"})
 		end
-		start_timer(pos)
+		start_timer_growth(pos)
 	end
 end
 aus.plantlife_aquatic.grow = grow
+
+local function destroy_staggered(pos)
+	minetest.after(math.random(1, 2) - 0.8, minetest.dig_node, pos)
+end
+pa.destroy_staggered = destroy_staggered
+
+local function derive_stone_name(nodename)
+	local colonidx = nodename:find(":")
+	assert(colonidx, string.format("No colon found in nodename: %s", nodename))
+
+	-- Prefix the part after the colon with 'stone_'
+	return nodename:sub(0, colonidx) .. 'stone_' ..  nodename:sub(colonidx+1,-1)
+end
+pa.derive_stone_name = derive_stone_name
 
 local default_nodebox = {
 		type = "fixed",
@@ -92,10 +114,12 @@ local function base_def_on_timer_closure(nn_dead, nn_stone)
 			minetest.set_node(pos, {name=nn_dead})
 			local below = vector.new(pos.x, pos.y-1, pos.z)
 			if minetest.get_node(below).name == nn_stone then
-				minetest.set_node(vector.new(pos.x, pos.y-1, pos.z), {name="default:stone"})
+				-- Nodes are attached, so set_node would cause them to drop on
+				-- the ground
+				minetest.swap_node(vector.new(pos.x, pos.y-1, pos.z), {name="default:stone"})
 			end
 		else
-			minetest.get_node_timer(pos):start(math.random(22,38))
+			start_timer_checkup(pos)
 		end
 	end
 end
@@ -108,10 +132,13 @@ local function base_def_on_destruct_closure(nn_stone)
 		if minetest.get_node(below).name ~= nn_stone then
 			return
 		end
-		start_timer(below)
+		start_timer_growth(below)
 	end
 end
 pa.base_def_on_destruct_closure = base_def_on_destruct_closure
+
+local base_def_on_construct = start_timer_checkup
+pa.base_def_on_construct = base_def_on_construct
 
 local aquatic_life_base_def = {
 	drawtype = "plantlike",
@@ -128,11 +155,8 @@ local aquatic_life_base_def = {
 	node_box = default_nodebox,
 	collision_box = default_nodebox,
 
-	-- Keep a timer where we will check if the coral will still live
-	on_construct = function(pos)
-		local timer = minetest.get_node_timer(pos)
-		timer:start(math.random(22,38))
-	end,
+	-- Keep a timer where we will check if the plant life will still live
+	on_construct = base_def_on_construct,
 
 	--on_timer = base_def_on_timer_closure(nn_dead, nn_stone),
 	--on_destruct = base_def_on_destruct_closure(nn_stone),
@@ -146,13 +170,13 @@ pa.aquatic_life_base_def = aquatic_life_base_def
 -- [[ Stone node
 --
 
-local stone_basedef_on_construct = function(pos)
+local function stone_basedef_on_construct(pos)
 	local min_interval, max_interval = photosynthesis_interval(pos)
 	minetest.get_node_timer(pos):start(math.random(min_interval, max_interval))
 end
 pa.stone_basedef_on_construct = stone_basedef_on_construct
 
-local stone_basedef_on_timer_closure = function(nodename_plant)
+local function stone_basedef_on_timer_closure(nodename_plant)
 	return function(pos)
 		local above = minetest.get_node(vector.new(pos.x, pos.y+1, pos.z))
 		if not (iswater(above) or above.name == nodename_plant) then
@@ -164,7 +188,17 @@ local stone_basedef_on_timer_closure = function(nodename_plant)
 end
 pa.stone_basedef_on_timer_closure = stone_basedef_on_timer_closure
 
-local aquatic_life_stone_basedef = {
+local function stone_basedef_on_destruct(pos)
+	-- Used in case the plant node is not an attached node e.g. tall kelps
+	local above = vector.new(pos.x, pos.y+1, pos.z)
+	local nodename = minetest.get_node(pos).name
+	if minetest.get_node(above).name:match(growth_targets[nodename]) then
+		destroy_staggered(above)
+	end
+end
+pa.stone_basedef_on_destruct = stone_basedef_on_destruct
+
+local stone_basedef = {
 	tiles = {"aus_coral_stone.png"},
 	inventory_image = "aus_coral_stone.png^", --subclasses concat with this
 	is_ground_content = true,
@@ -172,9 +206,10 @@ local aquatic_life_stone_basedef = {
 	drop = "default:stone",
 	sounds = default.node_sound_stone_defaults(),
 	on_construct = stone_basedef_on_construct,
+	on_destruct = stone_basedef_on_destruct,
 	--on_timer = stone_basedef_on_timer_closure,
 }
-pa.stone_basedef = aquatic_life_stone_basedef
+pa.stone_basedef = stone_basedef
 
 --[[
 Register an aquatic stone life species and its spawning stone. The stone must
@@ -182,49 +217,84 @@ be registered to appropriate biomes as an ore separately for it to appear in
 the world.
 A ? after the property name means it is optional
 AquaticStoneLifeDef = {
-	nodename = "australia:"..., -- the coral
+	nodename = "australia:"..., -- the lifeform
 	nodename_stone? = "australia:, -- defaults to a pattern based on nodename,
 		as in e.g. hammer_coral or staghorn_coral_blue
 	image = "*.png", -- the coral's inventory image. .JPEG is NOT supported
 		without providing an explicit image_bleached. (use .jpg instead)
-	drawtype?, -- the coral's drawtype (to support nodeboxes instead of plantlikes)
+	drawtype?, -- the lifeforms's drawtype (to support nodeboxes instead of plantlikes)
 	nodebox?, -- for nodebox drawtype, the nodebox definition
+	-- Other properties may exist in subclasses
 }
 --]]
---TODO: Refactor aquatic_stone_life as parent of coral
---[[ abtract function aus.register_aquatic_stone_life(nodenames, def, def_dead, def_stone)
-	assert(nodenames[def], "Aquatic life needs a base node name")
-	assert(nodenames[def_dead], "Aquatic life needs a dead node name")
-	assert(nodenames[def_stone], "Aquatic life needs a stone node name")
+-- This 'abstract' function is a general guide on how to implement subclasses of
+-- aquatic stone life: A table copy followed by setting/override specific
+-- properies.
+--[[ abtract function pa.register_aquatic_stone_life(def)
+	register_plantlife_aquatic_common_start(def)
 
-	local nodename = def.nodename
-	assert(nodename, "Node needs a name.")
-
-	local image = def.image
-	assert(image, "Aquatic life needs an image.")
-
-	local merged_def = table.copy(aquatic_life_base_def)
-	for k,v in pairs(def) do
+	local merged_def = table.copy(aquatic_life_base_def) -- If using a subclassed def
+	for k,v in pairs(subclass_base_def) do
 		merged_def[k] = v
 	end
-	minetest.register_node(nodenames[def_base], merged_def)
+	base_def.description = description
+	-- .. other properties
+	minetest.register_node(nodenames[def.nodename], merged_def)
 
-	merged_def = table.copy(aquatic_life_dead_base_def)
-	for k,v in pairs(def_dead) do
+	local nodename_dead = something(def.nodename)
+	merged_def = table.copy(aquatic_life_dead_base_def) -- If using a subclassed def
+	for k,v in pairs(subclass_def_dead) do
 		merged_def[k] = v
 	end
-	minetest.register_node(nodenames[def_dead], merged_def)
+	-- .. other properties
+	minetest.register_node(nodename_dead, merged_def)
 
-	merged_def = table.copy(aquatic_life_stone_base_def)
-	for k,v in pairs(def_stone) do
+	local nodename_stone = something(def.nodename)
+	merged_def = table.copy(aquatic_life_stone_base_def) -- If using a subclassed def
+	for k,v in pairs(subclass_def_stone) do
 		merged_def[k] = v
 	end
-	minetest.register_node(nodenames[def_dead], merged_def)
+	-- .. other properties
+	minetest.register_node(nodename_stone, merged_def)
 
-	merged_def = table.copy(aquatic_life_stone_base_def)
-	minetest.register_node(nodename_stone[def_stone], {
+	-- Any other subclass-related extra nodes
 	})
 end --]]
+
+local function register_plantlife_aquatic_common_start(def)
+	assert(def.nodename, "Aquatic life needs nodename")
+	assert(def.description, "Aquatic life needs a description")
+	assert(def.image, "Aquatic life needs an image")
+end
+pa.register_plantlife_aquatic_common_start = register_plantlife_aquatic_common_start
+
+local function register_stone_craft(nodename, nodename_stone)
+	minetest.register_craft({
+		output = nodename_stone,
+		recipe = {
+			{nodename, nodename, nodename},
+			{nodename, nodename_stone, nodename},
+			{nodename, nodename, nodename},
+		},
+	})
+end
+pa.register_stone_craft = register_stone_craft
+
+local function basedef_do_common_properties(tab,
+	description, drawtype, image, groups, sounds, nodebox)
+
+	tab.description = description
+	tab.drawtype = drawtype
+	tab.tiles = {image}
+	tab.inventory_image = image
+	tab.wield_image = image
+	tab.groups = groups
+	tab.sounds = sounds
+    tab.selection_box = nodebox
+    tab.node_box = nodebox
+    tab.collision_box = nodebox
+end
+pa.basedef_do_common_properties = basedef_do_common_properties
 
 -- Runs any tasks for after all the plant lifeforms are all registered.
 -- Currently just registering the LBM
