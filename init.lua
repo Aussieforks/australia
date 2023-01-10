@@ -7,6 +7,8 @@
 -- Aussieforks version now designed for carpathian mapgen in Minetest 5.6.0, 
 -- but will work with others as well.
 
+--[[ This code is disabled while voxel.lua remains disabled because it serves no
+     purpose in that case, and interferes with mineunit.
 -- Check for necessary mod functions and abort if they aren't available.
 if not minetest.get_biome_id then
 	minetest.log("error", "* Not loading MOD: Australia *")
@@ -14,6 +16,7 @@ if not minetest.get_biome_id then
 	minetest.log("error", " not exposed by your Minetest build.")
 	return
 end
+--]]
 
 -- Definitions made by this mod that other mods can use too
 aus = {}
@@ -36,7 +39,6 @@ dofile(aus.path .. "/decorations.lua")
 dofile(aus.path .. "/mapgen.lua")
 dofile(aus.path .. "/saplings.lua")
 dofile(aus.path .. "/nodes.lua")
-dofile(aus.path .. "/noairblocks.lua")
 dofile(aus.path .. "/craftitems.lua")
 dofile(aus.path .. "/crafting.lua")
 --dofile(aus.path .. "/voxel.lua")

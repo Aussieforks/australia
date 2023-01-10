@@ -258,7 +258,7 @@ function pa.register_tall_kelp(def)
 		type = "cooking",
 		recipe = nodename,
 		output = nn_dead,
-		cooktime = 3,
+		cooktime = 5,
 	})
 
 	-- Stone node

@@ -9,22 +9,29 @@ pa.grown_from = grown_from
 
 local iswater = aus.iswater
 
--- Since light won't be sampled at a frequent interval we assume daytime growth
--- over time. Minimum interval: 60, (artificially shallow) max: 1600
--- (minimum light level of 1 needed to grow at all)
-local function photosynthesis_interval(pos)
-	local day_ll = minetest.get_node_light(vector.new(pos.x, pos.y+1, pos.z), 0.5)
-	if day_ll == nil then
-		-- REPORT: Only triggered when LBMs don't run on first world run,
-		-- whereby no corals spawn at first.
-		minetest.log("warning", string.format(
-			"[Australia] Nil light above %s when calculating aquatic "
-			.."photosynthesis assuming 0",
-			pos))
-		day_ll = 0
+local photosynthesis_interval
+if not aus.debug_mode then
+	-- Since light won't be sampled at a frequent interval we assume daytime growth
+	-- over time. Minimum interval: 60, (artificially shallow) max: 1600
+	-- (minimum light level of 1 needed to grow at all)
+	photosynthesis_interval = function(pos)
+		local day_ll = minetest.get_node_light(vector.new(pos.x, pos.y+1, pos.z), 0.5)
+		if day_ll == nil then
+			-- REPORT: Only triggered when LBMs don't run on first world run,
+			-- whereby no corals spawn at first.
+			minetest.log("warning", string.format(
+				"[Australia] Nil light above %s when calculating aquatic "
+				.."photosynthesis assuming 0",
+				pos))
+			day_ll = 0
+		end
+		local median_interval = 60*(minetest.LIGHT_MAX - day_ll + 3)
+		return (1/3)*median_interval, (5/3)*median_interval
 	end
-	local median_interval = 60*(minetest.LIGHT_MAX - day_ll + 3)
-	return 3,5--(1/3)*median_interval, (5/3)*median_interval
+else
+	photosynthesis_interval = function(pos)
+		return 3,5
+	end
 end
 pa.photosynthesis_interval = photosynthesis_interval
 
@@ -35,9 +42,15 @@ local function start_timer_growth(pos)
 end
 pa.start_timer_growth = start_timer_growth
 
-local function start_timer_checkup(pos)
-	local warn_start_timer_checkup
-	minetest.get_node_timer(pos):start(math.random(3,4))--22,38))
+local start_timer_checkup
+if not aus.debug_mode then
+	start_timer_checkup = function(pos)
+		minetest.get_node_timer(pos):start(math.random(22,38))
+	end
+else
+	start_timer_checkup = function(pos)
+		minetest.get_node_timer(pos):start(math.random(3,4))
+	end
 end
 pa.start_timer_checkup = start_timer_checkup
 

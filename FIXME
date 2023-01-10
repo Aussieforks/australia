@@ -9,13 +9,7 @@
 	* Woodship schematic as MTS
 	* U-boat schematic as MTS
 * ABMs: Conversion to LBMs or nodetimers where appropriate, especially shipwrecks
-	* Kelp
-		* Giant Brown kelp
-			* Knocking out the stem does not knock out the upper
-			* Nerf growth rate (move to nodetimer), it's too fast otherwise
-			* but try to make it appear in full size at worldgen time.
-			* Craft kelp-stone with 8 kelp + 1 stone
-		* Investigate edibility of other species
+	* Kelp cooking recipes
 	* Aquatic ABMS: Idle 28-33% Minetest before any changes
 * Bonemeal support:
 	* Growth requirement to be scaled per tree so that mulch is not a positive 

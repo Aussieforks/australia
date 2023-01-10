@@ -46,6 +46,14 @@ function pa.register_short_kelp(def)
 	-- Spawning stone crafting recipe
 	pa.register_stone_craft(nodename, nodename_stone)
 
+	-- Drying kelp in a furnace is an alternative to air drying
+	minetest.register_craft({
+		type = "cooking",
+		recipe = nodename,
+		output = nn_dead,
+		cooktime = 3,
+	})
+
 	local base_def = table.copy(pa.aquatic_life_base_def)
 	pa.basedef_do_common_properties(base_def,
 		description, base_def.drawtype, image, groups, sounds, nodebox)

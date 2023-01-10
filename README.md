@@ -116,36 +116,50 @@ All biomes are enabled by default. Currently, disabling the *Underground* biome 
 ## Changelog
 
 ### 0.5.2
-* Internally, trees, corals and kelps now use nodetimers instead of ABMs.
+* Internally, trees, corals, kelps and sponges now all use nodetimers and LBMs
+instead of ABMs, plus other changes below.
 
-### Tree updates
+#### Trees
+
 * Trees' growth rate is now scaled by their volume. Bigger trees grow slower
 than smaller trees, at a bias for smaller trees.
 
+#### Aquatic Life
 
-### Coral updates
+* Aquatic life growth now ranges from 60 to 1600 seconds, based on available
+light.
+* Sponges can now be crafted into ethereal sponge nodes if that mod is present.
+* Aquatic life will now only spawn on the top layer of sand(stone) in the ocean.
+* Aquatic life-growing stone nodes now appear in the creative inventory
+
+#### Kelp
+
+* Kelp death behaviour has been reworked. The plant will enter a dried up state
+instead of just being destroyed if it cannot get any water.
+* Destroying a node of tall kelp will now cause every node above it to fall in a
+slow cascade.
+
+#### Coral
+
 * Hammer coral is a hard coral and so has been made to act like one instead of a
 soft coral as before.
-* An issue where farming mod (MTG farming, farming\_redo and so on) seeds might
-not be found in woodship chests has been resolve by marking it an optional
 dependency.
-* Corals will now bleach rather than dissappear entirely if not kept under water
+* Corals will now bleach rather than disappear entirely if not kept under water
 long enough. Coral spawning stones will revert to stone when dying. Watch out!
 Stepping on dead coral will hurt.
 * Corals will no longer heal players and other entities inside them for no
 apparent reason.
-* Corals will now only spawn on the top layer of sand(stone) in the ocean.
-* Coral growth now ranges from 60 to 1600 seconds, based on available light.
-* Coral-growing stone nodes now appear in the creative inventory
 * Brain coral now appears in the inventory with its shape visible instead of as
 a flat texture.
 
 ### 0.5.1
+
 * Australian trees now finally support leaf decay.
 * A new series of commands will let server operators spawn aus schematics.
 * Fixed sapling drops for fern trees.
 
 ### 0.5.0
+
 * Biomes and several other mapgen features can now be disabled via the in-game
 settings menu instead of by editing Lua files.
 * Added better compatibility for non-valleys mapgens. Valleys mapgen will have
