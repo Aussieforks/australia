@@ -15,3 +15,11 @@ function aus.iswater(node)
 	return node.name == "default:water_source"
 		or node.name == "default:water_flowing"
 end
+
+if aus.debug_mode then
+	function aus.timer_info(pos)
+		local tmr = minetest.get_node_timer(pos)
+		print(string.format("is_started = %s, timeout = %s", tmr:is_started(), tmr:get_timeout()))
+	end
+-- else nil -> doesn't get included with nodedefs, effectively no-op
+end

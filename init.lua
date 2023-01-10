@@ -9,11 +9,9 @@
 
 -- Check for necessary mod functions and abort if they aren't available.
 if not minetest.get_biome_id then
-	minetest.log()
-	minetest.log("* Not loading MOD: Australia *")
-	minetest.log("MOD: Australia requires mod functions which are")
-	minetest.log(" not exposed by your Minetest build.")
-	minetest.log()
+	minetest.log("error", "* Not loading MOD: Australia *")
+	minetest.log("error", "MOD: Australia requires mod functions which are")
+	minetest.log("error", " not exposed by your Minetest build.")
 	return
 end
 
@@ -21,6 +19,11 @@ end
 aus = {}
 aus.path = minetest.get_modpath("australia")
 aus.schematics = {}
+
+aus.debug_mode = minetest.settings:get_bool("australia.debug_mode", false)
+if aus.debug_mode then
+	minetest.log("info", "[australia] Loading in debug mode")
+end
 
 
 -- Load files

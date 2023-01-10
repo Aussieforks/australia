@@ -103,8 +103,8 @@ pa.default_nodebox = default_nodebox
 
 -- [[ Node base definition
 --
--- TODO: Transform all registration functions to using these basedefs and
--- closures, starting with coral ->
+-- All aquatic life registration functions should use these basedefs and
+-- closures to reduce code duplication.
 
 local function base_def_on_timer_closure(nn_dead, nn_stone)
 	-- Die if not kept underwater.
@@ -157,6 +157,7 @@ local aquatic_life_base_def = {
 
 	-- Keep a timer where we will check if the plant life will still live
 	on_construct = base_def_on_construct,
+	on_punch = aus.timer_info,
 
 	--on_timer = base_def_on_timer_closure(nn_dead, nn_stone),
 	--on_destruct = base_def_on_destruct_closure(nn_stone),
@@ -205,6 +206,7 @@ local stone_basedef = {
 	groups = {cracky=3, stone=1},
 	drop = "default:stone",
 	sounds = default.node_sound_stone_defaults(),
+	on_punch = aus.timer_info,
 	on_construct = stone_basedef_on_construct,
 	on_destruct = stone_basedef_on_destruct,
 	--on_timer = stone_basedef_on_timer_closure,

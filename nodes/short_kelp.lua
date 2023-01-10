@@ -51,10 +51,6 @@ function pa.register_short_kelp(def)
 		description, base_def.drawtype, image, groups, sounds, nodebox)
 	base_def.on_timer = pa.base_def_on_timer_closure(nn_dead, nodename_stone)
 	base_def.on_destruct = pa.base_def_on_destruct_closure(nodename_stone)
-	base_def.on_punch = function(pos)
-		local tmr = minetest.get_node_timer(pos)
-		print(string.format("is_started = %s, timeout = %s", tmr:is_started(), tmr:get_timeout()))
-	end--]]
 	minetest.register_node(nodename, base_def)
 
 	local desc_dead = def.desc_dead or string.format("%s (dried)", description)
@@ -74,10 +70,6 @@ function pa.register_short_kelp(def)
 	stone_def.description = string.format("%s stone", description)
 	stone_def.inventory_image = stone_def.inventory_image .. image
 	stone_def.on_timer = pa.stone_basedef_on_timer_closure(nodename)
-	--[[stone_def.on_punch = function(pos)
-		local tmr = minetest.get_node_timer(pos)
-		print(string.format("is_started = %s, timeout = %s", tmr:is_started(), tmr:get_timeout()))
-	end--]]
 	minetest.register_node(nodename_stone, stone_def)
 end
 

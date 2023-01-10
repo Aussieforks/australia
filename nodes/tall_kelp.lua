@@ -16,7 +16,6 @@ local nodebox = {
 
 local function tall_kelp_middle_on_destruct_closure(nn_above, nn_below)
 	return function(pos)
-		--print("tk middle on destruct:", nn_above, nn_below)
 		local above = vector.new(pos.x, pos.y+1, pos.z)
 		local abovenode = minetest.get_node(above)
 		if abovenode.name:match(nn_above) then
@@ -82,12 +81,11 @@ local function tall_kelp_top_on_timer_closure(nodename_top, nodename_middle,
 	nodename_stone, nodename_dead)
 
 	return function(pos)--, node, active_object_count, active_object_count_wider)
-		local grow = true
+		local will_grow = true
 		-- Check for _death_ conditions
 		if tall_kelp_top_will_die(pos, nodename_top, nodename_middle,
 			nodename_stone, nodename_dead)
 		then
-			--print("time to leave ramsay street")
 			minetest.swap_node(pos, {name = nodename_dead})
 			-- Restart stone timer as if the plant is brand new
 			local below = vector.new(pos.x, pos.y-1, pos.z)
@@ -96,7 +94,7 @@ local function tall_kelp_top_on_timer_closure(nodename_top, nodename_middle,
 					minetest.registered_nodes[nodename_stone].on_construct
 				on_construct(below)
 			end
-			grow = false
+			will_grow = false
 		end
 
 		-- Check the roots of the plant
@@ -105,16 +103,15 @@ local function tall_kelp_top_on_timer_closure(nodename_top, nodename_middle,
 		if not (below_node.name == nodename_middle
 			or below_node.name == nodename_stone) then
 			minetest.dig_node(pos)
-			grow = false
+			will_grow = false
 		end
 
-		if not grow then return end
+		if not will_grow then return end
 
 		-- Check for _growing_ conditions
 		local growing_room_available = true
 		local pos_iter = vector.new(pos.x, pos.y+1, pos.z)
 		repeat
-			--print("pos_iter="..tostring(pos_iter))
 			-- Flowing water just won't do
 			if minetest.get_node(pos_iter).name ~= "default:water_source" then
 				growing_room_available = false
@@ -134,14 +131,12 @@ end
 
 local function tall_kelp_middle_on_timer_closure(nodename_middle,
 	nodename_middle_dead, nodename_stone)
-	--print("middle timer closure:", nodename_middle, nodename_middle_dead)
 	return function(pos)
 		local found_water = false
 		for _, delta in pairs(middle_lookaround) do
 			local checkpos = pos+delta
 			if iswater(minetest.get_node(checkpos)) then
 				found_water = true
-				--print("found water, middle not dying")
 				break
 			end
 		end
@@ -151,20 +146,16 @@ local function tall_kelp_middle_on_timer_closure(nodename_middle,
 		local below_node = minetest.get_node(pos_below)
 		if not (below_node.name == nodename_middle
 			or below_node.name == nodename_stone) then
-			dbg.pp(below_node)
-			print(nodename_middle, nodename_stone)
 			minetest.dig_node(pos)
 			return
 		end
 
 		-- Die
 		if not found_water then
-			--print("did not find water, middle dying")
 			minetest.swap_node(pos, {name=nodename_middle_dead})
 		end
 
 		start_timer_checkup(pos)
-		--print("middle timer fallthrough!")
 	end
 end
 
@@ -175,7 +166,6 @@ local tall_kelp_stone_on_timer_closure = function(nodename_plant, nodename_plant
 			or above.name == nodename_plant
 			or above.name == nodename_plant_middle)
 		then
-			--print("Dying giant kelp stone!", above, nodename_plant, nodename_plant_middle, pos)
 			minetest.set_node(pos, {name="default:stone"})
 		else
 			grow(pos, minetest.get_node(pos))
@@ -244,10 +234,6 @@ function pa.register_tall_kelp(def)
 		nodename_middle, nodename_stone, nn_dead)
 	base_def.on_destruct = pa.base_def_on_destruct_closure(nodename_stone)
 	base_def.post_effect_color = def.post_effect_color
-	base_def.on_punch = function(pos)
-		local tmr = minetest.get_node_timer(pos)
-		print(string.format("is_started = %s, timeout = %s", tmr:is_started(), tmr:get_timeout()))
-	end--]]
 	minetest.register_node(nodename, base_def)
 
 	-- Dead node
@@ -275,16 +261,11 @@ function pa.register_tall_kelp(def)
 		cooktime = 3,
 	})
 
-	-- FIXME: Dying under middle node despite my best efforts!
 	-- Stone node
 	local stone_def = table.copy(pa.stone_basedef)
 	stone_def.description = string.format("%s stone", description)
 	stone_def.inventory_image = stone_def.inventory_image .. image
 	stone_def.on_timer = tall_kelp_stone_on_timer_closure(nodename, nodename_middle)
-	stone_def.on_punch = function(pos)
-		local tmr = minetest.get_node_timer(pos)
-		print(string.format("is_started = %s, timeout = %s", tmr:is_started(), tmr:get_timeout()))
-	end--]]
 	minetest.register_node(nodename_stone, stone_def)
 
 	-- Middle node
@@ -303,10 +284,6 @@ function pa.register_tall_kelp(def)
 	middle_def.drop = nodename
 	middle_def.on_timer = tall_kelp_middle_on_timer_closure(nodename_middle,
 		nodename_middle_dead, nodename_stone)
-	middle_def.on_punch = function(pos)
-		local tmr = minetest.get_node_timer(pos)
-		print(string.format("is_started = %s, timeout = %s", tmr:is_started(), tmr:get_timeout()))
-	end--]]
 	minetest.register_node(nodename_middle, middle_def)
 	grown_from[nodename_middle] = nodename
 
@@ -314,7 +291,6 @@ function pa.register_tall_kelp(def)
 	local desc_middle_dead = desc_dead
 	local image_middle_dead = def.image_middle_dead
 		or aus.fname_with_suffix_ext(image, "_middle_dried")
-	print("regtime, dead stuff: image_middle_dead="..image_middle_dead)
 	local middle_dead_def = table.copy(dead_def)
 	pa.basedef_do_common_properties(middle_dead_def,
 		desc_middle_dead, middle_dead_def.drawtype, image_middle_dead, groups_dead, sounds, nodebox)
@@ -327,10 +303,6 @@ function pa.register_tall_kelp(def)
 	middle_dead_def.drop = nn_dead
 	middle_dead_def.liquid_move_physics = false
 	middle_dead_def.climbable = true
-	middle_dead_def.on_punch = function(pos)
-		local tmr = minetest.get_node_timer(pos)
-		print(string.format("is_started = %s, timeout = %s", tmr:is_started(), tmr:get_timeout()))
-	end--]]
 	minetest.register_node(nodename_middle_dead, middle_dead_def)
 
 end

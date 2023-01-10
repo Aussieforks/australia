@@ -1,3 +1,7 @@
+###
+### MAPGEN
+###
+
 # Clear existing biomes
 # You may want to disable this if you are using Australia with another mod
 # that adds biomes.
@@ -96,3 +100,11 @@ australia.enable_biome_australian_alps (Enable australian_alps biome) bool true
 # other biomes. This is to guarantee some snow will exist in the map even for
 # non-valleys mapgens.
 australia.snowline (Snow line altitude) int 120 0 31000
+
+###
+### CONFIG
+###
+
+# Enable certain functionality (like printing nodetimer information when
+# punching plants) which shouldn't be part of normal gameplay.
+australia.debug_mode (Australia debugging mode) bool false
