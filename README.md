@@ -306,7 +306,7 @@ The rest of this file comprises the original README text.
 ### Code
 * Original tree code adapted from Gael-de-Sailly [GNU GPLv3](http://www.gnu.org/licenses/gpl-3.0.en.html), original source can be found at [](https://github.com/Gael-de-Sailly/valleys_mapgen) and duane-r [BSD license](https://en.wikipedia.org/wiki/Bsd_license).
 * Original tree schematic creation code modified by vlapsley and orginal by duane-r [BSD license](https://en.wikipedia.org/wiki/Bsd_license).
-* noairblocks.lua : Code modified from Duane Robertson's [valleys_c](https://github.com/duane-r/valleys_c) mod. Original code modified from Perttu Ahola's [noairblocks](https://forum.minetest.net/viewtopic.php?id=4627) mod and released as [LGPL 2.1](http://www.gnu.org/licenses/old-licenses/lgpl-2.1.en.html).
+* noairblocks.lua : Older versions used code modified from Duane Robertson's [valleys_c](https://github.com/duane-r/valleys_c) mod. Original code modified from Perttu Ahola's [noairblocks](https://forum.minetest.net/viewtopic.php?id=4627) mod and released as [LGPL 2.1](http://www.gnu.org/licenses/old-licenses/lgpl-2.1.en.html).
 * Sunken woodship and submarine code modified by vlapsley and original copyright (C) 2011-2012 by celeron55, Perttu Ahola <celeron55@gmail.com>, (https://creativecommons.org/licenses/by-sa/3.0/legalcode)   [GNU Lesser General Public License](http://www.gnu.org/licenses/old-licenses/lgpl-2.1.en.html) as published by the Free Software Foundation; either version 2.1 of the License, or (at your option) any later version.
 
 ### Sounds

@@ -9,8 +9,7 @@
 	* Woodship schematic as MTS
 	* U-boat schematic as MTS
 * ABMs: Conversion to LBMs or nodetimers where appropriate, especially shipwrecks
-	* Kelp cooking recipes
-	* Aquatic ABMS: Idle 28-33% Minetest before any changes
+	* Aquatic ABMS: Idle 28-33% Minetest before any changes. Profiler proof of improvement?
 * Bonemeal support:
 	* Growth requirement to be scaled per tree so that mulch is not a positive 
 	feedback loop or break-even by default, then configurable multiplier.
