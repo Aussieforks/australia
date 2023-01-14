@@ -35,3 +35,13 @@ minetest.register_node("australia:mangrove_mud", {
 		dug = {name="aus_mangrove_mud", gain=0.4},
 	}),
 })
+
+-- 'Topsoil' for aquatic biomes so coral & kelp rocks don't spawn beneath the
+-- surface.
+local base_def = table.copy(minetest.registered_nodes["default:sand"])
+base_def.drop = "default:sand"
+minetest.register_node("australia:sand_top", base_def)
+
+base_def = table.copy(minetest.registered_nodes["default:sandstone"])
+base_def.drop = "default:sandstone"
+minetest.register_node("australia:sandstone_top", base_def)

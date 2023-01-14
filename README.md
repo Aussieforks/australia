@@ -115,12 +115,51 @@ All biomes are enabled by default. Currently, disabling the *Underground* biome 
 
 ## Changelog
 
+### 0.5.2
+* Internally, trees, corals, kelps and sponges now all use nodetimers and LBMs
+instead of ABMs, plus other changes below.
+
+#### Trees
+
+* Trees' growth rate is now scaled by their volume. Bigger trees grow slower
+than smaller trees, at a bias for smaller trees.
+
+#### Aquatic Life
+
+* Aquatic life growth now ranges from 60 to 1600 seconds, based on available
+light.
+* Sponges can now be crafted into ethereal sponge nodes if that mod is present.
+* Aquatic life will now only spawn on the top layer of sand(stone) in the ocean.
+* Aquatic life-growing stone nodes now appear in the creative inventory
+
+#### Kelp
+
+* Kelp death behaviour has been reworked. The plant will enter a dried up state
+instead of just being destroyed if it cannot get any water.
+* Destroying a node of tall kelp will now cause every node above it to fall in a
+slow cascade.
+
+#### Coral
+
+* Hammer coral is a hard coral and so has been made to act like one instead of a
+soft coral as before.
+dependency.
+* Corals will now bleach rather than disappear entirely if not kept under water
+long enough. Coral spawning stones will revert to stone when dying. Watch out!
+Stepping on dead coral will hurt.
+* Corals will no longer heal players and other entities inside them for no
+apparent reason.
+* Brain coral now appears in the inventory with its shape visible instead of as
+a flat texture.
+
 ### 0.5.1
+
 * Australian trees now finally support leaf decay.
 * A new series of commands will let server operators spawn aus schematics.
 * Fixed sapling drops for fern trees.
 
 ### 0.5.0
+
 * Biomes and several other mapgen features can now be disabled via the in-game
 settings menu instead of by editing Lua files.
 * Added better compatibility for non-valleys mapgens. Valleys mapgen will have
@@ -267,7 +306,7 @@ The rest of this file comprises the original README text.
 ### Code
 * Original tree code adapted from Gael-de-Sailly [GNU GPLv3](http://www.gnu.org/licenses/gpl-3.0.en.html), original source can be found at [](https://github.com/Gael-de-Sailly/valleys_mapgen) and duane-r [BSD license](https://en.wikipedia.org/wiki/Bsd_license).
 * Original tree schematic creation code modified by vlapsley and orginal by duane-r [BSD license](https://en.wikipedia.org/wiki/Bsd_license).
-* noairblocks.lua : Code modified from Duane Robertson's [valleys_c](https://github.com/duane-r/valleys_c) mod. Original code modified from Perttu Ahola's [noairblocks](https://forum.minetest.net/viewtopic.php?id=4627) mod and released as [LGPL 2.1](http://www.gnu.org/licenses/old-licenses/lgpl-2.1.en.html).
+* noairblocks.lua : Older versions used code modified from Duane Robertson's [valleys_c](https://github.com/duane-r/valleys_c) mod. Original code modified from Perttu Ahola's [noairblocks](https://forum.minetest.net/viewtopic.php?id=4627) mod and released as [LGPL 2.1](http://www.gnu.org/licenses/old-licenses/lgpl-2.1.en.html).
 * Sunken woodship and submarine code modified by vlapsley and original copyright (C) 2011-2012 by celeron55, Perttu Ahola <celeron55@gmail.com>, (https://creativecommons.org/licenses/by-sa/3.0/legalcode)   [GNU Lesser General Public License](http://www.gnu.org/licenses/old-licenses/lgpl-2.1.en.html) as published by the Free Software Foundation; either version 2.1 of the License, or (at your option) any later version.
 
 ### Sounds

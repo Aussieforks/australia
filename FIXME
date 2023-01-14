@@ -9,8 +9,10 @@
 	* Woodship schematic as MTS
 	* U-boat schematic as MTS
 * ABMs: Conversion to LBMs or nodetimers where appropriate, especially shipwrecks
-	* Tree growth to nodetimers (according to MTG practice)
-* Bonemeal support?
+	* Aquatic ABMS: Idle 28-33% Minetest before any changes. Profiler proof of improvement?
+* Bonemeal support:
+	* Growth requirement to be scaled per tree so that mulch is not a positive 
+	feedback loop or break-even by default, then configurable multiplier.
 * Tree Schematics with no sapling:
 	* Small river oak (river_oak_small_tree)
 	* Small Coast Banksia
@@ -20,9 +22,15 @@
 	* Register separate sapling, separate leaves OR
 	* Random choice of river oaks upon sapling growth OR
 	* Different schematic sets in different soils
+* Fern saplings do not work; do they even have schematics?
 * Reproduction of smaller plants like spinifex, mitchell grass
 	* Bonemeal addon?
 	* Cultivation item(s)?
+* Internationalise strings
+* Move schematics to subdirectory to avoid potential name clashes
+* Make submarines not exceedingly rare
+	* Murray-darling spawn (holbrook)?
+* Fern saplings, how do they work??
 
 # Biomes testing coords
 Mapgen is always carpathian. Teleportation is not safe unless you have fly!
