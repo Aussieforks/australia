@@ -173,7 +173,9 @@ for _, treedef in ipairs(aus.treelist) do
 				vector.new(sap_max_bounds_horiz, sap_max_size_y, sap_max_bounds_horiz),
 				4 -- kind of a magic number but meh
 			)
-		end
+		end,
+
+		on_punch = aus.timer_info,
 	})
 
 	-- fruit, if applicable

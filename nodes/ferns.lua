@@ -303,9 +303,7 @@ minetest.register_node("australia:sapling_tree_fern", {
 		type = "fixed",
 		fixed = {-7/16, -1/2, -7/16, 7/16, 0, 7/16},
 	},
-	on_punch = function(pos)
-		print(minetest.get_node_timer(pos):is_started())
-	end
+	on_punch = aus.timer_info
 })
 
 	-- Giant tree fern sapling
@@ -322,7 +320,5 @@ minetest.register_node("australia:sapling_giant_tree_fern", {
 		type = "fixed",
 		fixed = {-7/16, -1/2, -7/16, 7/16, 0, 7/16},
 	},
-	on_punch = function(pos)
-		print(minetest.get_node_timer(pos):is_started())
-	end
+	on_punch = aus.timer_info
 })
