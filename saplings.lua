@@ -155,3 +155,12 @@ function aus.sapling_growthrate(schems, species, fruit)
 	local avg_time = 10*treemass^0.7 + 500
 	return 0.9*avg_time, 1.1*avg_time
 end
+
+-- add bonemeal compatability for saplings
+if minetest.get_modpath("bonemeal") then
+	for sapling in pairs(aus.saplings2schems) do
+		bonemeal:add_sapling({
+			{sapling, aus.grow_sapling, "group:soil"}
+		})
+	end
+end
