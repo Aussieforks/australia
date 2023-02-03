@@ -26,14 +26,16 @@ minetest.register_craftitem("australia:ferntuber_roasted", {
 })
 
 	-- Bucket muddy_water
-bucket.register_liquid(
-	"australia:muddy_river_water_source",
-	"australia:muddy_river_water_flowing",
-	"australia:bucket_muddy_river_water",
-	"aus_bucket_muddy_water.png",
-	"Muddy Water Bucket",
-	{water_bucket = 1}
-)
+if minetest.get_modpath("bucket") or minetest.global_exists("bucket") then
+	bucket.register_liquid(
+		"australia:muddy_river_water_source",
+		"australia:muddy_river_water_flowing",
+		"australia:bucket_muddy_river_water",
+		"aus_bucket_muddy_water.png",
+		"Muddy Water Bucket",
+		{water_bucket = 1}
+	)
+end
 
 	-- Stairs and slabs
 for i in ipairs(aus.treelist) do
