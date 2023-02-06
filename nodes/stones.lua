@@ -20,6 +20,8 @@ minetest.register_node("australia:red_cobble", {
 
 minetest.register_node("australia:red_stonebrick", {
 	description = "Red Stone Brick",
+	paramtype2 = "facedir",
+	place_param2 = 0,
 	tiles = {"aus_red_stonebrick.png"},
 	is_ground_content = false,
 	groups = {cracky=2, stone=1},
@@ -52,6 +54,8 @@ minetest.register_node("australia:bluestone_cobble", {
 
 minetest.register_node("australia:bluestone_brick", {
 	description = "Bluestone Brick",
+	paramtype2 = "facedir",
+	place_param2 = 0,
 	tiles = {"aus_bluestone_brick.png"},
 	is_ground_content = false,
 	groups = {cracky=1, stone=1},
