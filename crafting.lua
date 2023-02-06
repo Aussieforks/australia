@@ -9,12 +9,31 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
+	output = 'australia:red_stone_block 9',
+	recipe = {
+		{'australia:red_stone', 'australia:red_stone', 'australia:red_stone',},
+		{'australia:red_stone', 'australia:red_stone', 'australia:red_stone',},
+		{'australia:red_stone', 'australia:red_stone', 'australia:red_stone',},
+	},
+})
+
+minetest.register_craft({
 	output = 'australia:bluestone_brick 4',
 	recipe = {
 		{'australia:bluestone', 'australia:bluestone'},
 		{'australia:bluestone', 'australia:bluestone'},
 	}
 })
+
+minetest.register_craft({
+	output = 'australia:bluestone_block 9',
+	recipe = {
+		{'australia:bluestone', 'australia:bluestone', 'australia:bluestone',},
+		{'australia:bluestone', 'australia:bluestone', 'australia:bluestone',},
+		{'australia:bluestone', 'australia:bluestone', 'australia:bluestone',},
+	},
+})
+
 
 	-- Fences
 for i in ipairs(aus.treelist) do

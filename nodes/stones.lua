@@ -26,6 +26,14 @@ minetest.register_node("australia:red_stonebrick", {
 	sounds = default.node_sound_stone_defaults(),
 })
 
+minetest.register_node("australia:red_stone_block", {
+	description = "Red Stone Block",
+	tiles = {"aus_red_stone_block.png"},
+	is_ground_content = false,
+	groups = {cracky = 2, stone = 1},
+	sounds = default.node_sound_stone_defaults(),
+})
+
 minetest.register_node("australia:bluestone", {
 	description = "Bluestone (Basalt)",
 	tiles = {"aus_bluestone.png"},
@@ -47,6 +55,14 @@ minetest.register_node("australia:bluestone_brick", {
 	tiles = {"aus_bluestone_brick.png"},
 	is_ground_content = false,
 	groups = {cracky=1, stone=1},
+	sounds = default.node_sound_stone_defaults(),
+})
+
+minetest.register_node("australia:bluestone_block", {
+	description = "Bluestone Block",
+	tiles = {"aus_bluestone_block.png"},
+	is_ground_content = false,
+	groups = {cracky = 2, stone = 1},
 	sounds = default.node_sound_stone_defaults(),
 })
 
