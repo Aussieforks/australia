@@ -35,3 +35,11 @@ minetest.register_node("australia:mangrove_mud", {
 		dug = {name="aus_mangrove_mud", gain=0.4},
 	}),
 })
+
+minetest.register_node("australia:mud_bricks", {
+	description = "Mud Bricks",
+	tiles = {"aus_mud_bricks.png"},
+	is_ground_content = false,
+	groups = {crumbly=2},
+	sounds = default.node_sound_stone_defaults(),
+})
