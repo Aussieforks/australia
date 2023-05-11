@@ -20,9 +20,19 @@ minetest.register_node("australia:red_cobble", {
 
 minetest.register_node("australia:red_stonebrick", {
 	description = "Red Stone Brick",
+	paramtype2 = "facedir",
+	place_param2 = 0,
 	tiles = {"aus_red_stonebrick.png"},
 	is_ground_content = false,
 	groups = {cracky=2, stone=1},
+	sounds = default.node_sound_stone_defaults(),
+})
+
+minetest.register_node("australia:red_stone_block", {
+	description = "Red Stone Block",
+	tiles = {"aus_red_stone_block.png"},
+	is_ground_content = false,
+	groups = {cracky = 2, stone = 1},
 	sounds = default.node_sound_stone_defaults(),
 })
 
@@ -44,9 +54,19 @@ minetest.register_node("australia:bluestone_cobble", {
 
 minetest.register_node("australia:bluestone_brick", {
 	description = "Bluestone Brick",
+	paramtype2 = "facedir",
+	place_param2 = 0,
 	tiles = {"aus_bluestone_brick.png"},
 	is_ground_content = false,
 	groups = {cracky=1, stone=1},
+	sounds = default.node_sound_stone_defaults(),
+})
+
+minetest.register_node("australia:bluestone_block", {
+	description = "Bluestone Block",
+	tiles = {"aus_bluestone_block.png"},
+	is_ground_content = false,
+	groups = {cracky = 2, stone = 1},
 	sounds = default.node_sound_stone_defaults(),
 })
 
