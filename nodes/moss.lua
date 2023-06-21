@@ -21,9 +21,8 @@ minetest.register_node("australia:moss", {
 		type = "fixed",
 		fixed = {-0.5, -0.5, -0.5, 0.5, -0.4375, 0.5}
 	},
-	groups = {snappy = 3,flammable = 3},
+	groups = {snappy = 3, flammable = 3, flora = 1},
 	sounds = default.node_sound_leaves_defaults(),
-    -- @@@ Josselin2
     use_texture_alpha = "clip",
 })
 
@@ -46,8 +45,7 @@ minetest.register_node("australia:moss_with_fungus", {
 		type = "fixed",
 		fixed = {-0.5, -0.5, -0.5, 0.5, -0.4375, 0.5}
 	},
-	groups = {snappy = 3,flammable = 3},
+	groups = {snappy = 3, flammable = 3, flora = 1},
 	sounds = default.node_sound_leaves_defaults(),
-    -- @@@ Josselin2
     use_texture_alpha = "clip",
 })

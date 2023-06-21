@@ -1,5 +1,25 @@
 -- mods/australia/crafting.lua
 
+--
+-- Ordinary recipes
+--
+
+-- Moss
+minetest.register_craft({
+	output = 'australia:moss',
+	type = 'shapeless',
+	recipe = {'australia:moss_with_fungus'},
+	replacements = {{'australia:moss_with_fungus', 'flowers:mushroom_brown'}},
+})
+
+minetest.register_craft({
+	output = 'australia:moss_with_fungus',
+	type = 'shapeless',
+	recipe = {'australia:moss', 'flowers:mushroom_brown'},
+})
+
+
+-- Bricks
 minetest.register_craft({
 	output = 'australia:red_stonebrick 4',
 	recipe = {
@@ -16,7 +36,7 @@ minetest.register_craft({
 	}
 })
 
-	-- Fences
+-- Fences
 for i in ipairs(aus.treelist) do
 	local treename			= aus.treelist[i][1]
 	minetest.register_craft({
@@ -28,6 +48,7 @@ for i in ipairs(aus.treelist) do
 	})
 end
 
+-- Ferns
 minetest.register_craft({
 	type = "shapeless",
 	output = "australia:fiddlehead 3",
@@ -46,7 +67,7 @@ minetest.register_craft({
 	},
 })
 
-	-- Wood planks
+-- Wood planks
 for i in ipairs(aus.treelist) do
 	local treename			= aus.treelist[i][1]
 	minetest.register_craft({
@@ -88,10 +109,4 @@ minetest.register_craft({
 	recipe = "australia:fiddlehead",
 	cooktime = 1,
 })
-
-
-
---
--- Fuels
---
 
