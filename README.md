@@ -115,6 +115,11 @@ All biomes are enabled by default. Currently, disabling the *Underground* biome 
 
 ## Changelog
 
+### 0.5.2
+* Trees' growth rate is now scaled by their volume. Bigger trees grow slower
+than smaller trees, at a bias for smaller trees.
+* Internally, trees now use nodetimers instead of ABMs.
+
 ### 0.5.1
 * Australian trees now finally support leaf decay.
 * A new series of commands will let server operators spawn aus schematics.

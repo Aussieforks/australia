@@ -9,8 +9,8 @@ aus.treelist = {
 	{"blue_gum", "Eucalyptus globulus: Blue Gum", 1.0, "eucalyptus", nil, nil, nil, nil, 3},
 	{"boab", "Adansonia gregorii: Boab", 1.0, "boab", nil, nil, nil, nil, 3},
 	{"bull_banksia", "Banksia grandis: Bull Banksia", 0.33, "banksia", nil, nil, nil, nil, 3},
-	{"celery_top_pine", "Phyllocladus aspleniifolius: Celery-top Pine", 1, "pine", nil, nil, nil, nil, vector.new(3,4,3)},
-	{"cherry", "Exocarpos cupressiformis: Australian Cherry", 0.5, "berry", "cherry", "Australian Cherries", 0.67, 1, 3},
+	{"celery_top_pine", "Phyllocladus aspleniifolius: Celery-top Pine", 1, "pine", nil, nil, nil, nil, vector.new(4,6,4)},
+	{"cherry", "Exocarpos cupressiformis: Australian Cherry", 0.5, "berry", "cherry", "Australian Cherries", 0.67, 1, vector.new(3,4,3)},
 	{"cloncurry_box", "Eucalyptus leucophylla: Cloncurry Box", 1.0, "eucalyptus", nil, nil, nil, nil, 3},
 	{"coast_banksia", "Banksia integrifolia: Coast Banksia", 1.0, "banksia", nil, nil, nil, nil, 3},
 	{"coolabah", "Eucalyptus coolabah: Coolabah", 1.0, "eucalyptus", nil, nil, nil, nil, 3},
@@ -124,13 +124,31 @@ for _, treedef in ipairs(aus.treelist) do
 	})
 
 	-- sapling
-	minetest.register_node("australia:"..treename.."_sapling", {
+	local saplingname = "australia:"..treename.."_sapling"
+	local sapling_texname = "aus_"..treesapling.."_sapling.png"
+	local sapling_schems = aus.saplings2schems[saplingname]
+	local sap_max_size_x = 0
+	local sap_max_size_y = 0
+	local sap_max_size_z = 0
+	for schemidx, schem in pairs(sapling_schems) do
+		sap_max_size_x = math.max(sap_max_size_x, schem.size.x)
+		sap_max_size_y = math.max(sap_max_size_y, schem.size.y)
+		sap_max_size_z = math.max(sap_max_size_z, schem.size.z)
+	end
+	-- Due to rotations, we have to always check the largest axis. They should
+	-- be equal anyway.
+	local sap_max_bounds_horiz = math.floor(math.max(sap_max_size_x, sap_max_size_z)/2)
+	local sap_size = vector.new(sap_max_size_x, sap_max_size_y, sap_max_size_z)
+	local sap_growthrate_a, sap_growthrate_b = aus.sapling_growthrate(
+		sapling_schems, saplingname, (treefruit and "australia:"..treefruit))
+
+	minetest.register_node(saplingname, {
 		description = treedesc.." Sapling",
 		drawtype = "plantlike",
 		visual_scale = 1.0,
-		tiles = {"aus_"..treesapling.."_sapling.png"},
-		inventory_image = "aus_"..treesapling.."_sapling.png",
-		wield_image = "aus_"..treesapling.."_sapling.png",
+		tiles = {sapling_texname},
+		inventory_image = sapling_texname,
+		wield_image = sapling_texname,
 		paramtype = "light",
 		sunlight_propagates = true,
 		walkable = false,
@@ -139,14 +157,29 @@ for _, treedef in ipairs(aus.treelist) do
 			type = "fixed",
 			fixed = {-0.3, -0.5, -0.3, 0.3, 0.35, 0.3}
 		},
-		groups = {snappy=2,dig_immediate=3,flammable=2,attached_node=1},
+		groups = {snappy=2,dig_immediate=3,flammable=2,attached_node=1,sapling=1},
 		sounds = default.node_sound_leaves_defaults(),
+
+		on_construct = function(pos)
+			minetest.get_node_timer(pos):start(math.random(
+					sap_growthrate_a, sap_growthrate_b))
+		end,
+		on_timer = aus.grow_sapling,
+
+		on_place = function(itemstack, placer, pointed_thing)
+			return default.sapling_on_place(itemstack, placer, pointed_thing,
+				itemstack:get_name(),
+				vector.new(-sap_max_bounds_horiz, 1, -sap_max_bounds_horiz),
+				vector.new(sap_max_bounds_horiz, sap_max_size_y, sap_max_bounds_horiz),
+				4 -- kind of a magic number but meh
+			)
+		end
 	})
 
 	-- fruit, if applicable
 	local treefruit_name
 	if treefruit then
-		treefruit_name = "australia:"..treefruit..""
+		treefruit_name = "australia:"..treefruit
 		minetest.register_node(treefruit_name, {
 			description = treefruit_desc,
 			drawtype = "plantlike",

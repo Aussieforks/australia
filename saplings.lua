@@ -3,138 +3,164 @@
 --
 
 -- list of all saplings
-aus.saplings = {
-	{sapling="australia:black_box_sapling",
-	 schematics=aus.schematics.black_box_tree},
-	{sapling="australia:black_wattle_sapling",
-	 schematics=aus.schematics.black_wattle_tree},
-	{sapling="australia:blue_gum_sapling",
-	 schematics=aus.schematics.blue_gum_tree},
-	{sapling="australia:boab_sapling",
-	 schematics=aus.schematics.boab_tree},
-	{sapling="australia:bull_banksia_sapling",
-	 schematics=aus.schematics.bull_banksia_tree},
-	{sapling="australia:celery_top_pine_sapling",
-	 schematics=aus.schematics.celery_top_pine_tree},
-	{sapling="australia:cherry_sapling",
-	 schematics=aus.schematics.cherry_tree},
-	{sapling="australia:cloncurry_box_sapling",
-	 schematics=aus.schematics.cloncurry_box_tree},
-	{sapling="australia:coast_banksia_sapling",
-	 schematics=aus.schematics.coast_banksia_big_tree},
-	{sapling="australia:coolabah_sapling",
-	 schematics=aus.schematics.coolabah_tree},
-	{sapling="australia:daintree_stringybark_sapling",
-	 schematics=aus.schematics.daintree_stringybark_tree},
-	{sapling="australia:darwin_woollybutt_sapling",
-	 schematics=aus.schematics.darwin_woollybutt_tree},
-	{sapling="australia:desert_oak_sapling",
-	 schematics=aus.schematics.desert_oak_tree},
-	{sapling="australia:fan_palm_sapling",
-	 schematics=aus.schematics.fan_palm_tree},
-	{sapling="australia:golden_wattle_sapling",
-	 schematics=aus.schematics.golden_wattle_tree},
-	{sapling="australia:grey_mangrove_sapling",
-	 schematics=aus.schematics.grey_mangrove_tree},
-	{sapling="australia:huon_pine_sapling",
-	 schematics=aus.schematics.huon_pine_tree},
-	{sapling="australia:illawarra_flame_sapling",
-	 schematics=aus.schematics.illawarra_flame_tree},
-	{sapling="australia:jarrah_sapling",
-	 schematics=aus.schematics.jarrah_tree},
-	{sapling="australia:karri_sapling",
-	 schematics=aus.schematics.karri_tree},
-	{sapling="australia:lemon_eucalyptus_sapling",
-	 schematics=aus.schematics.lemon_eucalyptus_tree},
-	{sapling="australia:lemon_myrtle_sapling",
-	 schematics=aus.schematics.lemon_myrtle_tree},
-	{sapling="australia:lilly_pilly_sapling",
-	 schematics=aus.schematics.lilly_pilly_tree},
-	{sapling="australia:macadamia_sapling",
-	 schematics=aus.schematics.macadamia_tree},
-	{sapling="australia:mangrove_apple_sapling",
-	 schematics=aus.schematics.mangrove_apple_tree},
-	{sapling="australia:marri_sapling",
-	 schematics=aus.schematics.marri_tree},
-	{sapling="australia:merbau_sapling",
-	 schematics=aus.schematics.merbau_tree},
-	{sapling="australia:moreton_bay_fig_sapling",
-	 schematics=aus.schematics.moreton_bay_fig_tree},
-	{sapling="australia:mulga_sapling",
-	 schematics=aus.schematics.mulga_tree},
-	{sapling="australia:paperbark_sapling",
-	 schematics=aus.schematics.paperbark_tree},
-	{sapling="australia:quandong_sapling",
-	 schematics=aus.schematics.quandong_tree},
-	{sapling="australia:red_bottlebrush_sapling",
-	 schematics=aus.schematics.red_bottlebrush_tree},
+aus.saplings2schems = {
+	["australia:black_box_sapling"] =
+		aus.schematics.black_box_tree,
+	["australia:black_wattle_sapling"] =
+		aus.schematics.black_wattle_tree,
+	["australia:blue_gum_sapling"] =
+		aus.schematics.blue_gum_tree,
+	["australia:boab_sapling"] =
+		aus.schematics.boab_tree,
+	["australia:bull_banksia_sapling"] =
+		aus.schematics.bull_banksia_tree,
+	["australia:celery_top_pine_sapling"] =
+		aus.schematics.celery_top_pine_tree,
+	["australia:cherry_sapling"] =
+		aus.schematics.cherry_tree,
+	["australia:cloncurry_box_sapling"] =
+		aus.schematics.cloncurry_box_tree,
+	["australia:coast_banksia_sapling"] =
+		aus.schematics.coast_banksia_big_tree,
+	["australia:coolabah_sapling"] =
+		aus.schematics.coolabah_tree,
+	["australia:daintree_stringybark_sapling"] =
+		aus.schematics.daintree_stringybark_tree,
+	["australia:darwin_woollybutt_sapling"] =
+		aus.schematics.darwin_woollybutt_tree,
+	["australia:desert_oak_sapling"] =
+		aus.schematics.desert_oak_tree,
+	["australia:fan_palm_sapling"] =
+		aus.schematics.fan_palm_tree,
+	["australia:golden_wattle_sapling"] =
+		aus.schematics.golden_wattle_tree,
+	["australia:grey_mangrove_sapling"] =
+		aus.schematics.grey_mangrove_tree,
+	["australia:huon_pine_sapling"] =
+		aus.schematics.huon_pine_tree,
+	["australia:illawarra_flame_sapling"] =
+		aus.schematics.illawarra_flame_tree,
+	["australia:jarrah_sapling"] =
+		aus.schematics.jarrah_tree,
+	["australia:karri_sapling"] =
+		aus.schematics.karri_tree,
+	["australia:lemon_eucalyptus_sapling"] =
+		aus.schematics.lemon_eucalyptus_tree,
+	["australia:lemon_myrtle_sapling"] =
+		aus.schematics.lemon_myrtle_tree,
+	["australia:lilly_pilly_sapling"] =
+		aus.schematics.lilly_pilly_tree,
+	["australia:macadamia_sapling"] =
+		aus.schematics.macadamia_tree,
+	["australia:mangrove_apple_sapling"] =
+		aus.schematics.mangrove_apple_tree,
+	["australia:marri_sapling"] =
+		aus.schematics.marri_tree,
+	["australia:merbau_sapling"] =
+		aus.schematics.merbau_tree,
+	["australia:moreton_bay_fig_sapling"] =
+		aus.schematics.moreton_bay_fig_tree,
+	["australia:mulga_sapling"] =
+		aus.schematics.mulga_tree,
+	["australia:paperbark_sapling"] =
+		aus.schematics.paperbark_tree,
+	["australia:quandong_sapling"] =
+		aus.schematics.quandong_tree,
+	["australia:red_bottlebrush_sapling"] =
+		aus.schematics.red_bottlebrush_tree,
     -- @@@ Josselin2
---	{sapling="australia:river_oak_sapling",
---	 schematics=aus.schematics.river_oak_tree},
-	{sapling="australia:river_oak_sapling",
-	 schematics=aus.schematics.river_oak_big_tree},
-	{sapling="australia:river_red_gum_sapling",
-	 schematics=aus.schematics.river_red_gum_tree},
-	{sapling="australia:rottnest_island_pine_sapling",
-	 schematics=aus.schematics.rottnest_island_pine_tree},
-	{sapling="australia:scribbly_gum_sapling",
-	 schematics=aus.schematics.scribbly_gum_tree},
-	{sapling="australia:shoestring_acacia_sapling",
-	 schematics=aus.schematics.shoestring_acacia_tree},
-	{sapling="australia:snow_gum_sapling",
-	 schematics=aus.schematics.snow_gum_tree},
-	{sapling="australia:southern_sassafras_sapling",
-	 schematics=aus.schematics.southern_sassafras_tree},
-	{sapling="australia:stilted_mangrove_sapling",
-	 schematics=aus.schematics.stilted_mangrove_tree},
-	{sapling="australia:sugar_gum_sapling",
-	 schematics=aus.schematics.sugar_gum_tree},
-	{sapling="australia:swamp_bloodwood_sapling",
-	 schematics=aus.schematics.swamp_bloodwood_tree},
-	{sapling="australia:swamp_gum_sapling",
-	 schematics=aus.schematics.swamp_gum_tree},
-	{sapling="australia:swamp_paperbark_sapling",
-	 schematics=aus.schematics.swamp_paperbark_tree},
-	{sapling="australia:tasmanian_myrtle_sapling",
-	 schematics=aus.schematics.tasmanian_myrtle_tree},
-	{sapling="australia:tea_tree_sapling",
-	 schematics=aus.schematics.tea_tree_tree},
-	{sapling="australia:white_box_sapling",
-	 schematics=aus.schematics.white_box_tree},
-	{sapling="australia:wirewood_sapling",
-	 schematics=aus.schematics.wirewood_tree},
+--	["australia:river_oak_sapling"] =
+--		aus.schematics.river_oak_tree,
+	["australia:river_oak_sapling"] =
+		aus.schematics.river_oak_big_tree,
+	["australia:river_red_gum_sapling"] =
+		aus.schematics.river_red_gum_tree,
+	["australia:rottnest_island_pine_sapling"] =
+		aus.schematics.rottnest_island_pine_tree,
+	["australia:scribbly_gum_sapling"] =
+		aus.schematics.scribbly_gum_tree,
+	["australia:shoestring_acacia_sapling"] =
+		aus.schematics.shoestring_acacia_tree,
+	["australia:snow_gum_sapling"] =
+		aus.schematics.snow_gum_tree,
+	["australia:southern_sassafras_sapling"] =
+		aus.schematics.southern_sassafras_tree,
+	["australia:stilted_mangrove_sapling"] =
+		aus.schematics.stilted_mangrove_tree,
+	["australia:sugar_gum_sapling"] =
+		aus.schematics.sugar_gum_tree,
+	["australia:swamp_bloodwood_sapling"] =
+		aus.schematics.swamp_bloodwood_tree,
+	["australia:swamp_gum_sapling"] =
+		aus.schematics.swamp_gum_tree,
+	["australia:swamp_paperbark_sapling"] =
+		aus.schematics.swamp_paperbark_tree,
+	["australia:tasmanian_myrtle_sapling"] =
+		aus.schematics.tasmanian_myrtle_tree,
+	["australia:tea_tree_sapling"] =
+		aus.schematics.tea_tree_tree,
+	["australia:white_box_sapling"] =
+		aus.schematics.white_box_tree,
+	["australia:wirewood_sapling"] =
+		aus.schematics.wirewood_tree,
 }
 
--- create a list of just the node names
-local sapling_list = {}
-for _, sap in pairs(aus.saplings) do
-	table.insert(sapling_list, sap.sapling)
+function aus.grow_sapling(pos)
+	if not default.can_grow(pos) then
+		-- Try again 2 minutes later (we'll be more generous than default because
+		-- some trees take ages)
+		minetest.get_node_timer(pos):start(120)
+		return
+	end
+	local node = minetest.get_node(pos)
+	local schems = aus.saplings2schems[node.name]
+	assert(schems ~= nil, string.format("No such sapling registered: %s @%s", node.name, pos))
+
+	minetest.log("action", string.format("[Australia] %s sapling grows into a tree at %s",
+		node.name, minetest.pos_to_string(pos)))
+	local schem = schems[math.random(1,#schems)]
+	local adj = {x = pos.x - math.floor(schem.size.x / 2),
+							 y = pos.y - 1,
+							 z = pos.z - math.floor(schem.size.z / 2)}
+
+	minetest.place_schematic(adj, schem, 'random', nil, true)
 end
 
--- This abm can handle all saplings.
-minetest.register_abm({
-	nodenames = sapling_list,
-	interval = 10,
-	chance = 50,
-	action = function(pos, node)
-		local node_under = minetest.get_node_or_nil({x = pos.x, y = pos.y - 1, z = pos.z})
-		if not node_under or
-		minetest.get_item_group(node_under.name, "soil") == 0 then
-			return
+function aus.sapling_growthrate(schems, species, fruit)
+	local nschems = #schems
+	local node_counts = {}
+	for schem_idx, schem in pairs(schems) do
+		for data_idx, data_point in pairs(schem.data) do
+			local nodename = data_point.name
+			node_counts[nodename] = (node_counts[nodename] or 0) + 1
 		end
-
-		for _, sap in pairs(aus.saplings) do
-			if node.name == sap.sapling then
-				minetest.log("action", "A sapling grows into a tree at "..
-					minetest.pos_to_string(pos))
-				local schem = sap.schematics[math.random(1,#sap.schematics)]
-				local adj = {x = pos.x - math.floor(schem.size.x / 2),
-										 y = pos.y - 1,
-										 z = pos.z - math.floor(schem.size.z / 2)}
-
-				minetest.place_schematic(adj, schem, 'random', nil, true)
-				break
-			end
+	end
+	local treemass = 0
+	for node, count in pairs(node_counts) do
+		local avg_count = node_counts[node] / nschems
+		node_counts[node] = avg_count
+		if node:match("tree") then
+			treemass = treemass + avg_count
+		elseif node:match("leaves")
+			or (fruit and node:match(fruit))
+		then
+			-- Leaves and fruit take less to grow than wood (but leaves
+			-- sometimes simulate branches, so not a huge penalty to mass either)
+			treemass = treemass + (1/3) * avg_count
 		end
-	end,
-})
+	end
+
+	-- Slight bias in favour of smaller trees
+	-- From lightest (golden wattle) to heaviest (river red gum) this means 10-57+-10% minute wait times
+	local avg_time = 10*treemass^0.7 + 500
+	return 0.9*avg_time, 1.1*avg_time
+end
+
+-- add bonemeal compatability for saplings
+if minetest.get_modpath("bonemeal") then
+	for sapling in pairs(aus.saplings2schems) do
+		bonemeal:add_sapling({
+			{sapling, aus.grow_sapling, "group:soil"}
+		})
+	end
+end
